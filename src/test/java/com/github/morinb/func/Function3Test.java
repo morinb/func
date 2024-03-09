@@ -1,16 +1,16 @@
 package com.github.morinb.func;
 
-import com.github.morinb.func.Function3;
-import com.github.morinb.func.Function1;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Function3Test {
+class Function3Test
+{
     @Test
-    public void testApply() {
+    void testApply()
+    {
         Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
 
         var result = function.apply("Test ", 123, true);
@@ -22,7 +22,8 @@ public class Function3Test {
 
 
     @Test
-    public void testAndThen() {
+    void testAndThen()
+    {
         Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
         Function<String, String> after = s -> s + " after";
 
@@ -34,7 +35,8 @@ public class Function3Test {
     }
 
     @Test
-    public void testCurried() {
+    void testCurried()
+    {
         Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
 
         var curriedFunction = function.curried();

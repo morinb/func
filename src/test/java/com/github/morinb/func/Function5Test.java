@@ -3,10 +3,12 @@ package com.github.morinb.func;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class Function5Test {
+class Function5Test
+{
 
     @Test
-    public void testApplyMethod() {
+    void testApplyMethod()
+    {
 
         // Define a function that concatenates five strings.
         Function5<String, String, String, String, String, String> concatenateStringsFunction =
@@ -18,7 +20,8 @@ public class Function5Test {
     }
 
     @Test
-    public void testAndThenMethod() {
+    void testAndThenMethod()
+    {
 
         // Define a function that concatenates five strings and then convert this string to upper case.
         Function5<String, String, String, String, String, String> concatenateStringsFunction =
@@ -33,7 +36,8 @@ public class Function5Test {
     }
 
     @Test
-    public void testCurriedMethod() {
+    void testCurriedMethod()
+    {
 
         // Define a function that concatenates five strings and then using curried function.
         Function5<String, String, String, String, String, String> concatenateStringsFunction =

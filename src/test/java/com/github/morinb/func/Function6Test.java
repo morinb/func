@@ -5,19 +5,22 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Function6Test {
-    private Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> sum = 
-        (a, b, c, d, e, f) -> a + b + c + d + e + f;
+class Function6Test
+{
+    private Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> sum =
+            (a, b, c, d, e, f) -> a + b + c + d + e + f;
 
     @Test
-    public void testApply() {
+    void testApply()
+    {
         assertEquals(Integer.valueOf(21), sum.apply(1, 2, 3, 4, 5, 6));
         assertEquals(Integer.valueOf(9), sum.apply(-1, -2, -3, 4, 5, 6));
         assertEquals(Integer.valueOf(-9), sum.apply(-1, -2, -3, -4, -5, 6));
     }
 
     @Test
-    public void testAndThen() {
+    void testAndThen()
+    {
         var sumPlusOne = sum.andThen(i -> i + 1);
 
         assertEquals(Integer.valueOf(22), sumPlusOne.apply(1, 2, 3, 4, 5, 6));
@@ -26,7 +29,8 @@ public class Function6Test {
     }
 
     @Test
-    public void testCurried() {
+    void testCurried()
+    {
         var curried = sum.curried();
 
         assertEquals(Integer.valueOf(21), curried.apply(1).apply(2).apply(3).apply(4).apply(5).apply(6));

@@ -11,35 +11,35 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class EitherTest
+class EitherTest
 {
     private Either<String, Integer> underTest;
     private Function1<String, String> leftMapper = str -> str + " mapped";
     private Function1<Integer, Integer> rightMapper = num -> num * 2;
 
     @Test
-    public void testRight_isRight()
+    void testRight_isRight()
     {
         underTest = Either.right(10);
         assertTrue(underTest.isRight());
     }
 
     @Test
-    public void testRight_isNotLeft()
+    void testRight_isNotLeft()
     {
         underTest = Either.right(10);
         assertFalse(underTest.isLeft());
     }
 
     @Test
-    public void testRight_returnsCorrectValue()
+    void testRight_returnsCorrectValue()
     {
         underTest = Either.right(10);
         assertEquals(Integer.valueOf(10), underTest.get());
     }
 
     @Test
-    public void testRight_getLeftThrowsException()
+    void testRight_getLeftThrowsException()
     {
         underTest = Either.right(10);
         assertThrows(NoSuchElementException.class, () -> {
@@ -48,7 +48,7 @@ public class EitherTest
     }
 
     @Test
-    public void testRight_mapRight()
+    void testRight_mapRight()
     {
         underTest = Either.right(10);
         var result = underTest.map(param1 -> param1 * 2);
@@ -56,7 +56,7 @@ public class EitherTest
     }
 
     @Test
-    public void testLeft_mapRight()
+    void testLeft_mapRight()
     {
         underTest = Either.left("under test");
         var result = underTest.map(param1 -> param1 * 2);
@@ -64,7 +64,7 @@ public class EitherTest
     }
 
     @Test
-    public void testRight_bimapRight()
+    void testRight_bimapRight()
     {
         underTest = Either.right(10);
         var result = underTest.bimap(leftMapper, rightMapper);
@@ -72,7 +72,7 @@ public class EitherTest
     }
 
     @Test
-    public void testRight_foldRight()
+    void testRight_foldRight()
     {
         underTest = Either.right(10);
         var result = underTest.fold(param1 -> param1 + "mapped", param1 -> Integer.toString(param1 * 2));
@@ -80,35 +80,35 @@ public class EitherTest
     }
 
     @Test
-    public void testLeft_isNotRight()
+    void testLeft_isNotRight()
     {
         underTest = Either.left("Left value");
         assertFalse(underTest.isRight());
     }
 
     @Test
-    public void testLeft_isLeft()
+    void testLeft_isLeft()
     {
         underTest = Either.left("Left value");
         assertTrue(underTest.isLeft());
     }
 
     @Test
-    public void testLeft_getThrowsException()
+    void testLeft_getThrowsException()
     {
         underTest = Either.left("Left value");
         assertThrows(NoSuchElementException.class, () -> underTest.get());
     }
 
     @Test
-    public void testLeft_returnsCorrectValue()
+    void testLeft_returnsCorrectValue()
     {
         underTest = Either.left("Left value");
         assertEquals("Left value", underTest.getLeft());
     }
 
     @Test
-    public void testLeft_mapLeft()
+    void testLeft_mapLeft()
     {
         underTest = Either.left("Left value");
         var result = underTest.mapLeft(leftMapper);
@@ -116,7 +116,7 @@ public class EitherTest
     }
 
     @Test
-    public void testRight_mapLeft()
+    void testRight_mapLeft()
     {
         underTest = Either.right(10);
         var result = underTest.mapLeft(leftMapper);
@@ -124,7 +124,7 @@ public class EitherTest
     }
 
     @Test
-    public void testLeft_bimapLeft()
+    void testLeft_bimapLeft()
     {
         underTest = Either.left("Left value");
         var result = underTest.bimap(leftMapper, rightMapper);
@@ -132,7 +132,7 @@ public class EitherTest
     }
 
     @Test
-    public void testLeft_foldLeft()
+    void testLeft_foldLeft()
     {
         underTest = Either.left("Left value");
         var result = underTest.fold(param1 -> "Left value mapped", param1 -> "Right value mapped");
@@ -140,7 +140,7 @@ public class EitherTest
     }
 
     @Test
-    public void testZipOrAccumulate()
+    void testZipOrAccumulate()
     {
         Either<String, Integer> either1 = Either.right(10);
         Either<String, Integer> either2 = Either.right(20);
@@ -164,7 +164,7 @@ public class EitherTest
     }
 
     @Test
-    public void test_allEithersAreLeft()
+    void test_allEithersAreLeft()
     {
         Either<String, Integer> either1 = Either.left("Error1");
         Either<String, Integer> either2 = Either.left("Error2");

@@ -7,10 +7,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.function.Function;
 
-public class ListTest{
+class ListTest
+{
 
     @Test
-    public void testMapWithSquaredFunction() {
+    void testMapWithSquaredFunction()
+    {
         // actual initialization
         var actual = List.of(2, 3, 4);
         actual = actual.map(i -> i * i);
@@ -27,7 +29,8 @@ public class ListTest{
     }
 
     @Test
-    public void testAdd() {
+    void testAdd()
+    {
         // actual initialization
         var actual = List.of(2, 3, 4);
         actual = actual.add(5);
@@ -45,7 +48,8 @@ public class ListTest{
     }
 
     @Test
-    public void testSize() {
+    void testSize()
+    {
         // actual initialization
         var actual = List.of(2, 3, 4);
 
@@ -54,7 +58,8 @@ public class ListTest{
     }
 
     @Test
-    public void testFlatMap() {
+    void testFlatMap()
+    {
         // actual initialization
         var source = List.of(List.of(1, 2), List.of(3, 4));
         Function<List<Integer>, List<Integer>> flatten = Function.identity();
@@ -70,7 +75,8 @@ public class ListTest{
     }
 
     @Test
-    public void testFilter() {
+    void testFilter()
+    {
         // actual initialization
         var actual = List.of(9, 20, 22, 34, 38);
         actual = actual.filter(i -> i % 2 == 0);
@@ -85,7 +91,8 @@ public class ListTest{
     }
 
     @Test
-    public void testContains() {
+    void testContains()
+    {
         // actual initialization
         var actual = List.of(2, 3, 4);
 
@@ -94,7 +101,8 @@ public class ListTest{
     }
 
     @Test
-    public void testGet() {
+    void testGet()
+    {
         // actual initialization
         var actual = List.of(11, 22, 33);
 
@@ -102,7 +110,8 @@ public class ListTest{
     }
 
     @Test
-    public void testIndexOf() {
+    void testIndexOf()
+    {
         // actual initialization
         var actual = List.of(2, 3, 4, 5);
 
@@ -110,7 +119,8 @@ public class ListTest{
     }
 
     @Test
-    public void testIsEmpty() {
+    void testIsEmpty()
+    {
         // actual initialization
         List<Integer> actual = List.of();
 
@@ -118,7 +128,8 @@ public class ListTest{
     }
 
     @Test
-    public void testAddAll() {
+    void testAddAll()
+    {
         // actual initialization
         var list1 = List.of(1, 2);
         var list2 = List.of(3, 4);
@@ -134,7 +145,8 @@ public class ListTest{
     }
 
     @Test
-    public void testContainsAll() {
+    void testContainsAll()
+    {
         // actual initialization
         var actualList = List.of(1, 2, 3, 4, 5);
         var subList = List.of(2, 3, 4);

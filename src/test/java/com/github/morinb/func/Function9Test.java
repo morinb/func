@@ -1,6 +1,5 @@
 package com.github.morinb.func;
 
-import com.github.morinb.func.Function9;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;
@@ -8,10 +7,12 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class Function9Test {
+class Function9Test
+{
 
     @Test
-    void testApply() {
+    void testApply()
+    {
         Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> function =
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9) -> param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
 
@@ -27,7 +28,8 @@ class Function9Test {
     }
 
     @Test
-    void testAndThen() {
+    void testAndThen()
+    {
         Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> function =
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9) -> param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
 
@@ -41,7 +43,8 @@ class Function9Test {
     }
 
     @Test
-    void testCurried() {
+    void testCurried()
+    {
         Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> function =
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9) -> param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
 

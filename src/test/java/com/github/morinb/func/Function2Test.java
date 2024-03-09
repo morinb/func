@@ -6,10 +6,12 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Function2Test {
+class Function2Test
+{
 
     @Test
-    public void testApply() {
+    void testApply()
+    {
         Function2<Integer, Integer, Integer> addFunction = (Integer a, Integer b) -> a + b;
 
         int result = addFunction.apply(5, 7);
@@ -17,7 +19,8 @@ public class Function2Test {
     }
 
     @Test
-    public void testCurried() {
+    void testCurried()
+    {
         Function2<Integer, Integer, Integer> addFunction = (Integer a, Integer b) -> a + b;
         var curriedFunction = addFunction.curried();
 
@@ -28,7 +31,8 @@ public class Function2Test {
     }
 
     @Test
-    public void testAndThen() {
+    void testAndThen()
+    {
         Function2<Integer, Integer, Integer> addFunction = (Integer a, Integer b) -> a + b;
         Function<Integer, Integer> doubleFunction = (Integer a) -> a * 2;
 

@@ -1,14 +1,14 @@
-
 package com.github.morinb.func;
 
-import com.github.morinb.func.Function1;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
- class Function1Test {
+class Function1Test
+{
 
     @Test
-     void testApply() {
+    void testApply()
+    {
         // Setup our Function1 instance
         Function1<String, Integer> lengthFunc = String::length;
 
@@ -32,7 +32,8 @@ import org.junit.jupiter.api.Test;
     }
 
     @Test
-     void testAndThen() {
+    void testAndThen()
+    {
         // Setup our Function1 instance
         Function1<String, Integer> lengthFunc = String::length;
         Function1<Integer, String> intToStringFunc = x -> x.toString();
@@ -54,7 +55,8 @@ import org.junit.jupiter.api.Test;
     }
 
     @Test
-     void testCurried() {
+    void testCurried()
+    {
         // Setup our Function1 instance
         Function1<String, Integer> lengthFunc = String::length;
 

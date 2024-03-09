@@ -2,26 +2,8 @@ package com.github.morinb.func;
 
 import java.util.Objects;
 
-public class Pair<T, R>
+public record Pair<T, R>(T first, R second)
 {
-    private final T first;
-    private final R second;
-
-    public Pair(T first, R second)
-    {
-        this.first = first;
-        this.second = second;
-    }
-
-    public T getFirst()
-    {
-        return first;
-    }
-
-    public R getSecond()
-    {
-        return second;
-    }
 
     @Override
     public boolean equals(Object o)
@@ -33,14 +15,6 @@ public class Pair<T, R>
 
         if (!Objects.equals(first, pair.first)) return false;
         return Objects.equals(second, pair.second);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        var result = first != null ? first.hashCode() : 0;
-        result = 31 * result + (second != null ? second.hashCode() : 0);
-        return result;
     }
 
     @Override

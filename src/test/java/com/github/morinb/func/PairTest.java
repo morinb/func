@@ -1,24 +1,29 @@
 package com.github.morinb.func;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class PairTest {
+class PairTest
+{
 
     @Test
-    public void testGetFirst() {
+    void testGetFirst()
+    {
         var pair = new Pair<>("John", 20);
-        Assertions.assertEquals("John", pair.getFirst());
+        Assertions.assertEquals("John", pair.first());
     }
 
     @Test
-    public void testGetSecond() {
+    void testGetSecond()
+    {
         var pair = new Pair<>("John", 20);
-        Assertions.assertEquals(20, pair.getSecond());
+        Assertions.assertEquals(20, pair.second());
     }
 
     @Test
-    public void testEquals() {
+    void testEquals()
+    {
         var pair1 = new Pair<>("John", 20);
         var pair2 = new Pair<>("John", 20);
         Assertions.assertEquals(pair1, pair2);
@@ -31,17 +36,22 @@ public class PairTest {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode()
+    {
         var pair1 = new Pair<>("John", 20);
         var pair2 = new Pair<>("John", 20);
         Assertions.assertEquals(pair1.hashCode(), pair2.hashCode());
 
         var pair3 = new Pair<>("John", 30);
         Assertions.assertNotEquals(pair1.hashCode(), pair3.hashCode());
+
+        EqualsVerifier.forClass(Pair.class).verify();
     }
 
+
     @Test
-    public void testHashCodeWithNulls() {
+    void testHashCodeWithNulls()
+    {
         var pairWithNulls = new Pair<>(null, null);
         var anotherPairWithNulls = new Pair<>(null, null);
         Assertions.assertEquals(pairWithNulls.hashCode(), anotherPairWithNulls.hashCode());
@@ -51,43 +61,52 @@ public class PairTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString()
+    {
         var pair = new Pair<>("John", 20);
         Assertions.assertEquals("Pair{first=John, second=20}", pair.toString());
     }
+
     @Test
-    public void testEqualsToDifferentClassObject() {
+    void testEqualsToDifferentClassObject()
+    {
         var pair = new Pair<>("John", 20);
         Assertions.assertNotEquals("Some String", pair);
     }
 
     @Test
-    public void testEqualsToDifferentPairWithDifferentFirst() {
+    void testEqualsToDifferentPairWithDifferentFirst()
+    {
         var pair1 = new Pair<>("John", 20);
         var pair2 = new Pair<>("Doe", 20);
         Assertions.assertNotEquals(pair1, pair2);
     }
 
     @Test
-    public void testEqualsToDifferentPairWithDifferentSecond() {
+    void testEqualsToDifferentPairWithDifferentSecond()
+    {
         var pair1 = new Pair<>("John", 20);
         var pair2 = new Pair<>("John", 30);
         Assertions.assertNotEquals(pair1, pair2);
     }
 
     @Test
-    public void testEqualsToSamePair() {
+    void testEqualsToSamePair()
+    {
         var pair = new Pair<>("John", 20);
         Assertions.assertEquals(pair, pair);
     }
 
     @Test
-    public void testEqualsToNull() {
+    void testEqualsToNull()
+    {
         var pair = new Pair<>("John", 20);
         Assertions.assertNotEquals(pair, null);
     }
+
     @Test
-    public void testEqualsToOtherClass() {
+    void testEqualsToOtherClass()
+    {
         var pair = new Pair<>("John", 20);
         Assertions.assertNotEquals(pair, new Object());
     }

@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Function10Test {
+class Function10Test
+{
 
     @Test
-    public void applyShouldApplyFunctionToAllArguments() {
+    void applyShouldApplyFunctionToAllArguments()
+    {
 
         Function10<String, String, String, String, String, String, String, String, String, String, String> concatenator =
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
@@ -21,7 +23,8 @@ public class Function10Test {
     }
 
     @Test
-    public void andThenShouldApplySecondFunction() {
+    void andThenShouldApplySecondFunction()
+    {
 
         Function10<String, String, String, String, String, String, String, String, String, String, Integer> lengthCalculator =
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
@@ -37,7 +40,8 @@ public class Function10Test {
     }
 
     @Test
-    public void curriedShouldApplyFunctionToAllArguments() {
+    void curriedShouldApplyFunctionToAllArguments()
+    {
 
         Function10<String, String, String, String, String, String, String, String, String, String, String> concatenator =
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
