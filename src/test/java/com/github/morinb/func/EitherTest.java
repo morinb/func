@@ -140,7 +140,7 @@ class EitherTest
     }
 
     @Test
-    void testZipOrAccumulate()
+    void test_zipOrAccumulate10()
     {
         Either<String, Integer> either1 = Either.right(10);
         Either<String, Integer> either2 = Either.right(20);
@@ -164,18 +164,18 @@ class EitherTest
     }
 
     @Test
-    void test_allEithersAreLeft()
+    void test_zipOrAccumulate10Left1()
     {
         Either<String, Integer> either1 = Either.left("Error1");
-        Either<String, Integer> either2 = Either.left("Error2");
-        Either<String, Integer> either3 = Either.left("Error3");
-        Either<String, Integer> either4 = Either.left("Error4");
-        Either<String, Integer> either5 = Either.left("Error5");
-        Either<String, Integer> either6 = Either.left("Error6");
-        Either<String, Integer> either7 = Either.left("Error7");
-        Either<String, Integer> either8 = Either.left("Error8");
-        Either<String, Integer> either9 = Either.left("Error9");
-        Either<String, Integer> either10 = Either.left("Error10");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
 
         Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
@@ -185,6 +185,223 @@ class EitherTest
 
         assertTrue(result.isLeft());
 
-        assertEquals(NonEmptyList.of("Error1", "Error2", "Error3", "Error4", "Error5", "Error6", "Error7", "Error8", "Error9", "Error10"), result.getLeft());
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
     }
+    @Test
+    void test_zipOrAccumulate10Left2()
+    {
+        Either<String, Integer> either2 = Either.left("Error1");
+        Either<String, Integer> either1 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left3()
+    {
+        Either<String, Integer> either3 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either1 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left4()
+    {
+        Either<String, Integer> either4 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either1 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left5()
+    {
+        Either<String, Integer> either5 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either1 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left6()
+    {
+        Either<String, Integer> either6 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either1 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left7()
+    {
+        Either<String, Integer> either7 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either1 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left8()
+    {
+        Either<String, Integer> either8 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either1 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left9()
+    {
+        Either<String, Integer> either9 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either1 = Either.right(90);
+        Either<String, Integer> either10 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+    @Test
+    void test_zipOrAccumulate10Left10()
+    {
+        Either<String, Integer> either10 = Either.left("Error1");
+        Either<String, Integer> either2 = Either.right(20);
+        Either<String, Integer> either3 = Either.right(30);
+        Either<String, Integer> either4 = Either.right(40);
+        Either<String, Integer> either5 = Either.right(50);
+        Either<String, Integer> either6 = Either.right(60);
+        Either<String, Integer> either7 = Either.right(70);
+        Either<String, Integer> either8 = Either.right(80);
+        Either<String, Integer> either9 = Either.right(90);
+        Either<String, Integer> either1 = Either.right(100);
+
+        Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat =
+                (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                        param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        var result = Either.zipOrAccumulate(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
 }
