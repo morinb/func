@@ -18,6 +18,7 @@ import java.util.function.Function;
  * @param <T10> the type of the tenth parameter
  * @param <R> the type of the result
  */
+@SuppressWarnings("squid:S119")
 @FunctionalInterface
 public interface Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R>
 {
@@ -36,6 +37,7 @@ public interface Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R>
      * @param param10 the tenth parameter of type T10
      * @return the result of applying the function to the parameters
      */
+    @SuppressWarnings("squid:S107")
     R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7, T8 param8, T9 param9, T10 param10);
 
     /**
@@ -51,7 +53,7 @@ public interface Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R>
      *         the given function
      * @throws NullPointerException if {@code after} is null
      */
-    default <V> Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, V> andThen(Function<? super R, ? extends V> after)
+    default <V> Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, V> andThen(final Function<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after);
         return (T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7, T8 param8, T9 param9, T10 param10) -> after.apply(apply(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10));
@@ -60,17 +62,6 @@ public interface Function10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R>
     /**
      * Returns a curried function that takes 10 parameters and returns a result.
      *
-     * @param <T1> The type of the first parameter.
-     * @param <T2> The type of the second parameter.
-     * @param <T3> The type of the third parameter.
-     * @param <T4> The type of the fourth parameter.
-     * @param <T5> The type of the fifth parameter.
-     * @param <T6> The type of the sixth parameter.
-     * @param <T7> The type of the seventh parameter.
-     * @param <T8> The type of the eighth parameter.
-     * @param <T9> The type of the ninth parameter.
-     * @param <T10> The type of the tenth parameter.
-     * @param <R> The type of the result.
      * @return A curried function that takes 10 parameters and returns a result.
      */
     default Function1<T1, Function1<T2, Function1<T3, Function1<T4, Function1<T5, Function1<T6, Function1<T7, Function1<T8, Function1<T9, Function1<T10, R>>>>>>>>>> curried()

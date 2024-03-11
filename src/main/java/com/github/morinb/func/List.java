@@ -1,11 +1,10 @@
 package com.github.morinb.func;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * A generic immutable list implementation.
@@ -20,20 +19,18 @@ public final class List<T>
      *
      * <p>This variable should not be accessed directly from outside the class.
      * Instead, appropriate methods should be used to interact with this List.
-     *</p>
+     * </p>
      *
-     * @param <T> the type of elements stored in the innerList
      * @see java.util.List
      */
-    private java.util.List<T> innerList;
+    private final java.util.List<T> innerList;
 
     /**
      * Private constructor that initializes the innerList with the provided list.
      *
      * @param list the list to be used to initialize the innerList
-     * @param <T> the type of elements in the list
      */
-    private List(java.util.List<T> list)
+    private List(final java.util.List<T> list)
     {
         innerList = new LinkedList<>(list);
     }
@@ -45,10 +42,10 @@ public final class List<T>
      * @param function the function to apply
      * @return a new list containing the results of applying the function
      */
-    public <R> List<R> map(Function<? super T, ? extends R> function)
+    public <R> List<R> map(final Function<? super T, ? extends R> function)
     {
-        java.util.List<R> newList = new LinkedList<>();
-        for (var element : innerList)
+        final java.util.List<R> newList = new LinkedList<>();
+        for (final var element : innerList)
         {
             newList.add(function.apply(element));
         }
@@ -59,13 +56,13 @@ public final class List<T>
      * Applies the given function to each element in the list and flattens the resulting list.
      *
      * @param function the function to apply to each element
-     * @param <R> the type of elements in the resulting list
+     * @param <R>      the type of elements in the resulting list
      * @return a new list containing the flattened elements
      */
-    public <R> List<R> flatMap(Function<? super T, ? extends List<? extends R>> function)
+    public <R> List<R> flatMap(final Function<? super T, List<? extends R>> function)
     {
-        java.util.List<R> newList = new LinkedList<>();
-        for (var element : innerList)
+        final java.util.List<R> newList = new LinkedList<>();
+        for (final var element : innerList)
         {
             newList.addAll(function.apply(element).toJavaList());
         }
@@ -76,11 +73,12 @@ public final class List<T>
     /**
      * Creates an immutable List from the given values.
      *
-     * @param <R>     the type of the values
-     * @param values  the values to be added to the List
+     * @param <R>    the type of the values
+     * @param values the values to be added to the List
      * @return an immutable List containing the specified values
      */
-    public static <R> List<R> of(R... values)
+    @SafeVarargs
+    public static <R> List<R> of(final R... values)
     {
         final var list = new LinkedList<R>();
         Collections.addAll(list, values);
@@ -91,12 +89,12 @@ public final class List<T>
      * Creates a new instance of a List based on the given values.
      *
      * @param values The list of values to be added to the new List.
-     * @param <R> The type of elements in the List.
+     * @param <R>    The type of elements in the List.
      * @return A new List containing the given values.
      */
-    public static <R> List<R> of(java.util.List<R> values)
+    public static <R> List<R> of(final java.util.List<R> values)
     {
-        final var list = new LinkedList<R>(values);
+        final var list = new LinkedList<>(values);
         return new List<>(list);
     }
 
@@ -126,7 +124,7 @@ public final class List<T>
      * @param o the element to check if it is present in the list
      * @return true if the list contains the specified element, false otherwise
      */
-    public boolean contains(Object o)
+    public boolean contains(final T o)
     {
         return innerList.contains(o);
     }
@@ -137,9 +135,9 @@ public final class List<T>
      * @param c the collection whose elements are to be checked for containment in this list
      * @return true if this list contains all of the elements in the specified collection, false otherwise
      */
-    public boolean containsAll(List<?> c)
+    public boolean containsAll(final List<T> c)
     {
-        return innerList.containsAll(c.toJavaList());
+        return new HashSet<>(innerList).containsAll(c.toJavaList());
     }
 
     /**
@@ -148,7 +146,7 @@ public final class List<T>
      * @param o the object to be searched for
      * @return the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element
      */
-    public int indexOf(Object o)
+    public int indexOf(final T o)
     {
         return innerList.indexOf(o);
     }
@@ -159,7 +157,7 @@ public final class List<T>
      * @param index the index of the element to retrieve
      * @return the element at the specified index
      */
-    public T get(int index)
+    public T get(final int index)
     {
         return innerList.get(index);
     }
@@ -170,9 +168,9 @@ public final class List<T>
      * @param value the value to be added to the list
      * @return a new List instance with the added value
      */
-    public List<T> add(T value)
+    public List<T> add(final T value)
     {
-        java.util.List<T> newList = new LinkedList<>(this.innerList);
+        final java.util.List<T> newList = new LinkedList<>(this.innerList);
         newList.add(value);
         return new List<>(newList);
     }
@@ -193,9 +191,9 @@ public final class List<T>
      * @param values the list containing values to be added
      * @return a new list with the values added
      */
-    public List<T> addAll(List<T> values)
+    public List<T> addAll(final List<T> values)
     {
-        java.util.List<T> newList = new LinkedList<>(this.innerList);
+        final java.util.List<T> newList = new LinkedList<>(this.innerList);
         newList.addAll(values.toJavaList());
         return new List<>(newList);
     }
@@ -206,10 +204,11 @@ public final class List<T>
      * @param predicate the predicate used to filter the elements
      * @return a new List containing the filtered elements
      */
-    public List<T> filter(Predicate<? super T> predicate) {
-        var newList = innerList.stream()
+    public List<T> filter(final Predicate<? super T> predicate)
+    {
+        final var newList = innerList.stream()
                 .filter(predicate)
-                .collect(Collectors.toList());
+                .toList();
         return new List<>(newList);
     }
 }

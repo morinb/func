@@ -18,11 +18,11 @@ class ListTest
         actual = actual.map(i -> i * i);
 
         //Setting up manual expected
-        var expectedInnerList = new LinkedList<Integer>();
+        final var expectedInnerList = new LinkedList<Integer>();
         expectedInnerList.add(4); // = 2*2
         expectedInnerList.add(9); // = 3*3
         expectedInnerList.add(16); // = 4*4
-        var expected = List.of(expectedInnerList);
+        final var expected = List.of(expectedInnerList);
 
         //Asserts
         Assertions.assertEquals(expected.toJavaList(), actual.toJavaList());
@@ -36,12 +36,12 @@ class ListTest
         actual = actual.add(5);
 
         //Setting up manual expected
-        var expectedInnerList = new LinkedList<Integer>();
+        final var expectedInnerList = new LinkedList<Integer>();
         expectedInnerList.add(2);
         expectedInnerList.add(3);
         expectedInnerList.add(4);
         expectedInnerList.add(5);
-        var expected = List.of(expectedInnerList);
+        final var expected = List.of(expectedInnerList);
 
         //Asserts
         Assertions.assertEquals(expected.toJavaList(), actual.toJavaList());
@@ -51,7 +51,7 @@ class ListTest
     void testSize()
     {
         // actual initialization
-        var actual = List.of(2, 3, 4);
+        final var actual = List.of(2, 3, 4);
 
         //Asserts
         Assertions.assertEquals(3, actual.size());
@@ -61,14 +61,12 @@ class ListTest
     void testFlatMap()
     {
         // actual initialization
-        var source = List.of(List.of(1, 2), List.of(3, 4));
-        Function<List<Integer>, List<Integer>> flatten = Function.identity();
-        var actual = source.flatMap(flatten);
+        final var source = List.of(List.of(1, 2), List.of(3, 4));
+        final var actual = source.flatMap(Function.identity());
 
         //Setting up manual expected
-        var expectedInnerList = new LinkedList<Integer>();
-        expectedInnerList.addAll(Arrays.asList(1, 2, 3, 4));
-        var expected = List.of(expectedInnerList);
+        final var expectedInnerList = new LinkedList<>(Arrays.asList(1, 2, 3, 4));
+        final var expected = List.of(expectedInnerList);
 
         //Asserts
         Assertions.assertEquals(expected.toJavaList(), actual.toJavaList());
@@ -82,9 +80,8 @@ class ListTest
         actual = actual.filter(i -> i % 2 == 0);
 
         //Setting up manual expected
-        var expectedInnerList = new LinkedList<Integer>();
-        expectedInnerList.addAll(Arrays.asList(20, 22, 34, 38));
-        var expected = List.of(expectedInnerList);
+        final var expectedInnerList = new LinkedList<>(Arrays.asList(20, 22, 34, 38));
+        final var expected = List.of(expectedInnerList);
 
         //Asserts
         Assertions.assertEquals(expected.toJavaList(), actual.toJavaList());
@@ -94,7 +91,7 @@ class ListTest
     void testContains()
     {
         // actual initialization
-        var actual = List.of(2, 3, 4);
+        final var actual = List.of(2, 3, 4);
 
         Assertions.assertTrue(actual.contains(2));
         Assertions.assertFalse(actual.contains(10));
@@ -104,7 +101,7 @@ class ListTest
     void testGet()
     {
         // actual initialization
-        var actual = List.of(11, 22, 33);
+        final var actual = List.of(11, 22, 33);
 
         Assertions.assertEquals(22, actual.get(1));
     }
@@ -113,7 +110,7 @@ class ListTest
     void testIndexOf()
     {
         // actual initialization
-        var actual = List.of(2, 3, 4, 5);
+        final var actual = List.of(2, 3, 4, 5);
 
         Assertions.assertEquals(2, actual.indexOf(4));
     }
@@ -122,7 +119,7 @@ class ListTest
     void testIsEmpty()
     {
         // actual initialization
-        List<Integer> actual = List.of();
+        final List<Integer> actual = List.of();
 
         Assertions.assertTrue(actual.isEmpty());
     }
@@ -131,14 +128,13 @@ class ListTest
     void testAddAll()
     {
         // actual initialization
-        var list1 = List.of(1, 2);
-        var list2 = List.of(3, 4);
-        var actual = list1.addAll(list2);
+        final var list1 = List.of(1, 2);
+        final var list2 = List.of(3, 4);
+        final var actual = list1.addAll(list2);
 
         //Setting up manual expected
-        var expectedInnerList = new LinkedList<Integer>();
-        expectedInnerList.addAll(Arrays.asList(1, 2, 3, 4));
-        var expected = List.of(expectedInnerList);
+        final var expectedInnerList = new LinkedList<>(Arrays.asList(1, 2, 3, 4));
+        final var expected = List.of(expectedInnerList);
 
         //Asserts
         Assertions.assertEquals(expected.toJavaList(), actual.toJavaList());
@@ -148,8 +144,8 @@ class ListTest
     void testContainsAll()
     {
         // actual initialization
-        var actualList = List.of(1, 2, 3, 4, 5);
-        var subList = List.of(2, 3, 4);
+        final var actualList = List.of(1, 2, 3, 4, 5);
+        final var subList = List.of(2, 3, 4);
 
         Assertions.assertTrue(actualList.containsAll(subList));
         Assertions.assertFalse(actualList.containsAll(List.of(2, 3, 6)));

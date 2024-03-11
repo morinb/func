@@ -19,15 +19,15 @@ class NonEmptyListTest
     @BeforeEach
     void setup()
     {
-        var list = Arrays.asList(1, 2, 3, 4, 5);
+        final var list = Arrays.asList(1, 2, 3, 4, 5);
         testList = NonEmptyList.of(list);
     }
 
     @Test
     void mapTest()
     {
-        Function<Integer, Integer> times2 = (x) -> x * 2;
-        var resultList = testList.map(times2);
+        final Function<Integer, Integer> times2 = (x) -> x * 2;
+        final var resultList = testList.map(times2);
         assertEquals(2, resultList.head());
         assertArrayEquals(new Integer[]{4, 6, 8, 10}, resultList.tail().toArray());
     }
@@ -35,12 +35,12 @@ class NonEmptyListTest
     @Test
     void flatMapTest()
     {
-        Function<Integer, NonEmptyList<Integer>> listIncrement = (x) -> {
-            List<Integer> newList = new ArrayList<>();
+        final Function<Integer, NonEmptyList<Integer>> listIncrement = (x) -> {
+            final List<Integer> newList = new ArrayList<>();
             newList.add(x + 1);
             return NonEmptyList.of(newList);
         };
-        var resultList = testList.flatMap(listIncrement);
+        final var resultList = testList.flatMap(listIncrement);
         assertEquals(2, resultList.head());
         assertArrayEquals(new Integer[]{3, 4, 5, 6}, resultList.tail().toArray());
     }
@@ -55,33 +55,47 @@ class NonEmptyListTest
     @Test
     void ofTest_exception()
     {
-        List<Integer> nullList = null;
-        List<Integer> emptyList = new ArrayList<>();
-        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(nullList));
+        final List<Integer> emptyList = new ArrayList<>();
+        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of((List<Integer>) null));
         assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(emptyList));
     }
 
     @Test
     void testOfValidElements()
     {
-        String[] elements = {"A", "B", "C"};
-        NonEmptyList<String> result = NonEmptyList.of(elements);
+        final var elements = new String[]{"A", "B", "C"};
+        final var result = NonEmptyList.of(elements);
 
         // Assertion to check if the function operates as expected.
         // Update this as per your requirements.
+        assertEquals("A", result.head());
+        assertArrayEquals(new String[]{"B", "C"}, result.tail().toArray());
     }
 
     @Test
     void testOfNullElements()
     {
-        String[] elements = null;
-        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(elements));
+        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of((Object) null));
     }
 
     @Test
     void testOfNoElements()
     {
-        String[] elements = new String[0];
+        final var elements = new String[0];
         assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(elements));
     }
+
+    @Test
+    void testOfNullArray()
+    {
+        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of((Object[]) null));
+    }
+
+    @Test
+    void testOfZeroLengthArray()
+    {
+        final var elements = new Integer[0];
+        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(elements));
+    }
+
 }

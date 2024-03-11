@@ -37,7 +37,7 @@ public interface Function5<T1, T2, T3, T4, T5, R>
      * @return the composed function
      * @throws NullPointerException if the provided function is null
      */
-    default <V> Function5<T1, T2, T3, T4, T5, V> andThen(Function<? super R, ? extends V> after)
+    default <V> Function5<T1, T2, T3, T4, T5, V> andThen(final Function<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after);
         return (T1 param1, T2 param2, T3 param3, T4 param4, T5 param5) -> after.apply(apply(param1, param2, param3, param4, param5));
@@ -47,12 +47,6 @@ public interface Function5<T1, T2, T3, T4, T5, R>
     /**
      * Returns a curried version of the function.
      *
-     * @param <T1> the type of the first input to the function
-     * @param <T2> the type of the second input to the function
-     * @param <T3> the type of the third input to the function
-     * @param <T4> the type of the fourth input to the function
-     * @param <T5> the type of the fifth input to the function
-     * @param <R>  the type of the result of the function
      * @return a curried version of the function
      */
     default Function1<T1, Function1<T2, Function1<T3, Function1<T4, Function1<T5, R>>>>> curried()

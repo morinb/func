@@ -22,7 +22,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param value the value for the right side of the instance
      * @return a new instance of Right with the specified value
      */
-    static <L, R> Right<L, R> right(R value)
+    static <L, R> Right<L, R> right(final R value)
     {
         return new Right<>(value);
     }
@@ -35,7 +35,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param value the value for the left side of the instance
      * @return a new instance of Left with the specified value
      */
-    static <L, R> Left<L, R> left(L value)
+    static <L, R> Left<L, R> left(final L value)
     {
         return new Left<>(value);
     }
@@ -112,9 +112,9 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return an Either containing the accumulated Left values or the result of applying the transform function
      */
     static <R, A, B, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Function2<A, B, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Function2<A, B, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -139,10 +139,10 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return an Either containing the accumulated Left values or the result of applying the transform function
      */
     static <R, A, B, C, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Function3<A, B, C, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Function3<A, B, C, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -169,11 +169,11 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return an Either containing the accumulated Left values or the result of applying the transform function
      */
     static <R, A, B, C, D, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Either<R, D> d,
-            Function4<A, B, C, D, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Either<R, D> d,
+            final Function4<A, B, C, D, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -202,12 +202,12 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return an Either containing the accumulated Left values or the result of applying the transform function
      */
     static <R, A, B, C, D, E, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Either<R, D> d,
-            Either<R, E> e,
-            Function5<A, B, C, D, E, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Either<R, D> d,
+            final Either<R, E> e,
+            final Function5<A, B, C, D, E, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -238,13 +238,13 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return an Either containing the accumulated Left values or the result of applying the transform function
      */
     static <R, A, B, C, D, E, F, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Either<R, D> d,
-            Either<R, E> e,
-            Either<R, F> f,
-            Function6<A, B, C, D, E, F, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Either<R, D> d,
+            final Either<R, E> e,
+            final Either<R, F> f,
+            final Function6<A, B, C, D, E, F, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -278,14 +278,14 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Either<R, D> d,
-            Either<R, E> e,
-            Either<R, F> f,
-            Either<R, G> g,
-            Function7<A, B, C, D, E, F, G, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Either<R, D> d,
+            final Either<R, E> e,
+            final Either<R, F> f,
+            final Either<R, G> g,
+            final Function7<A, B, C, D, E, F, G, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -321,15 +321,15 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Either<R, D> d,
-            Either<R, E> e,
-            Either<R, F> f,
-            Either<R, G> g,
-            Either<R, H> h,
-            Function8<A, B, C, D, E, F, G, H, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Either<R, D> d,
+            final Either<R, E> e,
+            final Either<R, F> f,
+            final Either<R, G> g,
+            final Either<R, H> h,
+            final Function8<A, B, C, D, E, F, G, H, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -368,16 +368,16 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, I, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Either<R, D> d,
-            Either<R, E> e,
-            Either<R, F> f,
-            Either<R, G> g,
-            Either<R, H> h,
-            Either<R, I> i,
-            Function9<A, B, C, D, E, F, G, H, I, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Either<R, D> d,
+            final Either<R, E> e,
+            final Either<R, F> f,
+            final Either<R, G> g,
+            final Either<R, H> h,
+            final Either<R, I> i,
+            final Function9<A, B, C, D, E, F, G, H, I, Z> transform
     )
     {
         return zipOrAccumulate(
@@ -418,22 +418,22 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, I, J, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
-            Either<R, A> a,
-            Either<R, B> b,
-            Either<R, C> c,
-            Either<R, D> d,
-            Either<R, E> e,
-            Either<R, F> f,
-            Either<R, G> g,
-            Either<R, H> h,
-            Either<R, I> i,
-            Either<R, J> j,
-            Function10<A, B, C, D, E, F, G, H, I, J, Z> transform
+            final Either<R, A> a,
+            final Either<R, B> b,
+            final Either<R, C> c,
+            final Either<R, D> d,
+            final Either<R, E> e,
+            final Either<R, F> f,
+            final Either<R, G> g,
+            final Either<R, H> h,
+            final Either<R, I> i,
+            final Either<R, J> j,
+            final Function10<A, B, C, D, E, F, G, H, I, J, Z> transform
     )
     {
-        var eithers = List.of(a, b, c, d, e, f, g, h, i, j);
+        final var eithers = List.of(a, b, c, d, e, f, g, h, i, j);
 
-        var errors = eithers
+        final var errors = eithers
                 .filter(Either::isLeft)
                 .map(Either::getLeft);
 
@@ -454,7 +454,8 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param mapper The function to apply to the value if it is a right value.
      * @return A new Either containing the mapped value, or the same Either if it is a left value.
      */
-    default <T> Either<L, T> map(Function1<? super R, ? extends T> mapper)
+    @SuppressWarnings("unchecked")
+    default <T> Either<L, T> map(final Function1<? super R, ? extends T> mapper)
     {
         if (isRight())
         {
@@ -473,7 +474,8 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param <T>    the type of the result of the function
      * @return a new Either object with the result of applying the mapper function to the left value
      */
-    default <T> Either<T, R> mapLeft(Function1<? super L, ? extends T> mapper)
+    @SuppressWarnings("unchecked")
+    default <T> Either<T, R> mapLeft(final Function1<? super L, ? extends T> mapper)
     {
         Objects.requireNonNull(mapper, "mapper is null");
         if (isLeft())
@@ -496,7 +498,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param <U>         the type of the right value of the Either
      * @return a new Either instance with the transformed values
      */
-    default <T, U> Either<T, U> bimap(Function1<? super L, ? extends T> leftMapper, Function1<? super R, ? extends U> rightMapper)
+    default <T, U> Either<T, U> bimap(final Function1<? super L, ? extends T> leftMapper, final Function1<? super R, ? extends U> rightMapper)
     {
         Objects.requireNonNull(leftMapper, "leftMapper is null");
         Objects.requireNonNull(rightMapper, "rightMapper is null");
@@ -521,7 +523,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return the result of the function application
      * @throws NullPointerException if leftMapper is null or rightMapper is null
      */
-    default <U> U fold(Function1<? super L, ? extends U> leftMapper, Function1<? super R, ? extends U> rightMapper)
+    default <U> U fold(final Function1<? super L, ? extends U> leftMapper, final Function1<? super R, ? extends U> rightMapper)
     {
         Objects.requireNonNull(leftMapper, "leftMapper is null");
         Objects.requireNonNull(rightMapper, "rightMapper is null");
@@ -550,7 +552,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          *
          * @param value the value for the left side of the instance
          */
-        public Left(L value)
+        public Left(final L value)
         {
             this.value = value;
         }
@@ -618,7 +620,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
         /**
          * Represents a Right value in an Either object.
          */
-        public Right(R value)
+        public Right(final R value)
         {
             this.value = value;
         }

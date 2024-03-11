@@ -12,12 +12,12 @@ public record Pair<T, R>(T first, R second)
 {
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        var pair = (Pair<?, ?>) o;
+        final var pair = (Pair<?, ?>) o;
 
         if (!Objects.equals(first, pair.first)) return false;
         return Objects.equals(second, pair.second);

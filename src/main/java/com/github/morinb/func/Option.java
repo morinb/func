@@ -20,6 +20,7 @@ public sealed interface Option<T>
      * @param <T> the type of the value that would have been wrapped by the None object
      * @return an instance of `None`
      */
+    @SuppressWarnings("unchecked")
     static <T> Option<T> none()
     {
         return (Option<T>) None.INSTANCE;
@@ -32,7 +33,7 @@ public sealed interface Option<T>
      * @param <T>   the type of the value
      * @return an Option instance containing the specified value
      */
-    static <T> Option<T> some(T value)
+    static <T> Option<T> some(final T value)
     {
         return new Some<>(value);
     }
@@ -46,7 +47,7 @@ public sealed interface Option<T>
      * @param value the value to be wrapped
      * @return an Option object containing the value, or an empty Option if the value is null
      */
-    static <T> Option<T> of(T value)
+    static <T> Option<T> of(final T value)
     {
         return value == null ? none() : some(value);
     }
@@ -74,7 +75,7 @@ public sealed interface Option<T>
      * @return a new Option containing the result of applying the mapper function, or Option.none() if this Option is None
      * @throws NullPointerException if the mapper function is null
      */
-    default <R> Option<R> map(Function1<T, R> mapper)
+    default <R> Option<R> map(final Function1<T, R> mapper)
     {
         Objects.requireNonNull(mapper, "mapper is null");
         return isNone() ? Option.none() : Option.some(mapper.apply(this.getValue()));
@@ -89,7 +90,7 @@ public sealed interface Option<T>
      *         or an empty option if the current option is empty or the value
      *         does not satisfy the predicate
      */
-    default Option<T> filter(Predicate<T> predicate)
+    default Option<T> filter(final Predicate<T> predicate)
     {
         Objects.requireNonNull(predicate, "predicate is null");
         return isNone() || predicate.test(this.getValue()) ? this : Option.none();
@@ -104,7 +105,7 @@ public sealed interface Option<T>
      * @return the result value after folding the Option
      * @throws NullPointerException if either ifNone or ifSome is null
      */
-    default <R> R fold(Supplier<R> ifNone, Function1<T, R> ifSome)
+    default <R> R fold(final Supplier<R> ifNone, final Function1<T, R> ifSome)
     {
         Objects.requireNonNull(ifNone, "ifNone is null");
         Objects.requireNonNull(ifSome, "ifSome is null");
@@ -119,7 +120,7 @@ public sealed interface Option<T>
      * @return an Option containing the zipped Pair of values if both Options are Some,
      *              or None if either this Option or the other Option is None
      */
-    default <R> Option<Pair<T, R>> zip(Option<R> other)
+    default <R> Option<Pair<T, R>> zip(final Option<R> other)
     {
         Objects.requireNonNull(other, "other is null");
         return isNone() || other.isNone() ? Option.none() : Option.some(new Pair<>(this.getValue(), other.getValue()));
@@ -132,7 +133,7 @@ public sealed interface Option<T>
      * @return the current Option if not None, otherwise the provided Option
      * @throws NullPointerException if the provided Option is null
      */
-    default Option<T> orElse(Option<T> other)
+    default Option<T> orElse(final Option<T> other)
     {
         Objects.requireNonNull(other, "other is null");
         return isNone() ? other : this;
@@ -142,11 +143,10 @@ public sealed interface Option<T>
      * Returns the value contained in the {@code Option} or the result of the supplied {@code Supplier} if the {@code Option} is empty.
      *
      * @param supplier the {@code Supplier} to provide a value if the {@code Option} is empty (not null)
-     * @param <T> the type of the value contained in the {@code Option}
      * @return the value contained in the {@code Option} if it is not empty, or the result of the supplied {@code Supplier} if it is empty
      * @throws NullPointerException if the {@code supplier} is null
      */
-    default T getOrElse(Supplier<T> supplier)
+    default T getOrElse(final Supplier<T> supplier)
     {
         Objects.requireNonNull(supplier, "supplier is null");
         return isNone() ? supplier.get() : this.getValue();
@@ -164,7 +164,7 @@ public sealed interface Option<T>
      *
      * @throws NullPointerException if the mapper function is null
      */
-    default <R> Option<R> flatMap(Function1<T, Option<R>> mapper)
+    default <R> Option<R> flatMap(final Function1<T, Option<R>> mapper)
     {
         Objects.requireNonNull(mapper, "mapper is null");
         return isNone() ? Option.none() : mapper.apply(this.getValue());
@@ -181,7 +181,6 @@ public sealed interface Option<T>
         /**
          * Represents a value wrapped in an Option.
          *
-         * @param <T> the type of the value
          */
         private final T value;
 
@@ -189,9 +188,8 @@ public sealed interface Option<T>
          * Creates an Option instance with a non-null value.
          *
          * @param value the value to be wrapped in the Option
-         * @param <T>   the type of the value
          */
-        Some(T value)
+        Some(final T value)
         {
 
             this.value = value;
@@ -211,7 +209,6 @@ public sealed interface Option<T>
         /**
          * Retrieves the value contained in the Option.
          *
-         * @param <T> the type of the value
          * @return the value contained in the Option
          */
         @Override

@@ -14,7 +14,7 @@ class Function0Test
     void testApply()
     {
         // Act
-        var actualResult = greetFn.apply();
+        final var actualResult = greetFn.apply();
 
         // Assert
         assertEquals("Hello, world!", actualResult);
@@ -24,13 +24,13 @@ class Function0Test
     void testAndThen()
     {
         // Arrange
-        Function0<String> nameFn = () -> "John Doe";
-        Function1<String, String> greetingFn = name -> "Hello, " + name;
+        final Function0<String> nameFn = () -> "John Doe";
+        final Function1<String, String> greetingFn = name -> "Hello, " + name;
 
-        var greetWithName = nameFn.andThen(greetingFn);
+        final var greetWithName = nameFn.andThen(greetingFn);
 
         // Act
-        var actualResult = greetWithName.apply();
+        final var actualResult = greetWithName.apply();
 
         // Assert
         assertEquals("Hello, John Doe", actualResult);

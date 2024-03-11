@@ -10,25 +10,25 @@ class PairTest
     @Test
     void testGetFirst()
     {
-        var pair = new Pair<>("John", 20);
+        final var pair = new Pair<>("John", 20);
         Assertions.assertEquals("John", pair.first());
     }
 
     @Test
     void testGetSecond()
     {
-        var pair = new Pair<>("John", 20);
+        final var pair = new Pair<>("John", 20);
         Assertions.assertEquals(20, pair.second());
     }
 
     @Test
     void testEquals()
     {
-        var pair1 = new Pair<>("John", 20);
-        var pair2 = new Pair<>("John", 20);
+        final var pair1 = new Pair<>("John", 20);
+        final var pair2 = new Pair<>("John", 20);
         Assertions.assertEquals(pair1, pair2);
 
-        var pair3 = new Pair<>("John", 30);
+        final var pair3 = new Pair<>("John", 30);
         Assertions.assertNotEquals(pair1, pair3);
 
         Assertions.assertNotEquals(null, pair1);
@@ -38,11 +38,11 @@ class PairTest
     @Test
     void testHashCode()
     {
-        var pair1 = new Pair<>("John", 20);
-        var pair2 = new Pair<>("John", 20);
+        final var pair1 = new Pair<>("John", 20);
+        final var pair2 = new Pair<>("John", 20);
         Assertions.assertEquals(pair1.hashCode(), pair2.hashCode());
 
-        var pair3 = new Pair<>("John", 30);
+        final var pair3 = new Pair<>("John", 30);
         Assertions.assertNotEquals(pair1.hashCode(), pair3.hashCode());
 
         EqualsVerifier.forClass(Pair.class).verify();
@@ -52,62 +52,64 @@ class PairTest
     @Test
     void testHashCodeWithNulls()
     {
-        var pairWithNulls = new Pair<>(null, null);
-        var anotherPairWithNulls = new Pair<>(null, null);
+        final var pairWithNulls = new Pair<>(null, null);
+        final var anotherPairWithNulls = new Pair<>(null, null);
         Assertions.assertEquals(pairWithNulls.hashCode(), anotherPairWithNulls.hashCode());
 
-        var pairWithoutNulls = new Pair<>("John", 20);
+        final var pairWithoutNulls = new Pair<>("John", 20);
         Assertions.assertNotEquals(pairWithNulls.hashCode(), pairWithoutNulls.hashCode());
     }
 
     @Test
     void testToString()
     {
-        var pair = new Pair<>("John", 20);
+        final var pair = new Pair<>("John", 20);
         Assertions.assertEquals("Pair{first=John, second=20}", pair.toString());
     }
 
     @Test
     void testEqualsToDifferentClassObject()
     {
-        var pair = new Pair<>("John", 20);
+        final var pair = new Pair<>("John", 20);
         Assertions.assertNotEquals("Some String", pair);
     }
 
     @Test
     void testEqualsToDifferentPairWithDifferentFirst()
     {
-        var pair1 = new Pair<>("John", 20);
-        var pair2 = new Pair<>("Doe", 20);
+        final var pair1 = new Pair<>("John", 20);
+        final var pair2 = new Pair<>("Doe", 20);
         Assertions.assertNotEquals(pair1, pair2);
     }
 
     @Test
     void testEqualsToDifferentPairWithDifferentSecond()
     {
-        var pair1 = new Pair<>("John", 20);
-        var pair2 = new Pair<>("John", 30);
+        final var pair1 = new Pair<>("John", 20);
+        final var pair2 = new Pair<>("John", 30);
         Assertions.assertNotEquals(pair1, pair2);
     }
 
     @Test
     void testEqualsToSamePair()
     {
-        var pair = new Pair<>("John", 20);
+        final var pair = new Pair<>("John", 20);
         Assertions.assertEquals(pair, pair);
     }
 
+    @SuppressWarnings("squid:S3415")
     @Test
     void testEqualsToNull()
     {
-        var pair = new Pair<>("John", 20);
+        final var pair = new Pair<>("John", 20);
         Assertions.assertNotEquals(pair, null);
     }
 
+    @SuppressWarnings("squid:S3415")
     @Test
     void testEqualsToOtherClass()
     {
-        var pair = new Pair<>("John", 20);
+        final var pair = new Pair<>("John", 20);
         Assertions.assertNotEquals(pair, new Object());
     }
 }

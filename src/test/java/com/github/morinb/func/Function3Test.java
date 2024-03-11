@@ -11,12 +11,12 @@ class Function3Test
     @Test
     void testApply()
     {
-        Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
+        final Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
 
-        var result = function.apply("Test ", 123, true);
+        final var result = function.apply("Test ", 123, true);
         assertEquals("Test 123true", result, "Mismatched results.");
 
-        var result2 = function.apply("Check ", 456, false);
+        final var result2 = function.apply("Check ", 456, false);
         assertEquals("Check 456false", result2, "Mismatched results.");
     }
 
@@ -24,12 +24,12 @@ class Function3Test
     @Test
     void testAndThen()
     {
-        Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
-        Function<String, String> after = s -> s + " after";
+        final Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
+        final Function<String, String> after = s -> s + " after";
 
-        var combinedFunction = function.andThen(after);
+        final var combinedFunction = function.andThen(after);
 
-        var result = combinedFunction.apply("Test ", 123, true);
+        final var result = combinedFunction.apply("Test ", 123, true);
         assertEquals("Test 123true after", result, "Mismatched results with andThen.");
 
     }
@@ -37,11 +37,11 @@ class Function3Test
     @Test
     void testCurried()
     {
-        Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
+        final Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
 
-        var curriedFunction = function.curried();
+        final var curriedFunction = function.curried();
 
-        var result = curriedFunction.apply("Test ").apply(123).apply(true);
+        final var result = curriedFunction.apply("Test ").apply(123).apply(true);
         assertEquals("Test 123true", result, "Mismatched results with currying.");
     }
 

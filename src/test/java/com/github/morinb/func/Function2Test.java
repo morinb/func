@@ -12,19 +12,19 @@ class Function2Test
     @Test
     void testApply()
     {
-        Function2<Integer, Integer, Integer> addFunction = (Integer a, Integer b) -> a + b;
+        final Function2<Integer, Integer, Integer> addFunction = Integer::sum;
 
-        int result = addFunction.apply(5, 7);
+        final int result = addFunction.apply(5, 7);
         assertEquals(12, result);
     }
 
     @Test
     void testCurried()
     {
-        Function2<Integer, Integer, Integer> addFunction = (Integer a, Integer b) -> a + b;
-        var curriedFunction = addFunction.curried();
+        final Function2<Integer, Integer, Integer> addFunction = Integer::sum;
+        final var curriedFunction = addFunction.curried();
 
-        int result;
+        final int result;
 
         result = curriedFunction.apply(5).apply(7);
         assertEquals(12, result);
@@ -33,12 +33,12 @@ class Function2Test
     @Test
     void testAndThen()
     {
-        Function2<Integer, Integer, Integer> addFunction = (Integer a, Integer b) -> a + b;
-        Function<Integer, Integer> doubleFunction = (Integer a) -> a * 2;
+        final Function2<Integer, Integer, Integer> addFunction = Integer::sum;
+        final Function<Integer, Integer> doubleFunction = (Integer a) -> a * 2;
 
-        var composedFunction = addFunction.andThen(doubleFunction);
+        final var composedFunction = addFunction.andThen(doubleFunction);
 
-        int result;
+        final int result;
 
         result = composedFunction.apply(5, 7);
         assertEquals((5 + 7) * 2, result);

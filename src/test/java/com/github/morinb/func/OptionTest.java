@@ -16,8 +16,8 @@ class OptionTest
     @Test
     void testSomeWithValue()
     {
-        var testValue = "Test";
-        var singleOption = Option.some(testValue);
+        final var testValue = "Test";
+        final var singleOption = Option.some(testValue);
 
         assertFalse(singleOption.isNone(), "Option should not be None");
         assertEquals(testValue, singleOption.getValue(), "Value in option does not match expected");
@@ -26,7 +26,7 @@ class OptionTest
     @Test
     void testSomeWithNull()
     {
-        Option<String> singleOption = Option.some(null);
+        final Option<String> singleOption = Option.some(null);
 
         assertFalse(singleOption.isNone(), "Option should not be None");
         assertNull(singleOption.getValue(), "Value in option is not null");
@@ -35,7 +35,7 @@ class OptionTest
     @Test
     void testNone()
     {
-        Option<String> noneOption = Option.none();
+        final Option<String> noneOption = Option.none();
 
         assertTrue(noneOption.isNone(), "Option should be None");
         assertThrows(NoSuchElementException.class, noneOption::getValue, "Getting value from None should throw exception");
@@ -44,24 +44,24 @@ class OptionTest
     @Test
     void testOrElse()
     {
-        var defaultValue = Option.some("Default");
-        Option<String> noneOption = Option.none();
+        final var defaultValue = Option.some("Default");
+        final Option<String> noneOption = Option.none();
         assertEquals(defaultValue, noneOption.orElse(defaultValue), "OrElse did not return the default value");
 
-        var singleOption = Option.some("Test");
+        final var singleOption = Option.some("Test");
         assertEquals(singleOption, singleOption.orElse(defaultValue), "OrElse did not return the test value");
     }
 
     @Test
     void testMap()
     {
-        var someOption = Option.some(5);
-        var result = someOption.map(i -> i * 2);
+        final var someOption = Option.some(5);
+        final var result = someOption.map(i -> i * 2);
 
         assertFalse(result.isNone(), "Option should not be None");
         assertEquals(10, result.getValue(), "Value in option does not match expected");
 
-        final Option<String> mapped = Option.<String>none().map(param1 -> param1 + "mapped");
+        final var mapped = Option.<String>none().map(param1 -> param1 + "mapped");
         assertTrue(mapped.isNone());
 
     }
@@ -69,9 +69,9 @@ class OptionTest
     @Test
     void testFilter()
     {
-        var someOption = Option.some(5);
-        var result = someOption.filter(i -> i % 2 == 0);
-        var result2 = someOption.filter(i -> i % 2 == 1);
+        final var someOption = Option.some(5);
+        final var result = someOption.filter(i -> i % 2 == 0);
+        final var result2 = someOption.filter(i -> i % 2 == 1);
 
         assertTrue(result.isNone(), "Option should be None");
         assertFalse(result2.isNone());
@@ -81,8 +81,8 @@ class OptionTest
     @Test
     void testFold()
     {
-        var someOption = Option.some(5);
-        int result = someOption.fold(() -> 0, i -> i * 2);
+        final var someOption = Option.some(5);
+        final int result = someOption.fold(() -> 0, i -> i * 2);
 
         assertEquals(10, result, "Value does not match expected");
         assertTrue(Option.<String>none().fold(() -> true, param1 -> false));
@@ -91,9 +91,9 @@ class OptionTest
     @Test
     void testZip()
     {
-        var firstOption = Option.some(5);
-        var secondOption = Option.some(10);
-        var result = firstOption.zip(secondOption);
+        final var firstOption = Option.some(5);
+        final var secondOption = Option.some(10);
+        final var result = firstOption.zip(secondOption);
 
         assertFalse(result.isNone(), "Option should not be None");
         assertEquals(new Pair<>(5, 10), result.getValue(), "Value in option does not match expected");
@@ -104,21 +104,21 @@ class OptionTest
     @Test
     void testGetOrElse()
     {
-        Option<Integer> noneOption = Option.none();
-        int result = noneOption.getOrElse(() -> 5);
+        final Option<Integer> noneOption = Option.none();
+        final int result = noneOption.getOrElse(() -> 5);
 
         assertEquals(5, result, "Value does not match expected");
 
-        var someOption = Option.some(5);
-        int result2 = someOption.getOrElse(() -> 0);
+        final var someOption = Option.some(5);
+        final int result2 = someOption.getOrElse(() -> 0);
         assertEquals(5, result2);
     }
 
     @Test
     void testFlatMap()
     {
-        var someOption = Option.some(5);
-        var result = someOption.flatMap(i -> Option.some(i * 2));
+        final var someOption = Option.some(5);
+        final var result = someOption.flatMap(i -> Option.some(i * 2));
 
         assertFalse(result.isNone(), "Option should not be None");
         assertEquals(10, result.getValue(), "Value in option does not match expected");
@@ -133,8 +133,8 @@ class OptionTest
     @Test
     void testOfWithValue()
     {
-        var testValue = "Test";
-        var singleOption = Option.of(testValue);
+        final var testValue = "Test";
+        final var singleOption = Option.of(testValue);
 
         assertFalse(singleOption.isNone(), "Option should not be None");
         assertEquals(testValue, singleOption.getValue(), "Value in option does not match expected");
@@ -143,7 +143,7 @@ class OptionTest
     @Test
     void testOfWithNull()
     {
-        Option<String> singleOption = Option.of(null);
+        final Option<String> singleOption = Option.of(null);
 
         assertTrue(singleOption.isNone(), "Option should be None");
         assertThrows(NoSuchElementException.class, singleOption::getValue, "Getting value from None should throw exception");

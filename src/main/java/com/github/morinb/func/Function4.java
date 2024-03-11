@@ -22,7 +22,6 @@ public interface Function4<T1, T2, T3, T4, R>
      * @param param2 the second parameter
      * @param param3 the third parameter
      * @param param4 the fourth parameter
-     * @param <R>    the type of the result
      * @return the result of applying the function to the parameters
      */
     R apply(T1 param1, T2 param2, T3 param3, T4 param4);
@@ -35,7 +34,7 @@ public interface Function4<T1, T2, T3, T4, R>
      * @return the composed function
      * @throws NullPointerException if the given function is null
      */
-    default <V> Function4<T1, T2, T3, T4, V> andThen(Function<? super R, ? extends V> after)
+    default <V> Function4<T1, T2, T3, T4, V> andThen(final Function<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after);
         return (T1 param1, T2 param2, T3 param3, T4 param4) -> after.apply(apply(param1, param2, param3, param4));

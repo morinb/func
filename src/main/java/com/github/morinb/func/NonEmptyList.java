@@ -1,6 +1,7 @@
 package com.github.morinb.func;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,10 +34,10 @@ public record NonEmptyList<T>(T head, List<T> tail)
      * @param <U> the type of elements in the resulting NonEmptyList
      * @return a new NonEmptyList with the transformed elements
      */
-    public <U> NonEmptyList<U> map(Function<T, U> f)
+    public <U> NonEmptyList<U> map(final Function<T, U> f)
     {
-        var newHeader = f.apply(head);
-        var newTail = tail.stream().map(f).toList();
+        final var newHeader = f.apply(head);
+        final var newTail = tail.stream().map(f).toList();
         return new NonEmptyList<>(newHeader, newTail);
     }
 
@@ -47,11 +48,11 @@ public record NonEmptyList<T>(T head, List<T> tail)
      * @param <U> the type of elements in the resulting NonEmptyList
      * @return a new NonEmptyList containing the flattened results
      */
-    public <U> NonEmptyList<U> flatMap(Function<T, NonEmptyList<U>> f)
+    public <U> NonEmptyList<U> flatMap(final Function<T, NonEmptyList<U>> f)
     {
-        var newHeaderList = f.apply(head);
-        var newHeader = newHeaderList.head();
-        List<U> newTail = new ArrayList<>(newHeaderList.tail());
+        final var newHeaderList = f.apply(head);
+        final var newHeader = newHeaderList.head();
+        final List<U> newTail = new ArrayList<>(newHeaderList.tail());
         tail.stream().map(f)
                 .forEach(nonEmptyList -> {
                     newTail.add(nonEmptyList.head());
@@ -68,13 +69,15 @@ public record NonEmptyList<T>(T head, List<T> tail)
      * @return a NonEmptyList containing the given elements
      * @throws IllegalArgumentException if the elements are null or empty
      */
-    static <R> NonEmptyList<R> of(R... elements)
+    @SafeVarargs
+    static <R> NonEmptyList<R> of(final R... elements)
     {
-        if (elements == null || elements.length == 0)
+        if (elements == null || elements.length == 0
+            || Arrays.stream(elements).filter(Objects::nonNull).toArray().length == 0)
         {
             throw new IllegalArgumentException("Elements cannot be null or empty");
         }
-        var list = new LinkedList<R>();
+        final var list = new LinkedList<R>();
         Collections.addAll(list, elements);
         return of(list);
     }
@@ -87,15 +90,15 @@ public record NonEmptyList<T>(T head, List<T> tail)
      * @return the non-empty list
      * @throws IllegalArgumentException if the Java List is null or empty
      */
-    static <R> NonEmptyList<R> of(List<R> javaList)
+    static <R> NonEmptyList<R> of(final List<R> javaList)
     {
         if (javaList == null || javaList.isEmpty())
         {
             throw new IllegalArgumentException("List cannot be null or empty");
         }
 
-        var head = javaList.get(0);
-        List<R> tail = new ArrayList<>(javaList.subList(1, javaList.size()));
+        final var head = javaList.get(0);
+        final List<R> tail = new ArrayList<>(javaList.subList(1, javaList.size()));
 
         return new NonEmptyList<>(head, tail);
 

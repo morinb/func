@@ -11,10 +11,10 @@ class Function5Test
     {
 
         // Define a function that concatenates five strings.
-        Function5<String, String, String, String, String, String> concatenateStringsFunction =
+        final Function5<String, String, String, String, String, String> concatenateStringsFunction =
                 (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
 
-        var result = concatenateStringsFunction.apply("Hello, ", "this ", "is ", "a ", "test.");
+        final var result = concatenateStringsFunction.apply("Hello, ", "this ", "is ", "a ", "test.");
 
         Assertions.assertEquals("Hello, this is a test.", result);
     }
@@ -24,13 +24,13 @@ class Function5Test
     {
 
         // Define a function that concatenates five strings and then convert this string to upper case.
-        Function5<String, String, String, String, String, String> concatenateStringsFunction =
+        final Function5<String, String, String, String, String, String> concatenateStringsFunction =
                 (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
 
-        var toUpperCaseFunction =
+        final var toUpperCaseFunction =
                 concatenateStringsFunction.andThen(String::toUpperCase);
 
-        var result = toUpperCaseFunction.apply("Hello, ", "this ", "is ", "a ", "test.");
+        final var result = toUpperCaseFunction.apply("Hello, ", "this ", "is ", "a ", "test.");
 
         Assertions.assertEquals("HELLO, THIS IS A TEST.", result);
     }
@@ -40,13 +40,13 @@ class Function5Test
     {
 
         // Define a function that concatenates five strings and then using curried function.
-        Function5<String, String, String, String, String, String> concatenateStringsFunction =
+        final Function5<String, String, String, String, String, String> concatenateStringsFunction =
                 (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
 
-        var curriedFunction =
+        final var curriedFunction =
                 concatenateStringsFunction.curried();
 
-        var result = curriedFunction.apply("Hello, ").apply("this ").apply("is ").apply("a ").apply("test.");
+        final var result = curriedFunction.apply("Hello, ").apply("this ").apply("is ").apply("a ").apply("test.");
 
         Assertions.assertEquals("Hello, this is a test.", result);
     }

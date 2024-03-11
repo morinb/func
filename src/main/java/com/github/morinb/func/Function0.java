@@ -27,7 +27,7 @@ public interface Function0<R>
      * @throws NullPointerException if the given Function1 is null
      */
     // implements andThen
-    default <V> Function0<V> andThen(Function1<? super R, ? extends V> after)
+    default <V> Function0<V> andThen(final Function1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after);
         return () -> after.apply(apply());

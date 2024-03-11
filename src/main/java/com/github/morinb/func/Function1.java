@@ -29,7 +29,7 @@ public interface Function1<T1, R>
      * @throws NullPointerException if the given Function1 is null.
      */
     //implements andThen
-    default <V> Function1<T1, V> andThen(Function1<? super R, ? extends V> after)
+    default <V> Function1<T1, V> andThen(final Function1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after);
         return (T1 param1) -> after.apply(apply(param1));
