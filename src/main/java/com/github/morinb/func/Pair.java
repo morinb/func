@@ -2,6 +2,12 @@ package com.github.morinb.func;
 
 import java.util.Objects;
 
+/**
+ * Represents a pair of two objects.
+ *
+ * @param <T> the type of the first object in the pair
+ * @param <R> the type of the second object in the pair
+ */
 public record Pair<T, R>(T first, R second)
 {
 
