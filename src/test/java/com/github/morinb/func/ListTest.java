@@ -150,5 +150,23 @@ class ListTest
         Assertions.assertTrue(actualList.containsAll(subList));
         Assertions.assertFalse(actualList.containsAll(List.of(2, 3, 6)));
     }
+    @Test
+    void testPrepend()
+    {
+        // actual initialization
+        var actual = List.of(2, 3, 4);
+        actual = actual.prepend(1);
+
+        //Setting up manual expected
+        final var expectedInnerList = new LinkedList<Integer>();
+        expectedInnerList.add(1);
+        expectedInnerList.add(2);
+        expectedInnerList.add(3);
+        expectedInnerList.add(4);
+        final var expected = List.of(expectedInnerList);
+
+        //Asserts
+        Assertions.assertEquals(expected.toJavaList(), actual.toJavaList());
+    }
 
 }

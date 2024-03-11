@@ -211,4 +211,17 @@ public final class List<T>
                 .toList();
         return new List<>(newList);
     }
+
+    /**
+     * Adds the given element at the beginning of the list.
+     *
+     * @param element the element to be added
+     * @return a new list with the element added at the beginning
+     */
+    public List<T> prepend(T element)
+    {
+        final java.util.List<T> newList = new LinkedList<>(this.innerList);
+        newList.add(0, element);
+        return new List<>(newList);
+    }
 }
