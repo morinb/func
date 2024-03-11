@@ -74,4 +74,39 @@ class TryTest {
         assertTrue(either.isLeft(), "Expected toEither to return Either Left when Try instance is a Failure");
         assertEquals("Test exception", either.getLeft().getMessage(), "Expected toEither to return provided exception when Try instance is a Failure");
     }
+    @Test
+    void testMap_WhenSuccess() {
+        final var tryInstance = Try.of(() -> 5);
+        final var mappedInstance = tryInstance.map(x -> x * 2);
+        assertFalse(mappedInstance.isFailure(), "Expected map to return Success when Try instance is a Success");
+        assertEquals(10, mappedInstance.get(), "Expected map to correctly apply the function to the Success instance");
+    }
+
+    @Test
+    void testMap_WhenFailure() {
+        final Try<Integer> tryInstance = Try.of(() -> {
+            throw new RuntimeException("Test exception");
+        });
+        final var mappedInstance = tryInstance.map(x -> x * 2);
+        assertTrue(mappedInstance.isFailure(), "Expected map to return Failure when Try instance is a Failure");
+        assertThrows(NoSuchElementException.class, mappedInstance::get, "Expected get to throw NoSuchElementException when mapped instance is a Failure");
+    }
+
+    @Test
+    void testFlatMap_WhenSuccess() {
+        final var tryInstance = Try.of(() -> 5);
+        final var flatMappedInstance = tryInstance.flatMap(x -> Try.of(() -> x * 2));
+        assertFalse(flatMappedInstance.isFailure(), "Expected flatMap to return Success when Try instance is a Success");
+        assertEquals(10, flatMappedInstance.get(), "Expected flatMap to correctly apply the function to the Success instance and flatten the Try");
+    }
+
+    @Test
+    void testFlatMap_WhenFailure() {
+        final Try<Integer> tryInstance = Try.of(() -> {
+            throw new RuntimeException("Test exception");
+        });
+        final var flatMappedInstance = tryInstance.flatMap(x -> Try.of(() -> x * 2));
+        assertTrue(flatMappedInstance.isFailure(), "Expected flatMap to return Failure when Try instance is a Failure");
+        assertThrows(NoSuchElementException.class, flatMappedInstance::get, "Expected get to throw NoSuchElementException when flatMapped instance is a Failure");
+    }
 }

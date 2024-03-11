@@ -2,6 +2,7 @@ package com.github.morinb.func;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.function.Function;
 
 public sealed interface Try<T>
     permits Try.Success, Try.Failure
@@ -11,6 +12,18 @@ public sealed interface Try<T>
     T get();
 
     boolean isFailure();
+
+    @SuppressWarnings("unchecked")
+    default <U> Try<U> map(Function1<T, U> mapper)
+    {
+        return isFailure() ? (Try<U>) this : Try.of(() -> mapper.apply(get()));
+    }
+
+    @SuppressWarnings("unchecked")
+    default <U> Try<U> flatMap(Function<? super T, ? extends Try<? extends U>> mapper)
+    {
+        return isFailure() ? (Try<U>) this : (Try<U>) mapper.apply(get());
+    }
 
     default Either<Throwable, T> toEither()
     {
