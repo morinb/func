@@ -6,7 +6,7 @@
 
     <groupId>com.github.morinb</groupId>
     <artifactId>func</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -30,20 +30,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.mockito/mockito-core &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.mockito</groupId>-->
-        <!--    <artifactId>mockito-core</artifactId>-->
-        <!--    <version>5.11.0</version>-->
-        <!--    <scope>test</scope>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
             <version>3.15.8</version>
             <scope>test</scope>
         </dependency>
-
 
 
         <!-- pitest dependency -->
