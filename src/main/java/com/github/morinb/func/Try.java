@@ -1,10 +1,12 @@
 package com.github.morinb.func;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Function;
 
 public sealed interface Try<T>
+    extends Value<T>
     permits Try.Success, Try.Failure
 {
 
@@ -13,8 +15,10 @@ public sealed interface Try<T>
 
     boolean isFailure();
 
+
+    @Override
     @SuppressWarnings("unchecked")
-    default <U> Try<U> map(Function1<T, U> mapper)
+    default <U> Try<U> map(Function1<? super T, ? extends U> mapper)
     {
         return isFailure() ? (Try<U>) this : Try.of(() -> mapper.apply(get()));
     }
@@ -43,16 +47,6 @@ public sealed interface Try<T>
         }
     }
 
-    default T getOrElse(T other)
-    {
-        return isFailure() ? other : get();
-    }
-
-    default T getOrElse(Function0<? extends T> supplier)
-    {
-        Objects.requireNonNull(supplier, "supplier is null");
-        return isFailure() ? supplier.apply() : get();
-    }
 
     record Success<T>(T value) implements Try<T> {
 
@@ -67,6 +61,32 @@ public sealed interface Try<T>
         public T get()
         {
             return value;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public Iterator<T> iterator() {
+            return new Iterator<>() {
+                private boolean hasNext = true;
+
+                @Override
+                public boolean hasNext() {
+                    return hasNext;
+                }
+
+                @Override
+                public T next() {
+                    if (!hasNext) {
+                        throw new NoSuchElementException();
+                    }
+                    hasNext = false;
+                    return value;
+                }
+            };
         }
 
         @Override
@@ -88,6 +108,26 @@ public sealed interface Try<T>
         public T get()
         {
             throw new NoSuchElementException("Calling get on Failure");
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return true;
+        }
+
+        @Override
+        public Iterator<T> iterator() {
+            return new Iterator<>() {
+                @Override
+                public boolean hasNext() {
+                    return false;
+                }
+
+                @Override
+                public T next() {
+                    throw new NoSuchElementException();
+                }
+            };
         }
 
         @Override

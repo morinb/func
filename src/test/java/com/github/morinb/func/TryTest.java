@@ -3,19 +3,15 @@ package com.github.morinb.func;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class TryTest
-{
+class TryTest {
 
     // Testing isFailure method
     @Test
-    void testIsFailure_WhenFailure()
-    {
+    void testIsFailure_WhenFailure() {
         final Try<Integer> tryInstance = Try.of(() -> {
             throw new RuntimeException("Test exception");
         });
@@ -23,23 +19,20 @@ class TryTest
     }
 
     @Test
-    void testIsFailure_WhenSuccess()
-    {
+    void testIsFailure_WhenSuccess() {
         final var tryInstance = Try.of(() -> 5);
         assertFalse(tryInstance.isFailure(), "Expected isFailure to return false when Try instance is a Success");
     }
 
     // Testing get method
     @Test
-    void testGet_WhenSuccess()
-    {
+    void testGet_WhenSuccess() {
         final var tryInstance = Try.of(() -> 5);
         assertEquals(5, tryInstance.get(), "Expected get to return provided value when Try instance is a Success");
     }
 
     @Test
-    void testGet_WhenFailure()
-    {
+    void testGet_WhenFailure() {
         final Try<Integer> tryInstance = Try.of(() -> {
             throw new RuntimeException("Test exception");
         });
@@ -48,8 +41,7 @@ class TryTest
 
     // Testing getCause method
     @Test
-    void testGetCause_WhenFailure()
-    {
+    void testGetCause_WhenFailure() {
         final Try<Integer> tryInstance = Try.of(() -> {
             throw new RuntimeException("Test exception");
         });
@@ -57,16 +49,14 @@ class TryTest
     }
 
     @Test
-    void testGetCause_WhenSuccess()
-    {
+    void testGetCause_WhenSuccess() {
         final var tryInstance = Try.of(() -> 5);
         assertThrows(NoSuchElementException.class, tryInstance::getCause, "Expected getCause to throw NoSuchElementException when Try instance is a Success");
     }
 
     // Testing toEither method
     @Test
-    void testToEither_WhenSuccess()
-    {
+    void testToEither_WhenSuccess() {
         final var tryInstance = Try.of(() -> 5);
         final var either = tryInstance.toEither();
         assertTrue(either.isRight(), "Expected toEither to return Either Right when Try instance is a Success");
@@ -74,8 +64,7 @@ class TryTest
     }
 
     @Test
-    void testToEither_WhenFailure()
-    {
+    void testToEither_WhenFailure() {
         final Try<Integer> tryInstance = Try.of(() -> {
             throw new RuntimeException("Test exception");
         });
@@ -85,8 +74,7 @@ class TryTest
     }
 
     @Test
-    void testMap_WhenSuccess()
-    {
+    void testMap_WhenSuccess() {
         final var tryInstance = Try.of(() -> 5);
         final var mappedInstance = tryInstance.map(x -> x * 2);
         assertFalse(mappedInstance.isFailure(), "Expected map to return Success when Try instance is a Success");
@@ -94,8 +82,7 @@ class TryTest
     }
 
     @Test
-    void testMap_WhenFailure()
-    {
+    void testMap_WhenFailure() {
         final Try<Integer> tryInstance = Try.of(() -> {
             throw new RuntimeException("Test exception");
         });
@@ -105,8 +92,7 @@ class TryTest
     }
 
     @Test
-    void testFlatMap_WhenSuccess()
-    {
+    void testFlatMap_WhenSuccess() {
         final var tryInstance = Try.of(() -> 5);
         final var flatMappedInstance = tryInstance.flatMap(x -> Try.of(() -> x * 2));
         assertFalse(flatMappedInstance.isFailure(), "Expected flatMap to return Success when Try instance is a Success");
@@ -114,8 +100,7 @@ class TryTest
     }
 
     @Test
-    void testFlatMap_WhenFailure()
-    {
+    void testFlatMap_WhenFailure() {
         final Try<Integer> tryInstance = Try.of(() -> {
             throw new RuntimeException("Test exception");
         });
@@ -128,8 +113,7 @@ class TryTest
      * This method tests the happy path for the getOrElse(T other) method.
      */
     @Test
-    void getOrElse_Null_Success()
-    {
+    void getOrElse_Null_Success() {
         var tryInstance = Try.of(() -> 1);
         assertEquals(1, tryInstance.getOrElse(2)); // 1 is expected as Try instance is a Success
     }
@@ -138,8 +122,7 @@ class TryTest
      * This method tests the failure path for the getOrElse(T other) method.
      */
     @Test
-    void getOrElse_Null_Failure()
-    {
+    void getOrElse_Null_Failure() {
         Try<Integer> tryInstance = Try.of(() -> {
             throw new Exception("Failure");
         });
@@ -150,8 +133,7 @@ class TryTest
      * This method tests the happy path for the getOrElse(Function0<? extends T> supplier) method.
      */
     @Test
-    void getOrElse_Function0_Success()
-    {
+    void getOrElse_Function0_Success() {
         var tryInstance = Try.of(() -> 1);
         assertEquals(1, tryInstance.getOrElse(() -> 2)); // 1 is expected as Try instance is a Success
     }
@@ -160,8 +142,7 @@ class TryTest
      * This method tests the failure path for the getOrElse(Function0<? extends T> supplier) method.
      */
     @Test
-    void getOrElse_Function0_Failure()
-    {
+    void getOrElse_Function0_Failure() {
         Try<Integer> tryInstance = Try.of(() -> {
             throw new Exception("Failure");
         });
@@ -172,9 +153,8 @@ class TryTest
      * This method tests the failure path for the getOrElse(Function0<? extends T> supplier) method with a null supplier.
      */
     @Test
-    void getOrElse_Function0_Null()
-    {
+    void getOrElse_Function0_Null() {
         var tryInstance = Try.of(() -> 1);
-        assertThrows(NullPointerException.class, () -> tryInstance.getOrElse((Function0<? extends Integer>) null)); // Fail as the supplier is null
+        assertThrows(NullPointerException.class, () -> tryInstance.getOrElse((Supplier<? extends Integer>) null)); // Fail as the supplier is null
     }
 }

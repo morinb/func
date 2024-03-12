@@ -1,6 +1,7 @@
 package com.github.morinb.func;
 
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -10,8 +11,9 @@ import java.util.Objects;
  * @param <L> The type of the left value
  * @param <R> The type of the right value
  */
-public sealed interface Either<L, R> permits Either.Left, Either.Right
-{
+public sealed interface Either<L, R>
+        extends Value<R>
+        permits Either.Left, Either.Right {
 
 
     /**
@@ -22,8 +24,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param value the value for the right side of the instance
      * @return a new instance of Right with the specified value
      */
-    static <L, R> Right<L, R> right(final R value)
-    {
+    static <L, R> Right<L, R> right(final R value) {
         return new Right<>(value);
     }
 
@@ -35,8 +36,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param value the value for the left side of the instance
      * @return a new instance of Left with the specified value
      */
-    static <L, R> Left<L, R> left(final L value)
-    {
+    static <L, R> Left<L, R> left(final L value) {
         return new Left<>(value);
     }
 
@@ -54,12 +54,6 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     boolean isRight();
 
-    /**
-     * Retrieves the value of the object R.
-     *
-     * @return The value of the object R.
-     */
-    R get();
 
     /**
      * Retrieves the value of the left side of the Either instance.
@@ -68,26 +62,56 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     L getLeft();
 
-    default <H extends Throwable> R getOrElseThrow(Function1<? super L, H> throwableSupplier) throws H
-    {
-        Objects.requireNonNull(throwableSupplier, "throwableSupplier is null");
-        if (isLeft())
-        {
-            throw throwableSupplier.apply(getLeft());
+    @Override
+    default boolean isEmpty() {
+        return isLeft();
+    }
+
+    @Override
+    default Iterator<R> iterator() {
+        if (isRight()) {
+            return new Iterator<>() {
+                boolean hasNext = true;
+
+                @Override
+                public boolean hasNext() {
+                    return hasNext;
+                }
+
+                @Override
+                public R next() {
+                    if (!hasNext) {
+                        throw new NoSuchElementException();
+                    }
+                    hasNext = false;
+                    return get();
+                }
+            };
+        } else {
+            return new Iterator<>() {
+                @Override
+                public boolean hasNext() {
+                    return false;
+                }
+
+                @Override
+                public R next() {
+                    throw new NoSuchElementException();
+                }
+
+            };
         }
-        return get();
+
     }
 
     /**
      * The Companion class provides utility methods for the Either class.
      */
-    final class Companion
-    {
+    final class Companion {
         /**
          * The Companion class provides utility methods for the Either class.
          */
-        private Companion()
-        {
+        private Companion() {
             throw new AssertionError("Companion private constructor should not be called.");
         }
 
@@ -101,8 +125,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @return an empty Either object with the right value set to null
          */
         @SuppressWarnings("squid:S100")
-        static <L, V> Either<L, V> EMPTY_EITHER()
-        {
+        static <L, V> Either<L, V> EMPTY_EITHER() {
             return Either.right(null);
         }
     }
@@ -125,8 +148,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, A> a,
             final Either<R, B> b,
             final Function2<A, B, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb));
@@ -153,8 +175,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, B> b,
             final Either<R, C> c,
             final Function3<A, B, C, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, c, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc));
@@ -184,8 +205,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, C> c,
             final Either<R, D> d,
             final Function4<A, B, C, D, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, c, d, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd));
@@ -218,8 +238,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, D> d,
             final Either<R, E> e,
             final Function5<A, B, C, D, E, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, c, d, e, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee));
@@ -255,8 +274,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, E> e,
             final Either<R, F> f,
             final Function6<A, B, C, D, E, F, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, c, d, e, f, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff));
@@ -296,8 +314,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, F> f,
             final Either<R, G> g,
             final Function7<A, B, C, D, E, F, G, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, c, d, e, f, g, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg));
@@ -340,8 +357,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, G> g,
             final Either<R, H> h,
             final Function8<A, B, C, D, E, F, G, H, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, c, d, e, f, g, h, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh));
@@ -388,8 +404,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, H> h,
             final Either<R, I> i,
             final Function9<A, B, C, D, E, F, G, H, I, Z> transform
-    )
-    {
+    ) {
         return zipOrAccumulate(
                 a, b, c, d, e, f, g, h, i, Companion.EMPTY_EITHER(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh, ii));
@@ -439,20 +454,16 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Either<R, I> i,
             final Either<R, J> j,
             final Function10<A, B, C, D, E, F, G, H, I, J, Z> transform
-    )
-    {
+    ) {
         final var eithers = FList.of(a, b, c, d, e, f, g, h, i, j);
 
         final var errors = eithers
                 .filter(Either::isLeft)
                 .map(Either::getLeft);
 
-        if (errors.isEmpty())
-        {
+        if (errors.isEmpty()) {
             return right(transform.apply(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get(), i.get(), j.get()));
-        }
-        else
-        {
+        } else {
             return left(NonEmptyList.of(errors));
         }
     }
@@ -465,14 +476,10 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return A new Either containing the mapped value, or the same Either if it is a left value.
      */
     @SuppressWarnings("unchecked")
-    default <T> Either<L, T> map(final Function1<? super R, ? extends T> mapper)
-    {
-        if (isRight())
-        {
+    default <T> Either<L, T> map(final Function1<? super R, ? extends T> mapper) {
+        if (isRight()) {
             return right(mapper.apply(get()));
-        }
-        else
-        {
+        } else {
             return (Either<L, T>) this;
         }
     }
@@ -485,15 +492,11 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return a new Either object with the result of applying the mapper function to the left value
      */
     @SuppressWarnings("unchecked")
-    default <T> Either<T, R> mapLeft(final Function1<? super L, ? extends T> mapper)
-    {
+    default <T> Either<T, R> mapLeft(final Function1<? super L, ? extends T> mapper) {
         Objects.requireNonNull(mapper, "mapper is null");
-        if (isLeft())
-        {
+        if (isLeft()) {
             return left(mapper.apply(getLeft()));
-        }
-        else
-        {
+        } else {
             return (Either<T, R>) this;
         }
     }
@@ -508,16 +511,12 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param <U>         the type of the right value of the Either
      * @return a new Either instance with the transformed values
      */
-    default <T, U> Either<T, U> bimap(final Function1<? super L, ? extends T> leftMapper, final Function1<? super R, ? extends U> rightMapper)
-    {
+    default <T, U> Either<T, U> bimap(final Function1<? super L, ? extends T> leftMapper, final Function1<? super R, ? extends U> rightMapper) {
         Objects.requireNonNull(leftMapper, "leftMapper is null");
         Objects.requireNonNull(rightMapper, "rightMapper is null");
-        if (isLeft())
-        {
+        if (isLeft()) {
             return left(leftMapper.apply(getLeft()));
-        }
-        else
-        {
+        } else {
             return right(rightMapper.apply(get()));
         }
     }
@@ -533,22 +532,17 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @return the result of the function application
      * @throws NullPointerException if leftMapper is null or rightMapper is null
      */
-    default <U> U fold(final Function1<? super L, ? extends U> leftMapper, final Function1<? super R, ? extends U> rightMapper)
-    {
+    default <U> U fold(final Function1<? super L, ? extends U> leftMapper, final Function1<? super R, ? extends U> rightMapper) {
         Objects.requireNonNull(leftMapper, "leftMapper is null");
         Objects.requireNonNull(rightMapper, "rightMapper is null");
-        if (isRight())
-        {
+        if (isRight()) {
             return rightMapper.apply(get());
-        }
-        else
-        {
+        } else {
             return leftMapper.apply(getLeft());
         }
     }
 
-    final class Left<L, R> implements Either<L, R>
-    {
+    final class Left<L, R> implements Either<L, R> {
 
         /**
          * Represents the value stored in an instance of Left.
@@ -562,8 +556,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          *
          * @param value the value for the left side of the instance
          */
-        public Left(final L value)
-        {
+        public Left(final L value) {
             this.value = value;
         }
 
@@ -574,8 +567,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * {@code false} otherwise.
          */
         @Override
-        public boolean isLeft()
-        {
+        public boolean isLeft() {
             return true;
         }
 
@@ -585,8 +577,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @return {@code false} since this object represents the left side of an Either object
          */
         @Override
-        public boolean isRight()
-        {
+        public boolean isRight() {
             return false;
         }
 
@@ -597,8 +588,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @throws NoSuchElementException if called on an instance of Left.
          */
         @Override
-        public R get()
-        {
+        public R get() {
             throw new NoSuchElementException("Calling get on a Left");
         }
 
@@ -608,8 +598,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @return the left value
          */
         @Override
-        public L getLeft()
-        {
+        public L getLeft() {
             return value;
         }
     }
@@ -620,8 +609,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param <L> the type of the Left value
      * @param <R> the type of the Right value
      */
-    final class Right<L, R> implements Either<L, R>
-    {
+    final class Right<L, R> implements Either<L, R> {
         /**
          * Value stored in an instance of the Right class.
          */
@@ -630,8 +618,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
         /**
          * Represents a Right value in an Either object.
          */
-        public Right(final R value)
-        {
+        public Right(final R value) {
             this.value = value;
         }
 
@@ -641,8 +628,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @return {@code true} if the object is at the left, {@code false} otherwise.
          */
         @Override
-        public boolean isLeft()
-        {
+        public boolean isLeft() {
             return false;
         }
 
@@ -652,8 +638,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @return true if this instance represents a right value, false otherwise.
          */
         @Override
-        public boolean isRight()
-        {
+        public boolean isRight() {
             return true;
         }
 
@@ -663,8 +648,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @return the value of the Right type object
          */
         @Override
-        public R get()
-        {
+        public R get() {
             return value;
         }
 
@@ -675,8 +659,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
          * @throws NoSuchElementException if this is a Right instance.
          */
         @Override
-        public L getLeft()
-        {
+        public L getLeft() {
             throw new NoSuchElementException("Calling getLeft on a Right");
         }
     }
