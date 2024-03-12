@@ -47,6 +47,8 @@ public sealed interface Try<T>
         }
     }
 
+    boolean isSuccess();
+
 
     record Success<T>(T value) implements Try<T> {
 
@@ -94,6 +96,11 @@ public sealed interface Try<T>
         {
             return false;
         }
+
+        @Override
+        public boolean isSuccess() {
+            return true;
+        }
     }
 
     record Failure<T>(Throwable throwable) implements Try<T> {
@@ -134,6 +141,11 @@ public sealed interface Try<T>
         public boolean isFailure()
         {
             return true;
+        }
+
+        @Override
+        public boolean isSuccess() {
+            return false;
         }
 
     }

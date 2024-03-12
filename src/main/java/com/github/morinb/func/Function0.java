@@ -1,6 +1,7 @@
 package com.github.morinb.func;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * A functional interface representing a function with no arguments that returns a result of type R.
@@ -8,8 +9,7 @@ import java.util.Objects;
  * @param <R> the type of the result
  */
 @FunctionalInterface
-public interface Function0<R>
-{
+public interface Function0<R> extends Supplier<R> {
     /**
      * Applies the function and returns the result.
      *
@@ -21,15 +21,19 @@ public interface Function0<R>
      * Returns a new Function0 by composing this Function0 with the given Function1.
      * The resulting Function0 applies this Function0 first, and then applies the given Function1 to the result.
      *
-     * @param <V>    the type of the result returned by the given Function1
-     * @param after  the Function1 to be applied after this Function0 is applied
+     * @param <V>   the type of the result returned by the given Function1
+     * @param after the Function1 to be applied after this Function0 is applied
      * @return a new composed Function0
      * @throws NullPointerException if the given Function1 is null
      */
     // implements andThen
-    default <V> Function0<V> andThen(final Function1<? super R, ? extends V> after)
-    {
+    default <V> Function0<V> andThen(final Function1<? super R, ? extends V> after) {
         Objects.requireNonNull(after, "after is null");
         return () -> after.apply(apply());
+    }
+
+    @Override
+    default R get() {
+        return apply();
     }
 }

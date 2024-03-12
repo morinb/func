@@ -4,15 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Function0Test
-{
+class Function0Test {
 
     // Function0 object under test
     private final Function0<String> greetFn = () -> "Hello, world!";
 
     @Test
-    void testApply()
-    {
+    void testApply() {
         // Act
         final var actualResult = greetFn.apply();
 
@@ -21,8 +19,16 @@ class Function0Test
     }
 
     @Test
-    void testAndThen()
-    {
+    void testGet() {
+        // Act
+        final var actualResult = greetFn.get();
+
+        // Assert
+        assertEquals("Hello, world!", actualResult);
+    }
+
+    @Test
+    void testAndThen() {
         // Arrange
         final Function0<String> nameFn = () -> "John Doe";
         final Function1<String, String> greetingFn = name -> "Hello, " + name;

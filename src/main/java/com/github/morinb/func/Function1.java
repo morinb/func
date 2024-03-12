@@ -1,6 +1,7 @@
 package com.github.morinb.func;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a function that accepts one argument and produces a result.
@@ -10,7 +11,7 @@ import java.util.Objects;
  * @param <R>  the type of the result of the function
  */
 @FunctionalInterface
-public interface Function1<T1, R>
+public interface Function1<T1, R> extends Function<T1, R>
 {
     /**
      * Applies this function to the given parameter and returns the result.

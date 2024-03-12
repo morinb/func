@@ -7,11 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class EitherTest
@@ -1523,6 +1519,29 @@ class EitherTest
 
         // Assert that getOrElseThrow() returns the Option's value
         assertEquals(optionValue, optionSome.getOrElseThrow(NoSuchElementException::new));
+    }
+
+    @Test
+    void testIteratorWhenIsRight() {
+        var instance = Either.right("Value");
+
+        var iterator = instance.iterator();
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Value", iterator.next()); // replace expectedValue with the actual expected value
+        assertFalse(iterator.hasNext());
+
+        assertThrows(NoSuchElementException.class, iterator::next);
+    }
+
+    @Test
+    void testIteratorWhenIsNotRight() {
+        var instance = Either.left("Value");
+
+        var iterator = instance.iterator();
+
+        assertFalse(iterator.hasNext());
+        assertThrows(NoSuchElementException.class, iterator::next);
     }
 
 }

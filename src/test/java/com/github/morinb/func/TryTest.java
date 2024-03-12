@@ -157,4 +157,45 @@ class TryTest {
         var tryInstance = Try.of(() -> 1);
         assertThrows(NullPointerException.class, () -> tryInstance.getOrElse((Supplier<? extends Integer>) null)); // Fail as the supplier is null
     }
+
+    // Testing iterator method for Success class
+    @Test
+    void testIterator_hasNext_WhenCalledTwice() {
+        var successInstance = Try.of(() -> 5);
+        var iterator = successInstance.iterator();
+        assertTrue(iterator.hasNext(), "Expected hasNext to return true when first called on a Success iterator");
+        iterator.next();
+        assertFalse(iterator.hasNext(), "Expected hasNext to return false when called second time on a Success iterator");
+    }
+
+    @Test
+    void testIterator_next_WhenCalledTwice() {
+        var successInstance = Try.of(() -> 5);
+        var iterator = successInstance.iterator();
+        assertEquals(5, iterator.next(), "Expected next to return Success value when first called on a Success iterator");
+        assertThrows(NoSuchElementException.class, iterator::next, "Expected next to throw NoSuchElementException when called second time on a Success iterator");
+    }
+
+    @Test
+    void testIterator_WhenFailure() {
+        var failureInstance = Try.of(() -> {throw new RuntimeException("runtime");});
+        var iterator = failureInstance.iterator();
+        assertFalse(iterator.hasNext(), "Expected hasNext to return false when called on a Failure iterator");
+
+        assertThrows(NoSuchElementException.class, iterator::next, "Expected next to throw NoSuchElementException when called second time on a Success iterator");
+    }
+
+    @Test
+    void testIsSuccess_WhenFailure() {
+        final Try<Integer> tryInstance = Try.of(() -> {
+            throw new RuntimeException("Test exception");
+        });
+        assertFalse(tryInstance.isSuccess(), "Expected isSuccess to return false when Try instance is Failure");
+    }
+
+    @Test
+    void testIsSuccess_WhenSuccess() {
+        final var tryInstance = Try.of(() -> 5);
+        assertTrue(tryInstance.isSuccess(), "Expected isSuccess to return true when Try instance is Success");
+    }
 }

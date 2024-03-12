@@ -177,6 +177,11 @@ public interface Value<T> extends Iterable<T> {
         }
     }
 
+    /**
+     * Returns the current object as a Try instance.
+     *
+     * @return The current object as a Try instance.
+     */
     default Try<T> toTry() {
         if (this instanceof Try) {
             return (Try<T>) this;
