@@ -153,6 +153,26 @@ public sealed interface Option<T>
     }
 
     /**
+     * Returns the value contained in the {@code Option} or throws an exception obtained from the provided {@code throwableSupplier} if the {@code Option} is empty.
+     *
+     * @param <H> the type of the exception that may be thrown
+     * @param throwableSupplier the function that supplies the exception to be thrown
+     * @return the value contained in the {@code Option}
+     * @throws H if the {@code Option} is empty
+     * @throws NullPointerException if {@code throwableSupplier} is null
+     */
+    default <H extends Throwable> T getOrElseThrow(Function0<H> throwableSupplier) throws H
+    {
+        Objects.requireNonNull(throwableSupplier, "throwableSupplier is null");
+        if (isNone())
+        {
+            throw throwableSupplier.apply();
+        }
+        return getValue();
+    }
+
+
+    /**
      * Applies the given mapper function to the value of this Option instance if it is present,
      * and returns the result as a new Option instance.
      *

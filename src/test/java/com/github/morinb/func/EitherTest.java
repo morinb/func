@@ -1505,4 +1505,25 @@ class EitherTest
         assertThrows(NullPointerException.class, () -> either.getOrElseThrow(null));
     }
 
+    @Test
+    void getOrElseThrow_whenOptionIsNone_shouldThrowException()
+    {
+        // Initialize Option as None
+        Option<Integer> optionNone = Option.none();
+
+        // Assert that NoSuchElementException is thrown from getOrElseThrow
+        assertThrows(NoSuchElementException.class, () -> optionNone.getOrElseThrow(NoSuchElementException::new));
+    }
+
+    @Test
+    void getOrElseThrow_whenOptionIsSome_shouldReturnValue()
+    {
+        // Initialize Option with a value
+        final int optionValue = 5;
+        Option<Integer> optionSome = Option.some(optionValue);
+
+        // Assert that getOrElseThrow() returns the Option's value
+        assertEquals(optionValue, optionSome.getOrElseThrow(NoSuchElementException::new));
+    }
+
 }
