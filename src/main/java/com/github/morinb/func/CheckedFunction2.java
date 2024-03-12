@@ -11,7 +11,7 @@ import java.util.Objects;
  * @param <R>  the type of the result of the function
  */
 @FunctionalInterface
-public interface Function2<T1, T2, R>
+public interface CheckedFunction2<T1, T2, R>
 {
     /**
      * Applies this function to the given parameters.
@@ -20,7 +20,8 @@ public interface Function2<T1, T2, R>
      * @param param2 the second parameter of type T2
      * @return the result of applying this function to the given parameters
      */
-    R apply(T1 param1, T2 param2);
+    @SuppressWarnings("squid:S112")
+    R apply(T1 param1, T2 param2) throws Throwable;
 
     /**
      * Returns a new Function2 that applies the given Function after applying this Function2.
@@ -31,7 +32,7 @@ public interface Function2<T1, T2, R>
      * @throws NullPointerException If the given Function is null.
      */
     //implements andThen
-    default <V> Function2<T1, T2, V> andThen(final Function1<? super R, ? extends V> after)
+    default <V> CheckedFunction2<T1, T2, V> andThen(final CheckedFunction1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after, "after is null");
         return (T1 param1, T2 param2) -> after.apply(apply(param1, param2));
@@ -44,7 +45,7 @@ public interface Function2<T1, T2, R>
      * @return a curried version of the function
      */
     // implements curried
-    default Function1<T1, Function1<T2, R>> curried()
+    default CheckedFunction1<T1, CheckedFunction1<T2, R>> curried()
     {
         return (T1 param1) -> (T2 param2) -> apply(param1, param2);
     }

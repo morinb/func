@@ -10,7 +10,7 @@ import java.util.Objects;
  * @param <R>  the type of the result of the function
  */
 @FunctionalInterface
-public interface Function1<T1, R>
+public interface CheckedFunction1<T1, R>
 {
     /**
      * Applies this function to the given parameter and returns the result.
@@ -18,18 +18,19 @@ public interface Function1<T1, R>
      * @param param1 the input parameter to apply the function to
      * @return the result of applying this function to the given parameter
      */
-    R apply(T1 param1);
+    @SuppressWarnings("squid:S112")
+    R apply(T1 param1) throws Throwable;
 
     /**
      * Returns a new Function1 that applies the given Function1 after applying this Function1.
      *
-     * @param <V>    The return type of the given Function1.
-     * @param after  The Function1 to apply after this Function1.
+     * @param <V>   The return type of the given Function1.
+     * @param after The Function1 to apply after this Function1.
      * @return The composed Function1.
      * @throws NullPointerException if the given Function1 is null.
      */
     //implements andThen
-    default <V> Function1<T1, V> andThen(final Function1<? super R, ? extends V> after)
+    default <V> CheckedFunction1<T1, V> andThen(final CheckedFunction1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after, "after is null");
         return (T1 param1) -> after.apply(apply(param1));
@@ -42,7 +43,7 @@ public interface Function1<T1, R>
      * @return a curried version of the function
      */
     // implements curried
-    default Function1<T1, R> curried()
+    default CheckedFunction1<T1, R> curried()
     {
         return this;
     }

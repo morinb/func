@@ -31,7 +31,7 @@ public sealed interface Try<T>
     }
 
     @SuppressWarnings("squid:S1181")
-    static <U> Try<U> of(final Function0<U> supplier)
+    static <U> Try<U> of(final CheckedFunction0<? extends U> supplier)
     {
         Objects.requireNonNull(supplier, "supplier is null");
         try
@@ -41,6 +41,17 @@ public sealed interface Try<T>
         {
             return new Failure<>(throwable);
         }
+    }
+
+    default T getOrElse(T other)
+    {
+        return isFailure() ? other : get();
+    }
+
+    default T getOrElse(Function0<? extends T> supplier)
+    {
+        Objects.requireNonNull(supplier, "supplier is null");
+        return isFailure() ? supplier.apply() : get();
     }
 
     record Success<T>(T value) implements Try<T> {

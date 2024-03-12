@@ -14,7 +14,7 @@ import java.util.Objects;
  * @param <R>  the type of the result
  */
 @FunctionalInterface
-public interface Function6<T1, T2, T3, T4, T5, T6, R>
+public interface CheckedFunction6<T1, T2, T3, T4, T5, T6, R>
 {
     /**
      * Applies a function to the given parameters and returns the result.
@@ -27,7 +27,8 @@ public interface Function6<T1, T2, T3, T4, T5, T6, R>
      * @param param6 the sixth parameter
      * @return the result of applying the function to the parameters
      */
-    R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6);
+    @SuppressWarnings("squid:S112")
+    R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6) throws Throwable;
 
     /**
      * Returns a new Function6 that applies the given Function after applying this Function6.
@@ -37,7 +38,7 @@ public interface Function6<T1, T2, T3, T4, T5, T6, R>
      * @return The composed Function6.
      * @throws NullPointerException if the given Function is null.
      */
-    default <V> Function6<T1, T2, T3, T4, T5, T6, V> andThen(final Function1<? super R, ? extends V> after)
+    default <V> CheckedFunction6<T1, T2, T3, T4, T5, T6, V> andThen(final CheckedFunction1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after, "after is null");
         return (T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6) -> after.apply(apply(param1, param2, param3, param4, param5, param6));
@@ -52,7 +53,7 @@ public interface Function6<T1, T2, T3, T4, T5, T6, R>
      *
      * @return The curried function.
      */
-    default Function1<T1, Function1<T2, Function1<T3, Function1<T4, Function1<T5, Function1<T6, R>>>>>> curried()
+    default CheckedFunction1<T1, CheckedFunction1<T2, CheckedFunction1<T3, CheckedFunction1<T4, CheckedFunction1<T5, CheckedFunction1<T6, R>>>>>> curried()
     {
         return param1 -> param2 -> param3 -> param4 -> param5 -> param6 -> apply(param1, param2, param3, param4, param5, param6);
     }

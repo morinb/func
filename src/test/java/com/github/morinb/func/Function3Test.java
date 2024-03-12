@@ -2,8 +2,6 @@ package com.github.morinb.func;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Function;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Function3Test
@@ -25,7 +23,7 @@ class Function3Test
     void testAndThen()
     {
         final Function3<String, Integer, Boolean, String> function = (a, b, c) -> a + b + (c ? "true" : "false");
-        final Function<String, String> after = s -> s + " after";
+        final Function1<String, String> after = s -> s + " after";
 
         final var combinedFunction = function.andThen(after);
 

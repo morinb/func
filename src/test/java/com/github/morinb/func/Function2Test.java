@@ -2,8 +2,6 @@ package com.github.morinb.func;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Function;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Function2Test
@@ -34,7 +32,7 @@ class Function2Test
     void testAndThen()
     {
         final Function2<Integer, Integer, Integer> addFunction = Integer::sum;
-        final Function<Integer, Integer> doubleFunction = (Integer a) -> a * 2;
+        final Function1<Integer, Integer> doubleFunction = (Integer a) -> a * 2;
 
         final var composedFunction = addFunction.andThen(doubleFunction);
 

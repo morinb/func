@@ -12,7 +12,7 @@ import java.util.Objects;
  * @param <R>  the type of the result
  */
 @FunctionalInterface
-public interface Function4<T1, T2, T3, T4, R>
+public interface CheckedFunction4<T1, T2, T3, T4, R>
 {
     /**
      * Applies the function to the given parameters and returns the result.
@@ -23,17 +23,18 @@ public interface Function4<T1, T2, T3, T4, R>
      * @param param4 the fourth parameter
      * @return the result of applying the function to the parameters
      */
-    R apply(T1 param1, T2 param2, T3 param3, T4 param4);
+    @SuppressWarnings("squid:S112")
+    R apply(T1 param1, T2 param2, T3 param3, T4 param4) throws Throwable;
 
     /**
      * Applies the given function after applying this function, and returns the result.
      *
      * @param after the function to apply after this function
-     * @param <V> the type of the result produced by the given function
+     * @param <V>   the type of the result produced by the given function
      * @return the composed function
      * @throws NullPointerException if the given function is null
      */
-    default <V> Function4<T1, T2, T3, T4, V> andThen(final Function1<? super R, ? extends V> after)
+    default <V> CheckedFunction4<T1, T2, T3, T4, V> andThen(final CheckedFunction1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after, "after is null");
         return (T1 param1, T2 param2, T3 param3, T4 param4) -> after.apply(apply(param1, param2, param3, param4));
@@ -45,7 +46,7 @@ public interface Function4<T1, T2, T3, T4, R>
      *
      * @return a curried version of the function
      */
-    default Function1<T1, Function1<T2, Function1<T3, Function1<T4, R>>>> curried()
+    default CheckedFunction1<T1, CheckedFunction1<T2, CheckedFunction1<T3, CheckedFunction1<T4, R>>>> curried()
     {
         return param1 -> param2 -> param3 -> param4 -> apply(param1, param2, param3, param4);
     }

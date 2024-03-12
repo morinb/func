@@ -106,7 +106,7 @@ class FListTest
     @Test
     void getTest_whenGettingElementFromNonEmptyList_shouldReturnCorrectElement()
     {
-        final FList<Integer> list = FList.<Integer>empty().append(1).append(2);
+        final var list = FList.<Integer>empty().append(1).append(2);
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
     }
@@ -114,7 +114,7 @@ class FListTest
     @Test
     void getTest_whenGettingElementByInvalidIndex_shouldThrowException()
     {
-        final FList<Integer> list = FList.<Integer>empty().append(1).append(2);
+        final var list = FList.<Integer>empty().append(1).append(2);
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(3));
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1));
     }
@@ -123,7 +123,7 @@ class FListTest
     @Test
     void updateTest_whenUpdatingElementAtInvalidIndex_shouldThrowException()
     {
-        final FList<Integer> list = FList.<Integer>empty().append(1).append(2);
+        final var list = FList.<Integer>empty().append(1).append(2);
 
         assertThrows(IndexOutOfBoundsException.class, () -> list.update(2, 100));
     }
@@ -131,7 +131,7 @@ class FListTest
     @Test
     void updateTest_whenUpdatingElementAtInvalidIndex_shouldThrowException2()
     {
-        final FList<Integer> list = FList.<Integer>empty().append(1).append(2);
+        final var list = FList.<Integer>empty().append(1).append(2);
 
         assertThrows(IndexOutOfBoundsException.class, () -> list.update(-1, 100));
     }
@@ -150,10 +150,10 @@ class FListTest
     void flatMapTest_whenFlatteningListofList_shouldReturnFlattenedList()
     {
         FList<FList<Integer>> list = FList.empty();
-        final FList<Integer> sublist1 = FList.<Integer>empty().append(1).append(2);
-        final FList<Integer> subList2 = FList.<Integer>empty().append(3).append(4);
+        final var sublist1 = FList.<Integer>empty().append(1).append(2);
+        final var subList2 = FList.<Integer>empty().append(3).append(4);
         list = list.append(sublist1).append(subList2);
-        FList<Integer> flatList = list.flatMap(i -> i);
+        var flatList = list.flatMap(i -> i);
         assertEquals(4, flatList.size());
         assertEquals(1, flatList.get(0));
         assertEquals(2, flatList.get(1));
@@ -164,9 +164,9 @@ class FListTest
     @Test
     void appendListTest_whenAppendingTwoLists_shouldReturnCorrectlyAppendedList()
     {
-        FList<Integer> firstList = FList.<Integer>empty().append(1).append(2);
-        FList<Integer> secondList = FList.<Integer>empty().append(3).append(4);
-        FList<Integer> concatenatedList = firstList.appendList(secondList);
+        var firstList = FList.<Integer>empty().append(1).append(2);
+        var secondList = FList.<Integer>empty().append(3).append(4);
+        var concatenatedList = firstList.appendList(secondList);
         assertEquals(4, concatenatedList.size());
         assertEquals(1, concatenatedList.get(0));
         assertEquals(2, concatenatedList.get(1));
@@ -177,14 +177,14 @@ class FListTest
     @Test
     void ofTest_whenCreatingListWithOf_shouldReturnCorrectList()
     {
-        FList<Integer> list = FList.of(1);
+        var list = FList.of(1);
         assertEquals(1, list.get(0));
     }
 
     @Test
     void ofTest_whenCreatingListWithMultipleOf_shouldReturnCorrectList()
     {
-        FList<Integer> list = FList.of(1, 2);
+        var list = FList.of(1, 2);
         assertEquals(2, list.size());
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
@@ -193,7 +193,7 @@ class FListTest
     @Test
     void ofTest_whenCreatingListFromSingleElementArray_shouldReturnCorrectList() {
         Integer[] numbers = {1};
-        FList<Integer> list = FList.of(numbers);
+        var list = FList.of(numbers);
         assertEquals(1, list.size());
         assertEquals(1, list.get(0));
     }
@@ -201,7 +201,7 @@ class FListTest
     @Test
     void ofTest_whenCreatingListFromMultiElementArray_shouldReturnCorrectList() {
         Integer[] numbers = {1, 2, 3};
-        FList<Integer> list = FList.of(numbers);
+        var list = FList.of(numbers);
         assertEquals(3, list.size());
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
@@ -210,7 +210,7 @@ class FListTest
 
     @Test
     void reverseTest_whenReversingList_shouldReturnCorrectlyReversedList() {
-        FList<Integer> list = FList.<Integer>empty().append(1).append(2).append(3);
+        var list = FList.<Integer>empty().append(1).append(2).append(3);
         list = list.reverse();
         assertEquals(3, list.get(0));
         assertEquals(2, list.get(1));
@@ -219,7 +219,7 @@ class FListTest
 
     @Test
     void reverseTest_whenReversingSingleElementList_shouldReturnSameList() {
-        FList<Integer> list = FList.<Integer>empty().append(1);
+        var list = FList.<Integer>empty().append(1);
         list = list.reverse();
         assertEquals(1, list.get(0));
     }
@@ -238,19 +238,19 @@ class FListTest
 
     @Test
     void toStringTest_whenSingleElementList_shouldReturnElementString() {
-        FList<Integer> list = FList.of(1);
+        var list = FList.of(1);
         assertEquals("1", list.toString());
     }
 
     @Test
     void toStringTest_whenMultiElementList_shouldReturnCorrectString() {
-        FList<Integer> list = FList.of(1, 2, 3);
+        var list = FList.of(1, 2, 3);
         assertEquals("1::2::3", list.toString());
     }
     @Test
     void toNonEmptyListTest_whenFListContainsElements_shouldReturnNonEmptyList() {
-        FList<Integer> fList = FList.of(1, 2, 3);
-        NonEmptyList<Integer> list = fList.toNonEmptyList();
+        var fList = FList.of(1, 2, 3);
+        var list = fList.toNonEmptyList();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));

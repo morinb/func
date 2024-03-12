@@ -3,7 +3,6 @@ package com.github.morinb.func;
 
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.NoSuchElementException;
@@ -1476,7 +1475,7 @@ class EitherTest
     void testCompanionPrivateConstructor()
     {
         final Class<?> clazz = Either.Companion.class;
-        final Constructor<?> declaredConstructor = clazz.getDeclaredConstructors()[0];
+        final var declaredConstructor = clazz.getDeclaredConstructors()[0];
         assertTrue(Modifier.isPrivate(declaredConstructor.getModifiers()));
         declaredConstructor.setAccessible(true); // throws AssertException => newInstance wraps it in a InvocationTargetException
         assertThrows(InvocationTargetException.class, declaredConstructor::newInstance);
@@ -1519,8 +1518,8 @@ class EitherTest
     void getOrElseThrow_whenOptionIsSome_shouldReturnValue()
     {
         // Initialize Option with a value
-        final int optionValue = 5;
-        Option<Integer> optionSome = Option.some(optionValue);
+        final var optionValue = 5;
+        var optionSome = Option.some(optionValue);
 
         // Assert that getOrElseThrow() returns the Option's value
         assertEquals(optionValue, optionSome.getOrElseThrow(NoSuchElementException::new));

@@ -108,7 +108,7 @@ class NonEmptyListTest
     @Test
     void testOfEmptyFList()
     {
-        final FList<Object> nullFList = new FList<>(null, null);
+        final var nullFList = new FList<>(null, null);
         assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(nullFList));
     }
 

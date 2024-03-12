@@ -29,7 +29,7 @@ public interface Function0<R>
     // implements andThen
     default <V> Function0<V> andThen(final Function1<? super R, ? extends V> after)
     {
-        Objects.requireNonNull(after);
+        Objects.requireNonNull(after, "after is null");
         return () -> after.apply(apply());
     }
 }

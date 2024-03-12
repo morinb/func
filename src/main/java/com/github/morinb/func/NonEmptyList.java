@@ -39,12 +39,17 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return new NonEmptyList<>(newHeader, newTail);
     }
 
-    public <U> NonEmptyList<U> flatMap(final Function1<T, NonEmptyList<U>> f)
+    public static <R> NonEmptyList<R> of(final FList<R> fList)
     {
-        U newHead = f.apply(head).head;
-        FList<U> newTail = tail.flatMap(t -> f.apply(t).toFList());
+        if (fList == null || fList.isEmpty())
+        {
+            throw new IllegalArgumentException("List cannot be null or empty");
+        }
 
-        return new NonEmptyList<>(newHead, newTail);
+        final var head = fList.head();
+        final var tail = fList.tail();
+
+        return new NonEmptyList<>(head, tail);
     }
 
     public FList<T> toFList()
@@ -67,19 +72,6 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return of(list);
     }
 
-    public static <R> NonEmptyList<R> of(final FList<R> fList)
-    {
-        if (fList == null || fList.isEmpty())
-        {
-            throw new IllegalArgumentException("List cannot be null or empty");
-        }
-
-        final var head = fList.head();
-        final FList<R> tail = fList.tail();
-
-        return new NonEmptyList<>(head, tail);
-    }
-
     public static <R> NonEmptyList<R> of(final List<R> javaList)
     {
         if (javaList == null || javaList.isEmpty())
@@ -88,9 +80,17 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         }
 
         final var head = javaList.get(0);
-        final FList<R> tail = FList.of(new LinkedList<>(javaList.subList(1, javaList.size())));
+        final var tail = FList.of(new LinkedList<>(javaList.subList(1, javaList.size())));
 
         return new NonEmptyList<>(head, tail);
+    }
+
+    public <U> NonEmptyList<U> flatMap(final Function1<T, NonEmptyList<U>> f)
+    {
+        var newHead = f.apply(head).head;
+        var newTail = tail.flatMap(t -> f.apply(t).toFList());
+
+        return new NonEmptyList<>(newHead, newTail);
     }
 
     public int size()

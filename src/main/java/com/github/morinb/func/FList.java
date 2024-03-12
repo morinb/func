@@ -20,7 +20,7 @@ public record FList<T>(T head, com.github.morinb.func.FList<T> tail)
     public static <U> FList<U> of(U... elements)
     {
         FList<U> list = FList.empty();
-        for (int i = elements.length - 1; i >= 0; i--)
+        for (var i = elements.length - 1; i >= 0; i--)
         {
             list = list.prepend(elements[i]);
         }
@@ -30,7 +30,7 @@ public record FList<T>(T head, com.github.morinb.func.FList<T> tail)
     public static <U> FList<U> of(List<U> elements)
     {
         FList<U> list = FList.empty();
-        for (int i = elements.size() - 1; i >= 0; i--)
+        for (var i = elements.size() - 1; i >= 0; i--)
         {
             list = list.prepend(elements.get(i));
         }

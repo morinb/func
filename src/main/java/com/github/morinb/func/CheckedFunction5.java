@@ -14,7 +14,7 @@ import java.util.Objects;
  * @param <R>  the type of the result of the function
  */
 @FunctionalInterface
-public interface Function5<T1, T2, T3, T4, T5, R>
+public interface CheckedFunction5<T1, T2, T3, T4, T5, R>
 {
     /**
      * Applies this function to the given arguments.
@@ -26,17 +26,18 @@ public interface Function5<T1, T2, T3, T4, T5, R>
      * @param param5 the fifth input parameter
      * @return the result of applying this function to the given arguments
      */
-    R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5);
+    @SuppressWarnings("squid:S112")
+    R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5) throws Throwable;
 
     /**
      * Returns a new function that applies the provided function after applying this function.
      *
-     * @param <V>    the type of the result of the after function
-     * @param after  the function to apply after this function
+     * @param <V>   the type of the result of the after function
+     * @param after the function to apply after this function
      * @return the composed function
      * @throws NullPointerException if the provided function is null
      */
-    default <V> Function5<T1, T2, T3, T4, T5, V> andThen(final Function1<? super R, ? extends V> after)
+    default <V> CheckedFunction5<T1, T2, T3, T4, T5, V> andThen(final CheckedFunction1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after, "after is null");
         return (T1 param1, T2 param2, T3 param3, T4 param4, T5 param5) -> after.apply(apply(param1, param2, param3, param4, param5));
@@ -48,7 +49,7 @@ public interface Function5<T1, T2, T3, T4, T5, R>
      *
      * @return a curried version of the function
      */
-    default Function1<T1, Function1<T2, Function1<T3, Function1<T4, Function1<T5, R>>>>> curried()
+    default CheckedFunction1<T1, CheckedFunction1<T2, CheckedFunction1<T3, CheckedFunction1<T4, CheckedFunction1<T5, R>>>>> curried()
     {
         return param1 -> param2 -> param3 -> param4 -> param5 -> apply(param1, param2, param3, param4, param5);
     }

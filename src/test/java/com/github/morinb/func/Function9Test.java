@@ -2,8 +2,6 @@ package com.github.morinb.func;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Function;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -33,7 +31,7 @@ class Function9Test
                 (param1, param2, param3, param4, param5, param6, param7, param8, param9) -> param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
 
         //Test positive case
-        final Function<Integer, Integer> after = a -> a * 2;
+        final Function1<Integer, Integer> after = a -> a * 2;
         final var andThenFunc = function.andThen(after);
         assertEquals(90, andThenFunc.apply(1, 2, 3, 4, 5, 6, 7, 8, 9));
 

@@ -17,7 +17,7 @@ import java.util.function.Function;
  * @param <R>  the type of the result of the function
  */
 @FunctionalInterface
-public interface Function7<T1, T2, T3, T4, T5, T6, T7, R>
+public interface CheckedFunction7<T1, T2, T3, T4, T5, T6, T7, R>
 {
     /**
      * Applies the given function to the seven provided arguments and returns the result.
@@ -31,17 +31,18 @@ public interface Function7<T1, T2, T3, T4, T5, T6, T7, R>
      * @param param7 the seventh argument to the function
      * @return the result of applying the function to the given arguments
      */
-    R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7);
+    @SuppressWarnings("squid:S112")
+    R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7) throws Throwable;
 
     /**
-     * Returns a new {@link Function7} that applies the given {@link Function} after applying this {@link Function7}.
+     * Returns a new {@link CheckedFunction7} that applies the given {@link Function} after applying this {@link CheckedFunction7}.
      *
-     * @param <V>    the type of the result of the given {@link Function}
-     * @param after  the {@link Function} to apply after this {@link Function7}
-     * @return a new {@link Function7} that applies the given {@link Function} after applying this {@link Function7}
+     * @param <V>   the type of the result of the given {@link Function}
+     * @param after the {@link Function} to apply after this {@link CheckedFunction7}
+     * @return a new {@link CheckedFunction7} that applies the given {@link Function} after applying this {@link CheckedFunction7}
      * @throws NullPointerException if the given {@link Function} is null
      */
-    default <V> Function7<T1, T2, T3, T4, T5, T6, T7, V> andThen(final Function1<? super R, ? extends V> after)
+    default <V> CheckedFunction7<T1, T2, T3, T4, T5, T6, T7, V> andThen(final CheckedFunction1<? super R, ? extends V> after)
     {
         Objects.requireNonNull(after, "after is null");
         return (T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7) -> after.apply(apply(param1, param2, param3, param4, param5, param6, param7));
@@ -54,7 +55,7 @@ public interface Function7<T1, T2, T3, T4, T5, T6, T7, R>
      *
      * @return A curried function that takes 7 parameters and returns a result.
      */
-    default Function1<T1, Function1<T2, Function1<T3, Function1<T4, Function1<T5, Function1<T6, Function1<T7, R>>>>>>> curried()
+    default CheckedFunction1<T1, CheckedFunction1<T2, CheckedFunction1<T3, CheckedFunction1<T4, CheckedFunction1<T5, CheckedFunction1<T6, CheckedFunction1<T7, R>>>>>>> curried()
     {
         return param1 -> param2 -> param3 -> param4 -> param5 -> param6 -> param7 -> apply(param1, param2, param3, param4, param5, param6, param7);
     }
