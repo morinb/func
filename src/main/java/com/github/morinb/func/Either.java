@@ -40,6 +40,14 @@ public sealed interface Either<L, R>
         return new Left<>(value);
     }
 
+    static <L, R> Either<L, R> noop() {
+        return new Right<>(null);
+    }
+
+    static <L, R> Either<L, R> empty() {
+        return new Left<>(null);
+    }
+
     /**
      * Checks if the instance is of the Left type.
      *
@@ -104,31 +112,6 @@ public sealed interface Either<L, R>
 
     }
 
-    /**
-     * The Companion class provides utility methods for the Either class.
-     */
-    final class Companion {
-        /**
-         * The Companion class provides utility methods for the Either class.
-         */
-        private Companion() {
-            throw new AssertionError("Companion private constructor should not be called.");
-        }
-
-        /**
-         * This method is used to create an empty Either object.
-         * An empty Either object is one where the right value is set to null.
-         * The type parameters L and V represent the types of the left and right values, respectively.
-         *
-         * @param <L> the type of the left value
-         * @param <V> the type of the right value
-         * @return an empty Either object with the right value set to null
-         */
-        @SuppressWarnings("squid:S100")
-        static <L, V> Either<L, V> EMPTY_EITHER() {
-            return Either.right(null);
-        }
-    }
 
     /**
      * Zips or accumulates the values from multiple Either instances. If all input Either instances are Right,
@@ -150,7 +133,7 @@ public sealed interface Either<L, R>
             final Function2<A, B, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
+                a, b, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb));
     }
 
@@ -177,7 +160,7 @@ public sealed interface Either<L, R>
             final Function3<A, B, C, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, c, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
+                a, b, c, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc));
     }
 
@@ -207,7 +190,7 @@ public sealed interface Either<L, R>
             final Function4<A, B, C, D, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, c, d, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
+                a, b, c, d, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd));
     }
 
@@ -240,7 +223,7 @@ public sealed interface Either<L, R>
             final Function5<A, B, C, D, E, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, c, d, e, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
+                a, b, c, d, e, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee));
     }
 
@@ -276,7 +259,7 @@ public sealed interface Either<L, R>
             final Function6<A, B, C, D, E, F, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, c, d, e, f, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
+                a, b, c, d, e, f, Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff));
     }
 
@@ -316,7 +299,7 @@ public sealed interface Either<L, R>
             final Function7<A, B, C, D, E, F, G, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, c, d, e, f, g, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
+                a, b, c, d, e, f, g, Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg));
     }
 
@@ -359,7 +342,7 @@ public sealed interface Either<L, R>
             final Function8<A, B, C, D, E, F, G, H, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, c, d, e, f, g, h, Companion.EMPTY_EITHER(), Companion.EMPTY_EITHER(),
+                a, b, c, d, e, f, g, h, Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh));
     }
 
@@ -406,7 +389,7 @@ public sealed interface Either<L, R>
             final Function9<A, B, C, D, E, F, G, H, I, Z> transform
     ) {
         return zipOrAccumulate(
-                a, b, c, d, e, f, g, h, i, Companion.EMPTY_EITHER(),
+                a, b, c, d, e, f, g, h, i, Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh, ii));
     }
 

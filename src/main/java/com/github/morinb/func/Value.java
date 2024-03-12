@@ -86,10 +86,10 @@ public interface Value<T> extends Iterable<T> {
     }
 
     /**
-     * Returns the element represented by this Value, or the result of the supplier function if the Value is empty.
+     * Returns the element represented by this Value, or the result of the supplier function if the Value is noop.
      *
-     * @param supplier the supplier function to provide the result if the Value is empty. Must not be null.
-     * @return The element represented by this Value, or the result of the supplier function if the Value is empty.
+     * @param supplier the supplier function to provide the result if the Value is noop. Must not be null.
+     * @return The element represented by this Value, or the result of the supplier function if the Value is noop.
      * @throws NullPointerException if the supplier is null
      */
     default T getOrElse(Supplier<? extends T> supplier) {
@@ -98,12 +98,12 @@ public interface Value<T> extends Iterable<T> {
     }
 
     /**
-     * Returns the element represented by this Value, or throws an exception if the Value is empty.
+     * Returns the element represented by this Value, or throws an exception if the Value is noop.
      *
-     * @param exceptionSupplier the supplier function to provide the exception if the Value is empty. Must not be null.
+     * @param exceptionSupplier the supplier function to provide the exception if the Value is noop. Must not be null.
      * @param <X>               the type of exception to be thrown
      * @return The element represented by this Value.
-     * @throws X                    if the Value is empty
+     * @throws X                    if the Value is noop
      * @throws NullPointerException if the exceptionSupplier is null
      */
     default <X extends Throwable> T getOrElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
@@ -117,7 +117,7 @@ public interface Value<T> extends Iterable<T> {
 
 
     /**
-     * Returns the element represented by this Value, or the result of the supplier function if the Value is empty.
+     * Returns the element represented by this Value, or the result of the supplier function if the Value is noop.
      */
     default T getOrElseTry(CheckedFunction0<? extends T> supplier) {
         Objects.requireNonNull(supplier, "supplier is null");
@@ -125,18 +125,18 @@ public interface Value<T> extends Iterable<T> {
     }
 
     /**
-     * Returns the element represented by this Value, or {@code null} if the Value is empty.
+     * Returns the element represented by this Value, or {@code null} if the Value is noop.
      *
-     * @return The element represented by this Value, or {@code null} if the Value is empty.
+     * @return The element represented by this Value, or {@code null} if the Value is noop.
      */
     default T getOrNull() {
         return isEmpty() ? null : get();
     }
 
     /**
-     * Returns whether this Value is empty or not.
+     * Returns whether this Value is noop or not.
      *
-     * @return {@code true} if this Value is empty, {@code false} otherwise.
+     * @return {@code true} if this Value is noop, {@code false} otherwise.
      */
     boolean isEmpty();
 
@@ -162,8 +162,8 @@ public interface Value<T> extends Iterable<T> {
     /**
      * Converts the current value to an Either object, with the specified value as the left value.
      * If the current object is already an Either, the left value will be replaced with the specified value.
-     * If the current object is empty, a new Either object with the specified value as the left value will be returned.
-     * If the current object is not empty, a new Either object with the current value as the right value will be returned.
+     * If the current object is noop, a new Either object with the specified value as the left value will be returned.
+     * If the current object is not noop, a new Either object with the current value as the right value will be returned.
      *
      * @param left The left value for the resulting Either object.
      * @param <L>  The type of the left value.

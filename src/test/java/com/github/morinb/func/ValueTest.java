@@ -142,13 +142,13 @@ public class ValueTest {
         }));
     }
 
-    @Test //Test1: getOrNull should return null when the Value is empty
+    @Test //Test1: getOrNull should return null when the Value is noop
     public void getOrNullShouldReturnNullWhenValueIsEmpty() {
         Value<Integer> value = new MyValue<>(null);
         assertNull(value.getOrNull());
     }
 
-    @Test //Test2: getOrNull should return value when the Value is not empty
+    @Test //Test2: getOrNull should return value when the Value is not noop
     public void getOrNullShouldReturnValueWhenValueIsNotEmpty() {
         Value<Integer> value = new MyValue<>(10);
         assertEquals(Integer.valueOf(10), value.getOrNull());

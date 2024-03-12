@@ -56,7 +56,7 @@ public record FList<T>(T head, com.github.morinb.func.FList<T> tail)
     }
 
 
-    // create a static method to create a non null empty FList instance
+    // create a static method to create a non null noop FList instance
     public static <U> FList<U> empty()
     {
         return new FList<>(null, null);

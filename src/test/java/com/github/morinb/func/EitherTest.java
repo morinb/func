@@ -1,10 +1,9 @@
 package com.github.morinb.func;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -1466,18 +1465,6 @@ class EitherTest
         assertEquals(NonEmptyList.of("Error1"), result.getLeft());
     }
 
-
-    @Test
-    void testCompanionPrivateConstructor()
-    {
-        final Class<?> clazz = Either.Companion.class;
-        final var declaredConstructor = clazz.getDeclaredConstructors()[0];
-        assertTrue(Modifier.isPrivate(declaredConstructor.getModifiers()));
-        declaredConstructor.setAccessible(true); // throws AssertException => newInstance wraps it in a InvocationTargetException
-        assertThrows(InvocationTargetException.class, declaredConstructor::newInstance);
-
-    }
-
     @Test
     void testGetOrElseThrow_onRightValue()
     {
@@ -1542,6 +1529,32 @@ class EitherTest
 
         assertFalse(iterator.hasNext());
         assertThrows(NoSuchElementException.class, iterator::next);
+    }
+
+    @Test
+    public void testIsEmptyWithLeftValue() {
+        Either<String, Integer> either = Either.left("Hello");
+        Assertions.assertTrue(either.isEmpty());
+    }
+
+    @Test
+    public void testIsEmptyWithRightValue() {
+        Either<String, Integer> either = Either.right(10);
+        Assertions.assertFalse(either.isEmpty());
+    }
+
+    @Test
+    public void testIsEmptyWithNoValues() {
+        Either<String, Integer> either = Either.noop();
+        Assertions.assertFalse(either.isEmpty());
+    }
+
+    @Test
+    public void testIsEmptyWithEmptyValue() {
+        Either<String, Integer> either = Either.empty();
+        Assertions.assertTrue(either.isEmpty());
+        Assertions.assertTrue(either.isLeft());
+        Assertions.assertNull(either.getLeft());
     }
 
 }

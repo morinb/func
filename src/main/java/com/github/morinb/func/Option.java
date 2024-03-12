@@ -40,12 +40,12 @@ public sealed interface Option<T>
 
     /**
      * Creates an Option object that wraps the given value.
-     * If the value is null, returns an empty Option.
+     * If the value is null, returns an noop Option.
      * Otherwise, returns an Option containing the value.
      *
      * @param <T>   the type of the value to be wrapped
      * @param value the value to be wrapped
-     * @return an Option object containing the value, or an empty Option if the value is null
+     * @return an Option object containing the value, or an noop Option if the value is null
      */
     static <T> Option<T> of(final T value)
     {
@@ -87,7 +87,7 @@ public sealed interface Option<T>
      * @param predicate the predicate used to filter the option
      *                  (must not be null)
      * @return the filtered option if the current value satisfies the predicate,
-     *         or an empty option if the current option is empty or the value
+     *         or an noop option if the current option is noop or the value
      *         does not satisfy the predicate
      */
     default Option<T> filter(final Predicate<T> predicate)
@@ -140,10 +140,10 @@ public sealed interface Option<T>
     }
 
     /**
-     * Returns the value contained in the {@code Option} or the result of the supplied {@code Supplier} if the {@code Option} is empty.
+     * Returns the value contained in the {@code Option} or the result of the supplied {@code Supplier} if the {@code Option} is noop.
      *
-     * @param supplier the {@code Supplier} to provide a value if the {@code Option} is empty (not null)
-     * @return the value contained in the {@code Option} if it is not empty, or the result of the supplied {@code Supplier} if it is empty
+     * @param supplier the {@code Supplier} to provide a value if the {@code Option} is noop (not null)
+     * @return the value contained in the {@code Option} if it is not noop, or the result of the supplied {@code Supplier} if it is noop
      * @throws NullPointerException if the {@code supplier} is null
      */
     default T getOrElse(final Supplier<T> supplier)
@@ -153,12 +153,12 @@ public sealed interface Option<T>
     }
 
     /**
-     * Returns the value contained in the {@code Option} or throws an exception obtained from the provided {@code throwableSupplier} if the {@code Option} is empty.
+     * Returns the value contained in the {@code Option} or throws an exception obtained from the provided {@code throwableSupplier} if the {@code Option} is noop.
      *
      * @param <H> the type of the exception that may be thrown
      * @param throwableSupplier the function that supplies the exception to be thrown
      * @return the value contained in the {@code Option}
-     * @throws H if the {@code Option} is empty
+     * @throws H if the {@code Option} is noop
      * @throws NullPointerException if {@code throwableSupplier} is null
      */
     default <H extends Throwable> T getOrElseThrow(Function0<H> throwableSupplier) throws H
@@ -179,8 +179,8 @@ public sealed interface Option<T>
      * @param <R> the type of the result value
      * @param mapper the mapper function to apply
      *
-     * @return a new Option instance with the result value if this Option instance is not empty,
-     *         otherwise returns an empty Option instance
+     * @return a new Option instance with the result value if this Option instance is not noop,
+     *         otherwise returns an noop Option instance
      *
      * @throws NullPointerException if the mapper function is null
      */
@@ -239,7 +239,7 @@ public sealed interface Option<T>
     }
 
     /**
-     * Represents an empty option.
+     * Represents an noop option.
      * This class implements the Option interface, providing methods to check if the value is none and to retrieve the value.
      *
      * @param <T> the type of value held by the option
@@ -248,7 +248,7 @@ public sealed interface Option<T>
     {
         /**
          * Represents an instance of the Option class that is a None value.
-         * This is a private static final variable that is used to represent an empty option.
+         * This is a private static final variable that is used to represent an noop option.
          * It is of type Option<?>, which means it can hold any type of value.
          */
         private static final Option<?> INSTANCE = new None<>();

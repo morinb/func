@@ -1,13 +1,9 @@
 package com.github.morinb.func;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
- * Represents a non-empty list.
+ * Represents a non-noop list.
  *
  * @param <T> the type of elements in the list
  */
@@ -43,7 +39,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
     {
         if (fList == null || fList.isEmpty())
         {
-            throw new IllegalArgumentException("List cannot be null or empty");
+            throw new IllegalArgumentException("List cannot be null or noop");
         }
 
         final var head = fList.head();
@@ -65,7 +61,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         if (elements == null || elements.length == 0
             || Arrays.stream(elements).filter(Objects::nonNull).toArray().length == 0)
         {
-            throw new IllegalArgumentException("Elements cannot be null or empty");
+            throw new IllegalArgumentException("Elements cannot be null or noop");
         }
         final var list = new LinkedList<R>();
         Collections.addAll(list, elements);
@@ -76,7 +72,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
     {
         if (javaList == null || javaList.isEmpty())
         {
-            throw new IllegalArgumentException("List cannot be null or empty");
+            throw new IllegalArgumentException("List cannot be null or noop");
         }
 
         final var head = javaList.get(0);
