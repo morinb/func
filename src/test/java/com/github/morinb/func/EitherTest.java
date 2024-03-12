@@ -8,123 +8,142 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.NoSuchElementException;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-class EitherTest {
+class EitherTest
+{
     private Either<String, Integer> underTest;
     private final Function1<String, String> leftMapper = str -> str + " mapped";
     private final Function1<Integer, Integer> rightMapper = num -> num * 2;
 
     @Test
-    void testRight_isRight() {
+    void testRight_isRight()
+    {
         underTest = Either.right(10);
         assertTrue(underTest.isRight());
     }
 
     @Test
-    void testRight_isNotLeft() {
+    void testRight_isNotLeft()
+    {
         underTest = Either.right(10);
         assertFalse(underTest.isLeft());
     }
 
     @Test
-    void testRight_returnsCorrectValue() {
+    void testRight_returnsCorrectValue()
+    {
         underTest = Either.right(10);
         assertEquals(Integer.valueOf(10), underTest.get());
     }
 
     @Test
-    void testRight_getLeftThrowsException() {
+    void testRight_getLeftThrowsException()
+    {
         underTest = Either.right(10);
         assertThrows(NoSuchElementException.class, () -> underTest.getLeft());
     }
 
     @Test
-    void testRight_mapRight() {
+    void testRight_mapRight()
+    {
         underTest = Either.right(10);
         final var result = underTest.map(param1 -> param1 * 2);
         assertEquals(Integer.valueOf(20), result.get());
     }
 
     @Test
-    void testLeft_mapRight() {
+    void testLeft_mapRight()
+    {
         underTest = Either.left("under test");
         final var result = underTest.map(param1 -> param1 * 2);
         assertEquals(underTest, result);
     }
 
     @Test
-    void testRight_bimapRight() {
+    void testRight_bimapRight()
+    {
         underTest = Either.right(10);
         final var result = underTest.bimap(leftMapper, rightMapper);
         assertEquals(Integer.valueOf(20), result.get());
     }
 
     @Test
-    void testRight_foldRight() {
+    void testRight_foldRight()
+    {
         underTest = Either.right(10);
         final var result = underTest.fold(param1 -> param1 + "mapped", param1 -> Integer.toString(param1 * 2));
         assertEquals(Integer.toString(20), result);
     }
 
     @Test
-    void testLeft_isNotRight() {
+    void testLeft_isNotRight()
+    {
         underTest = Either.left("Left value");
         assertFalse(underTest.isRight());
     }
 
     @Test
-    void testLeft_isLeft() {
+    void testLeft_isLeft()
+    {
         underTest = Either.left("Left value");
         assertTrue(underTest.isLeft());
     }
 
     @Test
-    void testLeft_getThrowsException() {
+    void testLeft_getThrowsException()
+    {
         underTest = Either.left("Left value");
         assertThrows(NoSuchElementException.class, () -> underTest.get());
     }
 
     @Test
-    void testLeft_returnsCorrectValue() {
+    void testLeft_returnsCorrectValue()
+    {
         underTest = Either.left("Left value");
         assertEquals("Left value", underTest.getLeft());
     }
 
     @Test
-    void testLeft_mapLeft() {
+    void testLeft_mapLeft()
+    {
         underTest = Either.left("Left value");
         final var result = underTest.mapLeft(leftMapper);
         assertEquals("Left value mapped", result.getLeft());
     }
 
     @Test
-    void testRight_mapLeft() {
+    void testRight_mapLeft()
+    {
         underTest = Either.right(10);
         final var result = underTest.mapLeft(leftMapper);
         assertEquals(underTest, result);
     }
 
     @Test
-    void testLeft_bimapLeft() {
+    void testLeft_bimapLeft()
+    {
         underTest = Either.left("Left value");
         final var result = underTest.bimap(leftMapper, rightMapper);
         assertEquals("Left value mapped", result.getLeft());
     }
 
     @Test
-    void testLeft_foldLeft() {
+    void testLeft_foldLeft()
+    {
         underTest = Either.left("Left value");
         final var result = underTest.fold(param1 -> "Left value mapped", param1 -> "Right value mapped");
         assertEquals("Left value mapped", result);
     }
 
     @Test
-    void test_zipOrAccumulate10() {
+    void test_zipOrAccumulate10()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -146,7 +165,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left1() {
+    void test_zipOrAccumulate10Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -169,7 +189,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left2() {
+    void test_zipOrAccumulate10Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -192,7 +213,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left3() {
+    void test_zipOrAccumulate10Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -215,7 +237,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left4() {
+    void test_zipOrAccumulate10Left4()
+    {
         final Either<String, Integer> either4 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -238,7 +261,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left5() {
+    void test_zipOrAccumulate10Left5()
+    {
         final Either<String, Integer> either5 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -261,7 +285,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left6() {
+    void test_zipOrAccumulate10Left6()
+    {
         final Either<String, Integer> either6 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -284,7 +309,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left7() {
+    void test_zipOrAccumulate10Left7()
+    {
         final Either<String, Integer> either7 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -307,7 +333,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left8() {
+    void test_zipOrAccumulate10Left8()
+    {
         final Either<String, Integer> either8 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -330,7 +357,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left9() {
+    void test_zipOrAccumulate10Left9()
+    {
         final Either<String, Integer> either9 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -353,7 +381,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate10Left10() {
+    void test_zipOrAccumulate10Left10()
+    {
         final Either<String, Integer> either10 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -376,7 +405,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9() {
+    void test_zipOrAccumulate9()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -398,7 +428,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left1() {
+    void test_zipOrAccumulate9Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -421,7 +452,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left2() {
+    void test_zipOrAccumulate9Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -444,7 +476,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left3() {
+    void test_zipOrAccumulate9Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -467,7 +500,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left4() {
+    void test_zipOrAccumulate9Left4()
+    {
         final Either<String, Integer> either4 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -490,7 +524,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left5() {
+    void test_zipOrAccumulate9Left5()
+    {
         final Either<String, Integer> either5 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -513,7 +548,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left6() {
+    void test_zipOrAccumulate9Left6()
+    {
         final Either<String, Integer> either6 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -536,7 +572,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left7() {
+    void test_zipOrAccumulate9Left7()
+    {
         final Either<String, Integer> either7 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -559,7 +596,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left8() {
+    void test_zipOrAccumulate9Left8()
+    {
         final Either<String, Integer> either8 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -582,7 +620,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate9Left9() {
+    void test_zipOrAccumulate9Left9()
+    {
         final Either<String, Integer> either9 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -605,7 +644,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8() {
+    void test_zipOrAccumulate8()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -626,7 +666,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left1() {
+    void test_zipOrAccumulate8Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -648,7 +689,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left2() {
+    void test_zipOrAccumulate8Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -670,7 +712,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left3() {
+    void test_zipOrAccumulate8Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -692,7 +735,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left4() {
+    void test_zipOrAccumulate8Left4()
+    {
         final Either<String, Integer> either4 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -714,7 +758,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left5() {
+    void test_zipOrAccumulate8Left5()
+    {
         final Either<String, Integer> either5 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -736,7 +781,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left6() {
+    void test_zipOrAccumulate8Left6()
+    {
         final Either<String, Integer> either6 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -758,7 +804,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left7() {
+    void test_zipOrAccumulate8Left7()
+    {
         final Either<String, Integer> either7 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -780,7 +827,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate8Left8() {
+    void test_zipOrAccumulate8Left8()
+    {
         final Either<String, Integer> either8 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -802,7 +850,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7() {
+    void test_zipOrAccumulate7()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -821,7 +870,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7Left1() {
+    void test_zipOrAccumulate7Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -841,7 +891,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7Left2() {
+    void test_zipOrAccumulate7Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -861,7 +912,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7Left3() {
+    void test_zipOrAccumulate7Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -881,7 +933,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7Left4() {
+    void test_zipOrAccumulate7Left4()
+    {
         final Either<String, Integer> either4 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -901,7 +954,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7Left5() {
+    void test_zipOrAccumulate7Left5()
+    {
         final Either<String, Integer> either5 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -921,7 +975,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7Left6() {
+    void test_zipOrAccumulate7Left6()
+    {
         final Either<String, Integer> either6 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -941,7 +996,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate7Left7() {
+    void test_zipOrAccumulate7Left7()
+    {
         final Either<String, Integer> either7 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -961,7 +1017,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate6() {
+    void test_zipOrAccumulate6()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -979,7 +1036,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate6Left1() {
+    void test_zipOrAccumulate6Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -998,7 +1056,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate6Left2() {
+    void test_zipOrAccumulate6Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1017,7 +1076,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate6Left3() {
+    void test_zipOrAccumulate6Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -1036,7 +1096,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate6Left4() {
+    void test_zipOrAccumulate6Left4()
+    {
         final Either<String, Integer> either4 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1055,7 +1116,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate6Left5() {
+    void test_zipOrAccumulate6Left5()
+    {
         final Either<String, Integer> either5 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1074,7 +1136,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate6Left6() {
+    void test_zipOrAccumulate6Left6()
+    {
         final Either<String, Integer> either6 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1094,7 +1157,8 @@ class EitherTest {
 
 
     @Test
-    void test_zipOrAccumulate5() {
+    void test_zipOrAccumulate5()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1111,7 +1175,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate5Left1() {
+    void test_zipOrAccumulate5Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1129,7 +1194,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate5Left2() {
+    void test_zipOrAccumulate5Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1147,7 +1213,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate5Left3() {
+    void test_zipOrAccumulate5Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -1165,7 +1232,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate5Left4() {
+    void test_zipOrAccumulate5Left4()
+    {
         final Either<String, Integer> either4 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1183,7 +1251,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate5Left5() {
+    void test_zipOrAccumulate5Left5()
+    {
         final Either<String, Integer> either5 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1202,7 +1271,8 @@ class EitherTest {
 
 
     @Test
-    void test_zipOrAccumulate4() {
+    void test_zipOrAccumulate4()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1218,7 +1288,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate4Left1() {
+    void test_zipOrAccumulate4Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1235,7 +1306,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate4Left2() {
+    void test_zipOrAccumulate4Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1252,7 +1324,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate4Left3() {
+    void test_zipOrAccumulate4Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -1269,7 +1342,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate4Left4() {
+    void test_zipOrAccumulate4Left4()
+    {
         final Either<String, Integer> either4 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1287,7 +1361,8 @@ class EitherTest {
 
 
     @Test
-    void test_zipOrAccumulate3() {
+    void test_zipOrAccumulate3()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1302,7 +1377,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate3Left1() {
+    void test_zipOrAccumulate3Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1318,7 +1394,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate3Left2() {
+    void test_zipOrAccumulate3Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
         final Either<String, Integer> either3 = Either.right(30);
@@ -1334,7 +1411,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate3Left3() {
+    void test_zipOrAccumulate3Left3()
+    {
         final Either<String, Integer> either3 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
         final Either<String, Integer> either1 = Either.right(30);
@@ -1350,7 +1428,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate2() {
+    void test_zipOrAccumulate2()
+    {
         final Either<String, Integer> either1 = Either.right(10);
         final Either<String, Integer> either2 = Either.right(20);
 
@@ -1363,7 +1442,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate2Left1() {
+    void test_zipOrAccumulate2Left1()
+    {
         final Either<String, Integer> either1 = Either.left("Error1");
         final Either<String, Integer> either2 = Either.right(20);
 
@@ -1377,7 +1457,8 @@ class EitherTest {
     }
 
     @Test
-    void test_zipOrAccumulate2Left2() {
+    void test_zipOrAccumulate2Left2()
+    {
         final Either<String, Integer> either2 = Either.left("Error1");
         final Either<String, Integer> either1 = Either.right(20);
 
@@ -1391,9 +1472,9 @@ class EitherTest {
     }
 
 
-
     @Test
-    void testCompanionPrivateConstructor() {
+    void testCompanionPrivateConstructor()
+    {
         final Class<?> clazz = Either.Companion.class;
         final Constructor<?> declaredConstructor = clazz.getDeclaredConstructors()[0];
         assertTrue(Modifier.isPrivate(declaredConstructor.getModifiers()));
@@ -1401,4 +1482,27 @@ class EitherTest {
         assertThrows(InvocationTargetException.class, declaredConstructor::newInstance);
 
     }
+
+    @Test
+    void testGetOrElseThrow_onRightValue()
+    {
+        var either = Either.right("Hello");
+        assertDoesNotThrow(() -> either.getOrElseThrow(RuntimeException::new));
+        assertEquals("Hello", either.getOrElseThrow(RuntimeException::new));
+    }
+
+    @Test
+    void testGetOrElseThrow_onLeftValue()
+    {
+        var either = Either.left("Error");
+        assertThrows(RuntimeException.class, () -> either.getOrElseThrow(RuntimeException::new));
+    }
+
+    @Test
+    void testGetOrElseThrow_WithNullThrowableSupplier()
+    {
+        var either = Either.right("Hello");
+        assertThrows(NullPointerException.class, () -> either.getOrElseThrow(null));
+    }
+
 }

@@ -68,6 +68,16 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     L getLeft();
 
+    default <H extends Throwable> R getOrElseThrow(Function0<H> throwableSupplier) throws H
+    {
+        Objects.requireNonNull(throwableSupplier, "throwableSupplier is null");
+        if (isLeft())
+        {
+            throw throwableSupplier.apply();
+        }
+        return get();
+    }
+
     /**
      * The Companion class provides utility methods for the Either class.
      */
