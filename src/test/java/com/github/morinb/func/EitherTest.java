@@ -1486,7 +1486,7 @@ class EitherTest
     @Test
     void testGetOrElseThrow_onRightValue()
     {
-        var either = Either.right("Hello");
+        var either = Either.<Throwable, String>right("Hello");
         assertDoesNotThrow(() -> either.getOrElseThrow(RuntimeException::new));
         assertEquals("Hello", either.getOrElseThrow(RuntimeException::new));
     }

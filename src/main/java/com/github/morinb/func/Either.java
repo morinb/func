@@ -68,12 +68,12 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      */
     L getLeft();
 
-    default <H extends Throwable> R getOrElseThrow(Function0<H> throwableSupplier) throws H
+    default <H extends Throwable> R getOrElseThrow(Function1<? super L, H> throwableSupplier) throws H
     {
         Objects.requireNonNull(throwableSupplier, "throwableSupplier is null");
         if (isLeft())
         {
-            throw throwableSupplier.apply();
+            throw throwableSupplier.apply(getLeft());
         }
         return get();
     }
