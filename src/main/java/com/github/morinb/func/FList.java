@@ -1,10 +1,13 @@
 package com.github.morinb.func;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
-public record FList<T>(T head, FList<T> tail)
+public record FList<T>(T head, com.github.morinb.func.FList<T> tail)
 {
 
     public static <U> FList<U> of(U head)
@@ -12,7 +15,42 @@ public record FList<T>(T head, FList<T> tail)
         return FList.<U>empty().prepend(head);
     }
 
-    boolean isEmpty()
+
+    @SafeVarargs
+    public static <U> FList<U> of(U... elements)
+    {
+        FList<U> list = FList.empty();
+        for (int i = elements.length - 1; i >= 0; i--)
+        {
+            list = list.prepend(elements[i]);
+        }
+        return list;
+    }
+
+    public static <U> FList<U> of(List<U> elements)
+    {
+        FList<U> list = FList.empty();
+        for (int i = elements.size() - 1; i >= 0; i--)
+        {
+            list = list.prepend(elements.get(i));
+        }
+        return list;
+    }
+
+    public FList<T> reverse()
+    {
+        if (isEmpty())
+        {
+            return this;
+        }
+        else
+        {
+            return tail.reverse().append(head);
+        }
+
+    }
+
+    public boolean isEmpty()
     {
         return head == null;
     }
@@ -147,6 +185,39 @@ public record FList<T>(T head, FList<T> tail)
         {
             return new FList<>(head, tail.appendList(other));
         }
+    }
+
+    public Collection<T> toJavaCollection()
+    {
+        return reverse().foldRight(new ArrayList<>(), (elem, acc) -> {
+            acc.add(elem);
+            return acc;
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    public T[] toArray()
+    {
+        return toJavaCollection().toArray((T[]) new Object[size()]);
+    }
+
+    @Override
+    public String toString()
+    {
+        if (isEmpty())
+        {
+            return "";
+        }
+        else if (tail.isEmpty())
+        {
+            return "" + head;
+        }
+        return head + "::" + tail;
+    }
+
+    public NonEmptyList<T> toNonEmptyList()
+    {
+        return new NonEmptyList<>(head, tail);
     }
 
 }

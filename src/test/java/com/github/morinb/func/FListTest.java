@@ -184,9 +184,82 @@ class FListTest
     @Test
     void ofTest_whenCreatingListWithMultipleOf_shouldReturnCorrectList()
     {
-        FList<Integer> list = FList.of(1).append(2);
+        FList<Integer> list = FList.of(1, 2);
         assertEquals(2, list.size());
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
+    }
+
+    @Test
+    void ofTest_whenCreatingListFromSingleElementArray_shouldReturnCorrectList() {
+        Integer[] numbers = {1};
+        FList<Integer> list = FList.of(numbers);
+        assertEquals(1, list.size());
+        assertEquals(1, list.get(0));
+    }
+
+    @Test
+    void ofTest_whenCreatingListFromMultiElementArray_shouldReturnCorrectList() {
+        Integer[] numbers = {1, 2, 3};
+        FList<Integer> list = FList.of(numbers);
+        assertEquals(3, list.size());
+        assertEquals(1, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(3, list.get(2));
+    }
+
+    @Test
+    void reverseTest_whenReversingList_shouldReturnCorrectlyReversedList() {
+        FList<Integer> list = FList.<Integer>empty().append(1).append(2).append(3);
+        list = list.reverse();
+        assertEquals(3, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(1, list.get(2));
+    }
+
+    @Test
+    void reverseTest_whenReversingSingleElementList_shouldReturnSameList() {
+        FList<Integer> list = FList.<Integer>empty().append(1);
+        list = list.reverse();
+        assertEquals(1, list.get(0));
+    }
+
+    @Test
+    void reverseTest_whenReversingEmptyList_shouldReturnEmptyList() {
+        FList<Integer> list = FList.empty();
+        list = list.reverse();
+        assertTrue(list.isEmpty());
+    }
+    @Test
+    void toStringTest_whenEmptyList_shouldReturnEmptyString() {
+        FList<Integer> list = FList.empty();
+        assertEquals("", list.toString());
+    }
+
+    @Test
+    void toStringTest_whenSingleElementList_shouldReturnElementString() {
+        FList<Integer> list = FList.of(1);
+        assertEquals("1", list.toString());
+    }
+
+    @Test
+    void toStringTest_whenMultiElementList_shouldReturnCorrectString() {
+        FList<Integer> list = FList.of(1, 2, 3);
+        assertEquals("1::2::3", list.toString());
+    }
+    @Test
+    void toNonEmptyListTest_whenFListContainsElements_shouldReturnNonEmptyList() {
+        FList<Integer> fList = FList.of(1, 2, 3);
+        NonEmptyList<Integer> list = fList.toNonEmptyList();
+        assertEquals(3, list.size());
+        assertEquals(1, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(3, list.get(2));
+    }
+
+    @Test
+    void toNonEmptyListTest_whenFListIsEmpty_shouldThrowException() {
+        FList<Integer> fList = FList.empty();
+        assertThrows(NullPointerException.class, fList::toNonEmptyList);
     }
 }

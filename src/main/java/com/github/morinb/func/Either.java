@@ -416,7 +416,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
      * @param transform the function to apply to the values if all Either instances are Right
      * @return an Either containing the accumulated Left values or the result of applying the transform function
      */
-    @SuppressWarnings("squid:S107")
+    @SuppressWarnings({"squid:S107"})
     static <R, A, B, C, D, E, F, G, H, I, J, Z> Either<NonEmptyList<R>, Z> zipOrAccumulate(
             final Either<R, A> a,
             final Either<R, B> b,
@@ -431,7 +431,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
             final Function10<A, B, C, D, E, F, G, H, I, J, Z> transform
     )
     {
-        final var eithers = List.of(a, b, c, d, e, f, g, h, i, j);
+        final var eithers = FList.of(a, b, c, d, e, f, g, h, i, j);
 
         final var errors = eithers
                 .filter(Either::isLeft)
@@ -443,12 +443,12 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right
         }
         else
         {
-            return left(NonEmptyList.of(errors.toJavaList()));
+            return left(NonEmptyList.of(errors));
         }
     }
 
     /**
-     * Maps the value of the either if it is a right value, using the provided mapper function.
+     * Maps the value of the Either if it is a right value, using the provided mapper function.
      *
      * @param <T>    The type of the mapped value.
      * @param mapper The function to apply to the value if it is a right value.

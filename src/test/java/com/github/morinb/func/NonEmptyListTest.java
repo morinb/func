@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +25,7 @@ class NonEmptyListTest
     @Test
     void mapTest()
     {
-        final Function<Integer, Integer> times2 = (x) -> x * 2;
+        final Function1<Integer, Integer> times2 = (x) -> x * 2;
         final var resultList = testList.map(times2);
         assertEquals(2, resultList.head());
         assertArrayEquals(new Integer[]{4, 6, 8, 10}, resultList.tail().toArray());
@@ -35,7 +34,7 @@ class NonEmptyListTest
     @Test
     void flatMapTest()
     {
-        final Function<Integer, NonEmptyList<Integer>> listIncrement = (x) -> {
+        final Function1<Integer, NonEmptyList<Integer>> listIncrement = (x) -> {
             final List<Integer> newList = new ArrayList<>();
             newList.add(x + 1);
             return NonEmptyList.of(newList);
@@ -78,6 +77,8 @@ class NonEmptyListTest
         assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of((Object) null));
     }
 
+
+
     @Test
     void testOfNoElements()
     {
@@ -96,6 +97,19 @@ class NonEmptyListTest
     {
         final var elements = new Integer[0];
         assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(elements));
+    }
+
+    @Test
+    void testOfNullFList()
+    {
+        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of((FList<Integer>) null));
+    }
+
+    @Test
+    void testOfEmptyFList()
+    {
+        final FList<Object> nullFList = new FList<>(null, null);
+        assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(nullFList));
     }
 
 }
