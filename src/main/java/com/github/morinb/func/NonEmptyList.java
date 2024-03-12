@@ -55,7 +55,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
 
 
     @SafeVarargs
-    static <R> NonEmptyList<R> of(final R... elements)
+    public static <R> NonEmptyList<R> of(final R... elements)
     {
         if (elements == null || elements.length == 0
             || Arrays.stream(elements).filter(Objects::nonNull).toArray().length == 0)
@@ -67,7 +67,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return of(list);
     }
 
-    static <R> NonEmptyList<R> of(final FList<R> fList)
+    public static <R> NonEmptyList<R> of(final FList<R> fList)
     {
         if (fList == null || fList.isEmpty())
         {
@@ -80,7 +80,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return new NonEmptyList<>(head, tail);
     }
 
-    static <R> NonEmptyList<R> of(final List<R> javaList)
+    public static <R> NonEmptyList<R> of(final List<R> javaList)
     {
         if (javaList == null || javaList.isEmpty())
         {
