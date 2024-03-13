@@ -1,9 +1,12 @@
 package com.github.morinb.func;
 
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
@@ -1637,6 +1640,25 @@ class EitherTest
         assertEquals("Hello", outerStringBuilder.toString());
         assertSame(left, actual);
 
+    }
+
+
+    @Test
+    void eitherSerializedShouldDeserialize()
+    {
+        var either = Either.right(new ArrayList<>(List.of("Un", "Deux", "Trois")));
+
+        var copyEither = Serializers.deserialize(Serializers.serialize(either));
+
+        assertEquals(either, copyEither);
+
+    }
+
+    @Test
+    void testEqualsAndHashcode()
+    {
+        EqualsVerifier.forClass(Either.Right.class).verify();
+        EqualsVerifier.forClass(Either.Left.class).verify();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.github.morinb.func;
 
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.function.Consumer;
  * @param <R> The type of the right value
  */
 public sealed interface Either<L, R>
-        extends Value<R>
+        extends Value<R>, Serializable
         permits Either.Left, Either.Right {
 
 
@@ -611,6 +612,18 @@ public sealed interface Either<L, R>
         public L getLeft() {
             return value;
         }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            return (obj == this) || (obj instanceof Either.Left<?, ?> && Objects.equals(value, ((Left<?, ?>) obj).value));
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hashCode(value);
+        }
     }
 
     /**
@@ -671,6 +684,18 @@ public sealed interface Either<L, R>
         @Override
         public L getLeft() {
             throw new NoSuchElementException("Calling getLeft on a Right");
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            return (obj == this) || (obj instanceof Right && Objects.equals(value, ((Right<?, ?>) obj).value));
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hashCode(value);
         }
     }
 }

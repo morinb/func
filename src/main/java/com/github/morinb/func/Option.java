@@ -1,5 +1,7 @@
 package com.github.morinb.func;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -11,6 +13,7 @@ import java.util.function.Supplier;
  * @param <T> the type of the value wrapped by this option
  */
 public sealed interface Option<T>
+        extends Serializable
         permits Option.None, Option.Some
 {
 
@@ -71,7 +74,7 @@ public sealed interface Option<T>
      * containing the result.
      *
      * @param mapper the function to apply to the value of this Option
-     * @param <R> the type of the result of the mapper function
+     * @param <R>    the type of the result of the mapper function
      * @return a new Option containing the result of applying the mapper function, or Option.none() if this Option is None
      * @throws NullPointerException if the mapper function is null
      */
@@ -87,8 +90,8 @@ public sealed interface Option<T>
      * @param predicate the predicate used to filter the option
      *                  (must not be null)
      * @return the filtered option if the current value satisfies the predicate,
-     *         or an noop option if the current option is noop or the value
-     *         does not satisfy the predicate
+     * or an noop option if the current option is noop or the value
+     * does not satisfy the predicate
      */
     default Option<T> filter(final Predicate<T> predicate)
     {
@@ -101,7 +104,7 @@ public sealed interface Option<T>
      *
      * @param ifNone the supplier function to be called when the Option is None
      * @param ifSome the function to be called when the Option is Some
-     * @param <R> the type of the result value
+     * @param <R>    the type of the result value
      * @return the result value after folding the Option
      * @throws NullPointerException if either ifNone or ifSome is null
      */
@@ -118,7 +121,7 @@ public sealed interface Option<T>
      * @param other the other Option to zip with
      * @param <R>   the type parameter of the other Option
      * @return an Option containing the zipped Pair of values if both Options are Some,
-     *              or None if either this Option or the other Option is None
+     * or None if either this Option or the other Option is None
      */
     default <R> Option<Pair<T, R>> zip(final Option<R> other)
     {
@@ -155,17 +158,16 @@ public sealed interface Option<T>
     /**
      * Returns the value contained in the {@code Option} or throws an exception obtained from the provided {@code throwableSupplier} if the {@code Option} is noop.
      *
-     * @param <H> the type of the exception that may be thrown
+     * @param <H>               the type of the exception that may be thrown
      * @param throwableSupplier the function that supplies the exception to be thrown
      * @return the value contained in the {@code Option}
-     * @throws H if the {@code Option} is noop
+     * @throws H                    if the {@code Option} is noop
      * @throws NullPointerException if {@code throwableSupplier} is null
      */
     default <H extends Throwable> T getOrElseThrow(Function0<H> throwableSupplier) throws H
     {
         Objects.requireNonNull(throwableSupplier, "throwableSupplier is null");
-        if (isNone())
-        {
+        if (isNone()) {
             throw throwableSupplier.apply();
         }
         return getValue();
@@ -176,12 +178,10 @@ public sealed interface Option<T>
      * Applies the given mapper function to the value of this Option instance if it is present,
      * and returns the result as a new Option instance.
      *
-     * @param <R> the type of the result value
+     * @param <R>    the type of the result value
      * @param mapper the mapper function to apply
-     *
      * @return a new Option instance with the result value if this Option instance is not noop,
-     *         otherwise returns an noop Option instance
-     *
+     * otherwise returns an noop Option instance
      * @throws NullPointerException if the mapper function is null
      */
     default <R> Option<R> flatMap(final Function1<T, Option<R>> mapper)
@@ -200,7 +200,6 @@ public sealed interface Option<T>
 
         /**
          * Represents a value wrapped in an Option.
-         *
          */
         private final T value;
 
@@ -236,6 +235,18 @@ public sealed interface Option<T>
         {
             return value;
         }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            return (obj == this) || (obj instanceof Some && Objects.equals(value, ((Some<?>) obj).value));
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hashCode(value);
+        }
     }
 
     /**
@@ -261,6 +272,17 @@ public sealed interface Option<T>
         {
         }
 
+        @Override
+        public boolean equals(Object o)
+        {
+            return o == this || (o instanceof Option.None<?> && ((None<?>) o).isNone());
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return 1;
+        }
 
         /**
          * Checks if the value of the Option is none.
@@ -283,6 +305,18 @@ public sealed interface Option<T>
         public T getValue()
         {
             throw new NoSuchElementException("Calling getValue on None");
+        }
+
+        /**
+         * Instance control for object serialization.
+         *
+         * @return The singleton instance of None.
+         * @see Serializable
+         */
+        @Serial
+        private Object readResolve()
+        {
+            return INSTANCE;
         }
     }
 }

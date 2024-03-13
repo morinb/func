@@ -22,29 +22,8 @@ class PairTest
     }
 
     @Test
-    void testEquals()
+    void testEqualsAndHashCode()
     {
-        final var pair1 = new Pair<>("John", 20);
-        final var pair2 = new Pair<>("John", 20);
-        Assertions.assertEquals(pair1, pair2);
-
-        final var pair3 = new Pair<>("John", 30);
-        Assertions.assertNotEquals(pair1, pair3);
-
-        Assertions.assertNotEquals(null, pair1);
-        Assertions.assertNotEquals("Another class", pair1);
-    }
-
-    @Test
-    void testHashCode()
-    {
-        final var pair1 = new Pair<>("John", 20);
-        final var pair2 = new Pair<>("John", 20);
-        Assertions.assertEquals(pair1.hashCode(), pair2.hashCode());
-
-        final var pair3 = new Pair<>("John", 30);
-        Assertions.assertNotEquals(pair1.hashCode(), pair3.hashCode());
-
         EqualsVerifier.forClass(Pair.class).verify();
     }
 

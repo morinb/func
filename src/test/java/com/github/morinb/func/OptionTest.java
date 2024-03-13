@@ -1,14 +1,13 @@
 package com.github.morinb.func;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OptionTest
 {
@@ -148,4 +147,28 @@ class OptionTest
         assertTrue(singleOption.isNone(), "Option should be None");
         assertThrows(NoSuchElementException.class, singleOption::getValue, "Getting value from None should throw exception");
     }
+
+    @Test
+    void eitherSerializedShouldDeserialize()
+    {
+        var option = Option.some(new ArrayList<>(List.of("Un", "Deux", "Trois")));
+
+        var copyOption = Serializers.deserialize(Serializers.serialize(option));
+
+        assertEquals(option, copyOption);
+
+        var none = Option.none();
+        var copyNone = Serializers.deserialize(Serializers.serialize(none));
+
+        assertEquals(none, copyNone);
+
+    }
+
+    @Test
+    void testEqualsAndHashcode()
+    {
+        EqualsVerifier.forClass(Option.None.class).verify();
+        EqualsVerifier.forClass(Option.Some.class).verify();
+    }
+
 }
