@@ -1489,20 +1489,23 @@ class EitherTest
     }
 
     @Test
-    void testGetOrElseThrowFunction1_onRightValue() {
+    void testGetOrElseThrowFunction1_onRightValue()
+    {
         var either = Either.<Throwable, String>right("Hello");
         assertDoesNotThrow(() -> either.getOrElseThrow(throwable -> new RuntimeException(throwable)));
         assertEquals("Hello", either.getOrElseThrow(throwable -> new RuntimeException(throwable)));
     }
 
     @Test
-    void testGetOrElseThrowFunction1_onLeftValue() {
+    void testGetOrElseThrowFunction1_onLeftValue()
+    {
         var either = Either.left("Error");
         assertThrows(RuntimeException.class, () -> either.getOrElseThrow(string -> new RuntimeException(string)));
     }
 
     @Test
-    void testGetOrElseThrowFunction1_WithNullThrowableSupplier() {
+    void testGetOrElseThrowFunction1_WithNullThrowableSupplier()
+    {
         var either = Either.right("Hello");
         assertThrows(NullPointerException.class, () -> either.getOrElseThrow((Function1<? super Object, RuntimeException>) null));
     }
@@ -1529,7 +1532,8 @@ class EitherTest
     }
 
     @Test
-    void testIteratorWhenIsRight() {
+    void testIteratorWhenIsRight()
+    {
         var instance = Either.right("Value");
 
         var iterator = instance.iterator();
@@ -1542,7 +1546,8 @@ class EitherTest
     }
 
     @Test
-    void testIteratorWhenIsNotRight() {
+    void testIteratorWhenIsNotRight()
+    {
         var instance = Either.left("Value");
 
         var iterator = instance.iterator();
@@ -1552,29 +1557,86 @@ class EitherTest
     }
 
     @Test
-    public void testIsEmptyWithLeftValue() {
+    public void testIsEmptyWithLeftValue()
+    {
         Either<String, Integer> either = Either.left("Hello");
         Assertions.assertTrue(either.isEmpty());
     }
 
     @Test
-    public void testIsEmptyWithRightValue() {
+    public void testIsEmptyWithRightValue()
+    {
         Either<String, Integer> either = Either.right(10);
         Assertions.assertFalse(either.isEmpty());
     }
 
     @Test
-    public void testIsEmptyWithNoValues() {
+    public void testIsEmptyWithNoValues()
+    {
         Either<String, Integer> either = Either.noop();
         Assertions.assertFalse(either.isEmpty());
     }
 
     @Test
-    public void testIsEmptyWithEmptyValue() {
+    public void testIsEmptyWithEmptyValue()
+    {
         Either<String, Integer> either = Either.empty();
         Assertions.assertTrue(either.isEmpty());
         Assertions.assertTrue(either.isLeft());
         Assertions.assertNull(either.getLeft());
+    }
+
+
+    @Test
+    void testPeek()
+    {
+
+        var right = Either.right("Hello");
+        var outerStringBuilder = new StringBuilder();
+        var actual = right.peek(outerStringBuilder::append);
+
+        assertEquals("Hello", outerStringBuilder.toString());
+        assertSame(right, actual);
+
+    }
+
+    @Test
+    void testPeekOnLeft()
+    {
+
+        var left = Either.left(new Object());
+        var outerStringBuilder = new StringBuilder();
+        var actual = left.peek(outerStringBuilder::append);
+
+        assertEquals("", outerStringBuilder.toString());
+        assertSame(left, actual);
+
+    }
+
+    @Test
+    void testPeekLeft()
+    {
+
+        var right = Either.right(new Object());
+        var outerStringBuilder = new StringBuilder();
+        var actual = right.peekLeft(outerStringBuilder::append);
+
+        assertEquals("", outerStringBuilder.toString());
+        assertSame(right, actual);
+
+    }
+
+    @Test
+    void testPeekLeftOnLeft()
+    {
+
+        var left = Either.left("Hello");
+        var outerStringBuilder = new StringBuilder();
+        var actual = left.peekLeft(outerStringBuilder::append);
+
+        assertEquals("Hello", outerStringBuilder.toString());
+        assertSame(left, actual);
+
     }
 
 }

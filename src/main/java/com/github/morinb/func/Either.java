@@ -4,6 +4,7 @@ package com.github.morinb.func;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * An interface representing either a left or a right value.
@@ -118,6 +119,24 @@ public sealed interface Either<L, R>
             };
         }
 
+    }
+
+    default Either<L, R> peek(Consumer<R> action)
+    {
+        Objects.requireNonNull(action, "action is null");
+        if (isRight()) {
+            action.accept(get());
+        }
+        return this;
+    }
+
+    default Either<L, R> peekLeft(Consumer<L> action)
+    {
+        Objects.requireNonNull(action, "action is null");
+        if (isLeft()) {
+            action.accept(getLeft());
+        }
+        return this;
     }
 
 
