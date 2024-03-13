@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -1469,22 +1470,41 @@ class EitherTest
     void testGetOrElseThrow_onRightValue()
     {
         var either = Either.<Throwable, String>right("Hello");
-        assertDoesNotThrow(() -> either.getOrElseThrow(RuntimeException::new));
-        assertEquals("Hello", either.getOrElseThrow(RuntimeException::new));
+        assertDoesNotThrow(() -> either.getOrElseThrow(() -> new RuntimeException()));
+        assertEquals("Hello", either.getOrElseThrow(() -> new RuntimeException()));
     }
 
     @Test
     void testGetOrElseThrow_onLeftValue()
     {
         var either = Either.left("Error");
-        assertThrows(RuntimeException.class, () -> either.getOrElseThrow(RuntimeException::new));
+        assertThrows(RuntimeException.class, () -> either.getOrElseThrow(() -> new RuntimeException()));
     }
 
     @Test
     void testGetOrElseThrow_WithNullThrowableSupplier()
     {
         var either = Either.right("Hello");
-        assertThrows(NullPointerException.class, () -> either.getOrElseThrow(null));
+        assertThrows(NullPointerException.class, () -> either.getOrElseThrow((Supplier<? extends RuntimeException>) null));
+    }
+
+    @Test
+    void testGetOrElseThrowFunction1_onRightValue() {
+        var either = Either.<Throwable, String>right("Hello");
+        assertDoesNotThrow(() -> either.getOrElseThrow(throwable -> new RuntimeException(throwable)));
+        assertEquals("Hello", either.getOrElseThrow(throwable -> new RuntimeException(throwable)));
+    }
+
+    @Test
+    void testGetOrElseThrowFunction1_onLeftValue() {
+        var either = Either.left("Error");
+        assertThrows(RuntimeException.class, () -> either.getOrElseThrow(string -> new RuntimeException(string)));
+    }
+
+    @Test
+    void testGetOrElseThrowFunction1_WithNullThrowableSupplier() {
+        var either = Either.right("Hello");
+        assertThrows(NullPointerException.class, () -> either.getOrElseThrow((Function1<? super Object, RuntimeException>) null));
     }
 
     @Test

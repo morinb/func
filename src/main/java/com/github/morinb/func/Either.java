@@ -48,6 +48,14 @@ public sealed interface Either<L, R>
         return new Left<>(null);
     }
 
+    default <X extends Throwable> R getOrElseThrow(Function1<? super L, X> exceptionMapper) throws X {
+        Objects.requireNonNull(exceptionMapper, "exceptionMapper is null");
+        if (isEmpty()) {
+            throw exceptionMapper.apply(getLeft());
+        }
+        return get();
+    }
+
     /**
      * Checks if the instance is of the Left type.
      *
