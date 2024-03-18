@@ -22,10 +22,12 @@
 
     <groupId>com.github.morinb</groupId>
     <artifactId>func</artifactId>
-    <version>1.4</version>
+    <version>1.5-SNAPSHOT</version>
 
     <name>Func</name>
     <url>https://github.com/morinb/func</url>
+
+    <description>Simple Functional interfaces for Java</description>
 
     <licenses>
         <license>
