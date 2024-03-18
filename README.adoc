@@ -1,0 +1,8 @@
+= Func - Light functional interfaces for Java.
+
+image:https://github.com/morinb/func/actions/workflows/maven.yml/badge.svg[Build badge]
+image:https://img.shields.io/maven-central/v/com.github.morinb/func[Maven Central]
+
+
+
+Ç
