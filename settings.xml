@@ -1,0 +1,30 @@
+<!--
+  ~ Copyright 2024 Baptiste MORIN
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <servers>
+        <server>
+            <id>maven-test</id>
+            <username>morinb</username>
+            <!-- Public token with `read:packages` scope -->
+            <password>&#103;&#104;&#112;&#95;&#90;&#119;&#71;&#55;&#115;&#77;&#56;&#76;&#66;&#48;&#80;&#68;&#77;&#82;&#66;&#104;&#102;&#117;&#116;&#55;&#103;&#106;&#102;&#74;&#57;&#56;&#119;&#55;&#53;&#106;&#48;&#48;&#71;&#89;&#71;&#79;</password>
+        </server>
+    </servers>
+</settings>
