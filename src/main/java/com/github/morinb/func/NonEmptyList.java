@@ -23,9 +23,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents a non-noop list.
+ * Represents a non-empty list of elements.
  *
  * @param <T> the type of elements in the list
+ * @param head first element of the list
+ * @param tail other elements
  */
 public record NonEmptyList<T>(T head, FList<T> tail)
 {
@@ -33,6 +35,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
      * Creates a NonEmptyList object.
      *
      * @param head the head element of the NonEmptyList
+     * @param tail other elements
      * @throws NullPointerException if the head parameter is null
      */
     public NonEmptyList
@@ -55,6 +58,14 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return new NonEmptyList<>(newHeader, newTail);
     }
 
+    /**
+     * Creates a new NonEmptyList object from the given FList.
+     *
+     * @param fList the FList object to create the NonEmptyList from
+     * @param <R>   the type of elements in the FList
+     * @return a new NonEmptyList object
+     * @throws IllegalArgumentException if the fList parameter is null or empty
+     */
     public static <R> NonEmptyList<R> of(final FList<R> fList)
     {
         if (fList == null || fList.isEmpty())
@@ -68,13 +79,14 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return new NonEmptyList<>(head, tail);
     }
 
-    public FList<T> toFList()
-    {
-
-        return new FList<>(head, tail);
-    }
-
-
+    /**
+     * Creates a {@link NonEmptyList} from the given elements.
+     *
+     * @param <R>      the type of elements in the list
+     * @param elements the elements to include in the list
+     * @return a NonEmptyList object containing the given elements
+     * @throws IllegalArgumentException if the elements array is null, empty, or contains only null or noop elements
+     */
     @SafeVarargs
     public static <R> NonEmptyList<R> of(final R... elements)
     {
@@ -88,6 +100,14 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return of(list);
     }
 
+    /**
+     * Creates a {@link NonEmptyList} object from a Java List.
+     *
+     * @param javaList the Java List to create the NonEmptyList from
+     * @param <R>      the type of elements in the list
+     * @return a new NonEmptyList object
+     * @throws IllegalArgumentException if the javaList parameter is null or empty
+     */
     public static <R> NonEmptyList<R> of(final List<R> javaList)
     {
         if (javaList == null || javaList.isEmpty())
@@ -101,6 +121,26 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return new NonEmptyList<>(head, tail);
     }
 
+    /**
+     * Converts the NonEmptyList to an FList.
+     *
+     * @return an FList containing the same elements as the NonEmptyList
+     */
+    public FList<T> toFList()
+    {
+
+        return new FList<>(head, tail);
+    }
+
+    /**
+     * Applies the given function to each element of the list and returns a new NonEmptyList
+     * with the transformed elements.
+     *
+     * @param f   the function to apply to each element of the list
+     * @param <U> the type of elements in the resulting NonEmptyList
+     * @return a new NonEmptyList with the transformed elements
+     * @throws NullPointerException if the function f is null
+     */
     public <U> NonEmptyList<U> flatMap(final Function1<T, NonEmptyList<U>> f)
     {
         var newHead = f.apply(head).head;
@@ -109,11 +149,23 @@ public record NonEmptyList<T>(T head, FList<T> tail)
         return new NonEmptyList<>(newHead, newTail);
     }
 
+    /**
+     * Returns the number of elements in the NonEmptyList.
+     *
+     * @return the number of elements in the NonEmptyList
+     */
     public int size()
     {
         return tail.size() + 1;
     }
 
+    /**
+     * Retrieves the element at the specified index.
+     *
+     * @param index the index of the element to retrieve
+     * @return the element at the specified index
+     * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &ge; size())
+     */
     public T get(int index)
     {
         return index == 0 ? head : tail.get(index - 1);

@@ -30,6 +30,7 @@ public interface CheckedFunction0<R>
      * Applies the function and returns the result.
      *
      * @return the result of applying the function
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings("squid:S112")
     R apply() throws Throwable;

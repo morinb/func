@@ -31,7 +31,7 @@ import java.util.Objects;
  * @param <T7> the type of the seventh input to the function
  * @param <T8> the type of the eighth input to the function
  * @param <T9> the type of the ninth input to the function
- * @param <R>  the type of the result of the function
+ * @param <R>  the type of the result
  */
 @FunctionalInterface
 public interface CheckedFunction9<T1, T2, T3, T4, T5, T6, T7, T8, T9, R>
@@ -49,6 +49,7 @@ public interface CheckedFunction9<T1, T2, T3, T4, T5, T6, T7, T8, T9, R>
      * @param param8 the eighth parameter of the function
      * @param param9 the ninth parameter of the function
      * @return the result of the function
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings({"squid:S107", "squid:S112"})
     R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7, T8 param8, T9 param9) throws Throwable;

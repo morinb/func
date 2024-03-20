@@ -22,6 +22,13 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+/**
+ * The Value interface represents a value that may or may not be present. It provides various operations
+ * for working with values such as checking for containment, applying operations to the value, and handling
+ * cases where the value is absent.
+ *
+ * @param <T> The type of the value.
+ */
 public interface Value<T> extends Iterable<T> {
 
 
@@ -97,6 +104,12 @@ public interface Value<T> extends Iterable<T> {
      */
     T get();
 
+    /**
+     * Returns the element represented by this Value if it is not empty, otherwise returns the provided value.
+     *
+     * @param other The value to be returned if this Value is empty.
+     * @return The element represented by this Value if it is not empty, otherwise the provided value.
+     */
     default T getOrElse(T other) {
         return isEmpty() ? other : get();
     }
@@ -134,6 +147,10 @@ public interface Value<T> extends Iterable<T> {
 
     /**
      * Returns the element represented by this Value, or the result of the supplier function if the Value is noop.
+     *
+     * @param supplier the supplier function to provide the result if the Value is noop. Must not be null.
+     * @return The element represented by this Value, or the result of the supplier function if the Value is noop.
+     * @throws NullPointerException if the supplier is null
      */
     default T getOrElseTry(CheckedFunction0<? extends T> supplier) {
         Objects.requireNonNull(supplier, "supplier is null");

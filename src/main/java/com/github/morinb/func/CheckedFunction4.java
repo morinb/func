@@ -38,6 +38,7 @@ public interface CheckedFunction4<T1, T2, T3, T4, R>
      * @param param3 the third parameter
      * @param param4 the fourth parameter
      * @return the result of applying the function to the parameters
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings("squid:S112")
     R apply(T1 param1, T2 param2, T3 param3, T4 param4) throws Throwable;

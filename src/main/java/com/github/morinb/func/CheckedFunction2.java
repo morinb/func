@@ -35,6 +35,7 @@ public interface CheckedFunction2<T1, T2, R>
      * @param param1 the first parameter of type T1
      * @param param2 the second parameter of type T2
      * @return the result of applying this function to the given parameters
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings("squid:S112")
     R apply(T1 param1, T2 param2) throws Throwable;

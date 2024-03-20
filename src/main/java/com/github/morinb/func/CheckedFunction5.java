@@ -27,7 +27,7 @@ import java.util.Objects;
  * @param <T3> the type of the third input to the function
  * @param <T4> the type of the fourth input to the function
  * @param <T5> the type of the fifth input to the function
- * @param <R>  the type of the result of the function
+ * @param <R>  the type of the result
  */
 @FunctionalInterface
 public interface CheckedFunction5<T1, T2, T3, T4, T5, R>
@@ -41,6 +41,7 @@ public interface CheckedFunction5<T1, T2, T3, T4, T5, R>
      * @param param4 the fourth input parameter
      * @param param5 the fifth input parameter
      * @return the result of applying this function to the given arguments
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings("squid:S112")
     R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5) throws Throwable;

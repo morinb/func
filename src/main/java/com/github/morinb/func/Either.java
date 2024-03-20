@@ -61,11 +61,25 @@ public sealed interface Either<L, R>
         return new Left<>(value);
     }
 
+    /**
+     * Performs a no-operation and returns a new Either object with a Right value of null.
+     *
+     * @param <L> The type of the Left value in the Either object.
+     * @param <R> The type of the Right value in the Either object.
+     * @return A new Either object with a Right value of null.
+     */
     static <L, R> Either<L, R> noop()
     {
         return new Right<>(null);
     }
 
+    /**
+     * Creates an empty Either object.
+     *
+     * @param <L> The type of the left value.
+     * @param <R> The type of the right value.
+     * @return An empty Either object of type Either&lt;L, R&gt;.
+     */
     static <L, R> Either<L, R> empty()
     {
         return new Left<>(null);
@@ -432,7 +446,7 @@ public sealed interface Either<L, R>
      * @param a         The first input Either.
      * @param b         The second input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
 
     static <R, A, B, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -461,7 +475,7 @@ public sealed interface Either<L, R>
      * @param b         The second input Either.
      * @param c         The third input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
 
     static <R, A, B, C, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -493,7 +507,7 @@ public sealed interface Either<L, R>
      * @param c         The third input Either.
      * @param d         The fourth input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
 
 
@@ -529,7 +543,7 @@ public sealed interface Either<L, R>
      * @param d         The fourth input Either.
      * @param e         The fifth input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
 
     static <R, A, B, C, D, E, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -567,7 +581,7 @@ public sealed interface Either<L, R>
      * @param e         The fifth input Either.
      * @param f         The sixth input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
 
     static <R, A, B, C, D, E, F, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -608,7 +622,7 @@ public sealed interface Either<L, R>
      * @param f         The sixth input Either.
      * @param g         The seventh input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
 
     @SuppressWarnings("squid:S107")
@@ -653,7 +667,7 @@ public sealed interface Either<L, R>
      * @param g         The seventh input Either.
      * @param h         The eighth input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
 
     @SuppressWarnings("squid:S107")
@@ -701,7 +715,7 @@ public sealed interface Either<L, R>
      * @param h         The eighth input Either.
      * @param i         The ninth input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, I, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -751,7 +765,7 @@ public sealed interface Either<L, R>
      * @param i         The ninth input Either.
      * @param j         The tenth input Either.
      * @param transform The function to transform the Right values of the input Either into a result of type Z.
-     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     * @return Either - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
      */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, I, J, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -806,6 +820,15 @@ public sealed interface Either<L, R>
      */
     L getLeft();
 
+    /**
+     * Returns the value if it is present, or throws an exception if it is empty.
+     *
+     * @param exceptionMapper the function that maps the left value to an exception to be thrown
+     * @param <X>             the type of exception to be thrown
+     * @return the value if it is present
+     * @throws X                    if the value is empty
+     * @throws NullPointerException if exceptionMapper is null
+     */
     default <X extends Throwable> R getOrElseThrow(Function1<? super L, X> exceptionMapper) throws X
     {
         Objects.requireNonNull(exceptionMapper, "exceptionMapper is null");
@@ -870,6 +893,12 @@ public sealed interface Either<L, R>
 
     }
 
+    /**
+     * Performs the specified action on the value of the Right side of this Either, if it exists.
+     *
+     * @param action the action to be performed on the value of the Right side
+     * @return this Either
+     */
     default Either<L, R> peek(Consumer<R> action)
     {
         Objects.requireNonNull(action, "action is null");
@@ -880,6 +909,12 @@ public sealed interface Either<L, R>
         return this;
     }
 
+    /**
+     * Performs the specified action on the left value of this Either, if it is present.
+     *
+     * @param action the action to be performed on the left value, must not be null
+     * @return this Either
+     */
     default Either<L, R> peekLeft(Consumer<L> action)
     {
         Objects.requireNonNull(action, "action is null");
@@ -980,6 +1015,13 @@ public sealed interface Either<L, R>
         }
     }
 
+    /**
+     * Represents the left side of an {@link Either}.
+     * An instance of Left stores a value of type L on the left side.
+     *
+     * @param <L> the type of the value stored on the left side
+     * @param <R> the type of the value stored on the right side
+     */
     final class Left<L, R> implements Either<L, R>
     {
 
@@ -1083,7 +1125,9 @@ public sealed interface Either<L, R>
         private final R value;
 
         /**
-         * Represents a Right value in an Either object.
+         * Constructs a new Right instance with the specified value.
+         *
+         * @param value the value for the right side of the instance
          */
         public Right(final R value)
         {

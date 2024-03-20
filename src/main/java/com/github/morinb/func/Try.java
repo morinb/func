@@ -21,35 +21,24 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Function;
 
+/**
+ * The Try interface represents a computation that may either result in a value or an exception.
+ *
+ * @param <T> The type of the value contained in the Try instance.
+ */
 public sealed interface Try<T>
     extends Value<T>
     permits Try.Success, Try.Failure
 {
 
-    Throwable getCause();
-    T get();
-
-    boolean isFailure();
-
-
-    @Override
-    @SuppressWarnings("unchecked")
-    default <U> Try<U> map(Function1<? super T, ? extends U> mapper)
-    {
-        return isFailure() ? (Try<U>) this : Try.of(() -> mapper.apply(get()));
-    }
-
-    @SuppressWarnings("unchecked")
-    default <U> Try<U> flatMap(Function<? super T, ? extends Try<? extends U>> mapper)
-    {
-        return isFailure() ? (Try<U>) this : (Try<U>) mapper.apply(get());
-    }
-
-    default Either<Throwable, T> toEither()
-    {
-        return isFailure() ? Either.left(getCause()) : Either.right(get());
-    }
-
+    /**
+     * Creates a Try instance by applying the given supplier function.
+     *
+     * @param <U>      the type of the result
+     * @param supplier the supplier function to apply
+     * @return a Try instance representing the result of the supplier function
+     * @throws NullPointerException if the supplier is null
+     */
     @SuppressWarnings("squid:S1181")
     static <U> Try<U> of(final CheckedFunction0<? extends U> supplier)
     {
@@ -63,9 +52,82 @@ public sealed interface Try<T>
         }
     }
 
+    /**
+     * Returns the cause of this throwable or null if the cause is nonexistent or unknown.
+     *
+     * @return the cause of this throwable or null if the cause is nonexistent or unknown
+     */
+    Throwable getCause();
+
+    /**
+     * Returns the element represented by this Try object.
+     *
+     * @return The element represented by this Try object.
+     */
+    T get();
+
+    /**
+     * Checks if the current Try instance represents a failure.
+     *
+     * @return true if the Try instance represents a failure, false otherwise.
+     */
+    boolean isFailure();
+
+    /**
+     * Applies the given mapper function to the value contained in this Try instance and returns a new Try instance
+     * with the result.
+     * If this Try instance is a Failure, the original instance is returned without applying the mapper function.
+     *
+     * @param <U>    the result type of the mapper function
+     * @param mapper the mapper function to apply
+     * @return a new Try instance with the result of the mapper function applied, or the original instance if it is a Failure
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    default <U> Try<U> map(Function1<? super T, ? extends U> mapper)
+    {
+        return isFailure() ? (Try<U>) this : Try.of(() -> mapper.apply(get()));
+    }
+
+    /**
+     * Applies the given function to the value contained in this Try instance, and returns a new Try instance
+     * that is the result of the function application.
+     * If this Try instance is a Failure, it is returned as it is.
+     *
+     * @param mapper the function to apply to the value contained in this Try instance
+     * @param <U>    the type of the value contained in the resulting Try instance
+     * @return a new Try instance that is the result of the function application, or this Try instance if it's a Failure
+     */
+    @SuppressWarnings("unchecked")
+    default <U> Try<U> flatMap(Function<? super T, ? extends Try<? extends U>> mapper)
+    {
+        return isFailure() ? (Try<U>) this : (Try<U>) mapper.apply(get());
+    }
+
+    /**
+     * Converts the Try object to an Either object.
+     *
+     * @return Either object representing the Try object
+     */
+    default Either<Throwable, T> toEither()
+    {
+        return isFailure() ? Either.left(getCause()) : Either.right(get());
+    }
+
+    /**
+     * Returns true if the operation represented by this Try instance was successful,
+     * false otherwise.
+     *
+     * @return true if success, false if failure
+     */
     boolean isSuccess();
 
 
+    /**
+     * The Success class represents a successful result in the Try monad.
+     *
+     * @param <T> The type of the value contained in the Success instance.
+     */
     record Success<T>(T value) implements Try<T> {
 
         @Override
@@ -119,6 +181,11 @@ public sealed interface Try<T>
         }
     }
 
+    /**
+     * The Failure class represents a failed result in the Try monad.
+     *
+     * @param <T> The type of the value contained in the Failure instance.
+     */
     record Failure<T>(Throwable throwable) implements Try<T> {
 
         @Override

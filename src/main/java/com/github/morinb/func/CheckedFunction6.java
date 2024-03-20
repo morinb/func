@@ -42,6 +42,7 @@ public interface CheckedFunction6<T1, T2, T3, T4, T5, T6, R>
      * @param param5 the fifth parameter
      * @param param6 the sixth parameter
      * @return the result of applying the function to the parameters
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings("squid:S112")
     R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6) throws Throwable;

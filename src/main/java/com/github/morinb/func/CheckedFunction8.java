@@ -46,6 +46,7 @@ public interface CheckedFunction8<T1, T2, T3, T4, T5, T6, T7, T8, R>
      * @param param7 the seventh parameter of type T7
      * @param param8 the eighth parameter of type T8
      * @return the result of applying the function to the parameters
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings({"squid:S107", "squid:S112"})
     R apply(T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7, T8 param8) throws Throwable;

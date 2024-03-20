@@ -33,6 +33,7 @@ public interface CheckedFunction1<T1, R>
      *
      * @param param1 the input parameter to apply the function to
      * @return the result of applying this function to the given parameter
+     * @throws Throwable if an exception occurs during function execution
      */
     @SuppressWarnings("squid:S112")
     R apply(T1 param1) throws Throwable;
