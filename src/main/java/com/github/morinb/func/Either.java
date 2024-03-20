@@ -640,6 +640,16 @@ public sealed interface Either<L, R>
         {
             return Objects.hashCode(value);
         }
+
+        @Override
+        public String toString()
+        {
+            if (getLeft() == null)
+            {
+                return "Left(null)";
+            }
+            return "Left(" + getLeft() + ")";
+        }
     }
 
     /**
@@ -712,6 +722,16 @@ public sealed interface Either<L, R>
         public int hashCode()
         {
             return Objects.hashCode(value);
+        }
+
+        @Override
+        public String toString()
+        {
+            if (get() == null)
+            {
+                return "Right(null)";
+            }
+            return "Right(" + get() + ")";
         }
     }
 }

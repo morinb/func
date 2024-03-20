@@ -128,4 +128,16 @@ class NonEmptyListTest
         assertThrows(IllegalArgumentException.class, () -> NonEmptyList.of(nullFList));
     }
 
+    @Test
+    void testOneElementToString()
+    {
+        assertEquals("1234", NonEmptyList.of("1234").toString());
+    }
+
+    @Test
+    void testThreeElementToString()
+    {
+        assertEquals("1234::5678::1357", NonEmptyList.of("1234", "5678", "1357").toString());
+    }
+
 }

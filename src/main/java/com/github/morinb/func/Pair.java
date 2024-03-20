@@ -42,9 +42,6 @@ public record Pair<T, R>(T first, R second)
     @Override
     public String toString()
     {
-        return "Pair{" +
-               "first=" + first +
-               ", second=" + second +
-               '}';
+        return "(" + first + ", " + second + ')';
     }
 }

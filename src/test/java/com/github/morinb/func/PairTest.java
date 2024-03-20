@@ -59,7 +59,7 @@ class PairTest
     void testToString()
     {
         final var pair = new Pair<>("John", 20);
-        Assertions.assertEquals("Pair{first=John, second=20}", pair.toString());
+        Assertions.assertEquals("(John, 20)", pair.toString());
     }
 
     @Test

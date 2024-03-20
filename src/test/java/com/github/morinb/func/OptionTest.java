@@ -23,7 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OptionTest
 {
@@ -187,4 +191,21 @@ class OptionTest
         EqualsVerifier.forClass(Option.Some.class).verify();
     }
 
+    @Test
+    void testNoneToString()
+    {
+        assertEquals("None", Option.none().toString());
+    }
+
+    @Test
+    void testSomeValueToString()
+    {
+        assertEquals("Some(1234)", Option.some("1234").toString());
+    }
+
+    @Test
+    void testSomeNullToString()
+    {
+        assertEquals("Some(null)", Option.some(null).toString());
+    }
 }

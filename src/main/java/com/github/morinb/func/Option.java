@@ -263,6 +263,16 @@ public sealed interface Option<T>
         {
             return Objects.hashCode(value);
         }
+
+        @Override
+        public String toString()
+        {
+            if (getValue() == null)
+            {
+                return "Some(null)";
+            }
+            return "Some(" + getValue() + ")";
+        }
     }
 
     /**
@@ -321,6 +331,12 @@ public sealed interface Option<T>
         public T getValue()
         {
             throw new NoSuchElementException("Calling getValue on None");
+        }
+
+        @Override
+        public String toString()
+        {
+            return "None";
         }
 
         /**

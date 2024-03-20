@@ -16,7 +16,11 @@
 
 package com.github.morinb.func;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a non-noop list.
@@ -113,5 +117,15 @@ public record NonEmptyList<T>(T head, FList<T> tail)
     public T get(int index)
     {
         return index == 0 ? head : tail.get(index - 1);
+    }
+
+    @Override
+    public String toString()
+    {
+        if (tail.isEmpty())
+        {
+            return head.toString();
+        }
+        return head.toString() + "::" + tail;
     }
 }

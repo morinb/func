@@ -26,7 +26,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class EitherTest
@@ -1576,28 +1581,28 @@ class EitherTest
     }
 
     @Test
-    public void testIsEmptyWithLeftValue()
+    void testIsEmptyWithLeftValue()
     {
         Either<String, Integer> either = Either.left("Hello");
         Assertions.assertTrue(either.isEmpty());
     }
 
     @Test
-    public void testIsEmptyWithRightValue()
+    void testIsEmptyWithRightValue()
     {
         Either<String, Integer> either = Either.right(10);
         Assertions.assertFalse(either.isEmpty());
     }
 
     @Test
-    public void testIsEmptyWithNoValues()
+    void testIsEmptyWithNoValues()
     {
         Either<String, Integer> either = Either.noop();
         Assertions.assertFalse(either.isEmpty());
     }
 
     @Test
-    public void testIsEmptyWithEmptyValue()
+    void testIsEmptyWithEmptyValue()
     {
         Either<String, Integer> either = Either.empty();
         Assertions.assertTrue(either.isEmpty());
@@ -1675,6 +1680,30 @@ class EitherTest
     {
         EqualsVerifier.forClass(Either.Right.class).verify();
         EqualsVerifier.forClass(Either.Left.class).verify();
+    }
+
+    @Test
+    void testLeftToString()
+    {
+        assertEquals("Left(1234)", Either.left("1234").toString());
+    }
+
+    @Test
+    void testRightToString()
+    {
+        assertEquals("Right(1234)", Either.right("1234").toString());
+    }
+
+    @Test
+    void testLeftNullToString()
+    {
+        assertEquals("Left(null)", Either.left(null).toString());
+    }
+
+    @Test
+    void testRightNullToString()
+    {
+        assertEquals("Right(null)", Either.right(null).toString());
     }
 
 }
