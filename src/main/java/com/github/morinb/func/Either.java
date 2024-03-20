@@ -419,6 +419,22 @@ public sealed interface Either<L, R>
         }
     }
 
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
+
     static <R, A, B, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
             final Either<NonEmptyList<R>, A> a,
             final Either<NonEmptyList<R>, B> b,
@@ -429,6 +445,24 @@ public sealed interface Either<L, R>
                 a, b, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb));
     }
+
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
 
     static <R, A, B, C, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
             final Either<NonEmptyList<R>, A> a,
@@ -442,6 +476,27 @@ public sealed interface Either<L, R>
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc));
     }
 
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <D>       The type of the Right value in the fourth input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param d         The fourth input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
+
+
     static <R, A, B, C, D, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
             final Either<NonEmptyList<R>, A> a,
             final Either<NonEmptyList<R>, B> b,
@@ -454,6 +509,28 @@ public sealed interface Either<L, R>
                 a, b, c, d, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd));
     }
+
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <D>       The type of the Right value in the fourth input Either.
+     * @param <E>       The type of the Right value in the fifth input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param d         The fourth input Either.
+     * @param e         The fifth input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
 
     static <R, A, B, C, D, E, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
             final Either<NonEmptyList<R>, A> a,
@@ -469,6 +546,30 @@ public sealed interface Either<L, R>
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee));
     }
 
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <D>       The type of the Right value in the fourth input Either.
+     * @param <E>       The type of the Right value in the fifth input Either.
+     * @param <F>       The type of the Right value in the sixth input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param d         The fourth input Either.
+     * @param e         The fifth input Either.
+     * @param f         The sixth input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
+
     static <R, A, B, C, D, E, F, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
             final Either<NonEmptyList<R>, A> a,
             final Either<NonEmptyList<R>, B> b,
@@ -483,6 +584,32 @@ public sealed interface Either<L, R>
                 a, b, c, d, e, f, Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff));
     }
+
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <D>       The type of the Right value in the fourth input Either.
+     * @param <E>       The type of the Right value in the fifth input Either.
+     * @param <F>       The type of the Right value in the sixth input Either.
+     * @param <G>       The type of the Right value in the seventh input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param d         The fourth input Either.
+     * @param e         The fifth input Either.
+     * @param f         The sixth input Either.
+     * @param g         The seventh input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
 
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -500,6 +627,34 @@ public sealed interface Either<L, R>
                 a, b, c, d, e, f, g, Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg));
     }
+
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <D>       The type of the Right value in the fourth input Either.
+     * @param <E>       The type of the Right value in the fifth input Either.
+     * @param <F>       The type of the Right value in the sixth input Either.
+     * @param <G>       The type of the Right value in the seventh input Either.
+     * @param <H>       The type of the Right value in the eighth input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param d         The fourth input Either.
+     * @param e         The fifth input Either.
+     * @param f         The sixth input Either.
+     * @param g         The seventh input Either.
+     * @param h         The eighth input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
 
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
@@ -519,6 +674,35 @@ public sealed interface Either<L, R>
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh));
     }
 
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <D>       The type of the Right value in the fourth input Either.
+     * @param <E>       The type of the Right value in the fifth input Either.
+     * @param <F>       The type of the Right value in the sixth input Either.
+     * @param <G>       The type of the Right value in the seventh input Either.
+     * @param <H>       The type of the Right value in the eighth input Either.
+     * @param <I>       The type of the Right value in the ninth input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param d         The fourth input Either.
+     * @param e         The fifth input Either.
+     * @param f         The sixth input Either.
+     * @param g         The seventh input Either.
+     * @param h         The eighth input Either.
+     * @param i         The ninth input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, I, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
             final Either<NonEmptyList<R>, A> a,
@@ -538,6 +722,37 @@ public sealed interface Either<L, R>
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh, ii));
     }
 
+    /**
+     * Combines or accumulates multiple Either into a single Either.
+     * If all the input Either are Right, then
+     * the transform function is applied to their Right values and the result is returned as a Right. If any of the
+     * input Either are Left, then the Left values are accumulated and returned as a NonEmptyList of errors.
+     *
+     * @param <R>       The type of the error value in the input Either and the resulting NonEmptyList of errors.
+     * @param <A>       The type of the Right value in the first input Either.
+     * @param <B>       The type of the Right value in the second input Either.
+     * @param <C>       The type of the Right value in the third input Either.
+     * @param <D>       The type of the Right value in the fourth input Either.
+     * @param <E>       The type of the Right value in the fifth input Either.
+     * @param <F>       The type of the Right value in the sixth input Either.
+     * @param <G>       The type of the Right value in the seventh input Either.
+     * @param <H>       The type of the Right value in the eighth input Either.
+     * @param <I>       The type of the Right value in the ninth input Either.
+     * @param <J>       The type of the Right value in the tenth input Either.
+     * @param <Z>       The type of the result when transforming the Right values with the given transform function.
+     * @param a         The first input Either.
+     * @param b         The second input Either.
+     * @param c         The third input Either.
+     * @param d         The fourth input Either.
+     * @param e         The fifth input Either.
+     * @param f         The sixth input Either.
+     * @param g         The seventh input Either.
+     * @param h         The eighth input Either.
+     * @param i         The ninth input Either.
+     * @param j         The tenth input Either.
+     * @param transform The function to transform the Right values of the input Either into a result of type Z.
+     * @return Either<NonEmptyList < R>, Z> - Either containing the accumulated errors as a NonEmptyList or the transformed right value as a Right.
+     */
     @SuppressWarnings("squid:S107")
     static <R, A, B, C, D, E, F, G, H, I, J, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
             final Either<NonEmptyList<R>, A> a,
