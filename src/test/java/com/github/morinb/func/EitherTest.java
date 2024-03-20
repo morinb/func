@@ -1706,4 +1706,1337 @@ class EitherTest
         assertEquals("Right(null)", Either.right(null).toString());
     }
 
+
+    @Test
+    void test_zipOrAccumulateNel10()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> sum = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(550), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left4()
+    {
+        final Either<NonEmptyList<String>, Integer> either4 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left5()
+    {
+        final Either<NonEmptyList<String>, Integer> either5 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left6()
+    {
+        final Either<NonEmptyList<String>, Integer> either6 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left7()
+    {
+        final Either<NonEmptyList<String>, Integer> either7 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left8()
+    {
+        final Either<NonEmptyList<String>, Integer> either8 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left9()
+    {
+        final Either<NonEmptyList<String>, Integer> either9 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either10 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel10Left10()
+    {
+        final Either<NonEmptyList<String>, Integer> either10 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(100);
+
+        final Function10<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, either10, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> sum = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(450), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left4()
+    {
+        final Either<NonEmptyList<String>, Integer> either4 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left5()
+    {
+        final Either<NonEmptyList<String>, Integer> either5 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left6()
+    {
+        final Either<NonEmptyList<String>, Integer> either6 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left7()
+    {
+        final Either<NonEmptyList<String>, Integer> either7 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left8()
+    {
+        final Either<NonEmptyList<String>, Integer> either8 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either9 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel9Left9()
+    {
+        final Either<NonEmptyList<String>, Integer> either9 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(90);
+
+
+        final Function9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8, param9) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, either9, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> sum = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(360), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left4()
+    {
+        final Either<NonEmptyList<String>, Integer> either4 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left5()
+    {
+        final Either<NonEmptyList<String>, Integer> either5 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left6()
+    {
+        final Either<NonEmptyList<String>, Integer> either6 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left7()
+    {
+        final Either<NonEmptyList<String>, Integer> either7 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either8 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel8Left8()
+    {
+        final Either<NonEmptyList<String>, Integer> either8 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(80);
+
+
+        final Function8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7, param8) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, either8, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> sum = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(280), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7Left4()
+    {
+        final Either<NonEmptyList<String>, Integer> either4 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7Left5()
+    {
+        final Either<NonEmptyList<String>, Integer> either5 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7Left6()
+    {
+        final Either<NonEmptyList<String>, Integer> either6 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either7 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel7Left7()
+    {
+        final Either<NonEmptyList<String>, Integer> either7 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(70);
+
+        final Function7<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6, param7) ->
+                param1 + param2 + param3 + param4 + param5 + param6 + param7;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, either7, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel6()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+
+        final Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> sum = (param1, param2, param3, param4, param5, param6) ->
+                param1 + param2 + param3 + param4 + param5 + param6;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(210), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel6Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+
+        final Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6) ->
+                param1 + param2 + param3 + param4 + param5 + param6;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel6Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+
+        final Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6) ->
+                param1 + param2 + param3 + param4 + param5 + param6;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel6Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+
+        final Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6) ->
+                param1 + param2 + param3 + param4 + param5 + param6;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel6Left4()
+    {
+        final Either<NonEmptyList<String>, Integer> either4 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+
+        final Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6) ->
+                param1 + param2 + param3 + param4 + param5 + param6;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel6Left5()
+    {
+        final Either<NonEmptyList<String>, Integer> either5 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either6 = Either.right(60);
+
+        final Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6) ->
+                param1 + param2 + param3 + param4 + param5 + param6;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel6Left6()
+    {
+        final Either<NonEmptyList<String>, Integer> either6 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(60);
+
+        final Function6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5, param6) ->
+                param1 + param2 + param3 + param4 + param5 + param6;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, either6, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+
+    @Test
+    void test_zipOrAccumulateNel5()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+
+        final Function5<Integer, Integer, Integer, Integer, Integer, Integer> sum = (param1, param2, param3, param4, param5) ->
+                param1 + param2 + param3 + param4 + param5;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(150), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel5Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+
+        final Function5<Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5) ->
+                param1 + param2 + param3 + param4 + param5;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel5Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+
+        final Function5<Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5) ->
+                param1 + param2 + param3 + param4 + param5;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel5Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+
+        final Function5<Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5) ->
+                param1 + param2 + param3 + param4 + param5;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel5Left4()
+    {
+        final Either<NonEmptyList<String>, Integer> either4 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either5 = Either.right(50);
+
+        final Function5<Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5) ->
+                param1 + param2 + param3 + param4 + param5;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel5Left5()
+    {
+        final Either<NonEmptyList<String>, Integer> either5 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(50);
+
+        final Function5<Integer, Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4, param5) ->
+                param1 + param2 + param3 + param4 + param5;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, either5, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+
+    @Test
+    void test_zipOrAccumulateNel4()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+
+        final Function4<Integer, Integer, Integer, Integer, Integer> sum = (param1, param2, param3, param4) ->
+                param1 + param2 + param3 + param4;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(100), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel4Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+
+        final Function4<Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4) ->
+                param1 + param2 + param3 + param4;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel4Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+
+        final Function4<Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4) ->
+                param1 + param2 + param3 + param4;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel4Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either4 = Either.right(40);
+
+        final Function4<Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4) ->
+                param1 + param2 + param3 + param4;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel4Left4()
+    {
+        final Either<NonEmptyList<String>, Integer> either4 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(40);
+
+        final Function4<Integer, Integer, Integer, Integer, Integer> concat = (param1, param2, param3, param4) ->
+                param1 + param2 + param3 + param4;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, either4, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+
+    @Test
+    void test_zipOrAccumulateNel3()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+
+        final Function3<Integer, Integer, Integer, Integer> sum = (param1, param2, param3) ->
+                param1 + param2 + param3;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(60), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel3Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+
+        final Function3<Integer, Integer, Integer, Integer> concat = (param1, param2, param3) ->
+                param1 + param2 + param3;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel3Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either3 = Either.right(30);
+
+        final Function3<Integer, Integer, Integer, Integer> concat = (param1, param2, param3) ->
+                param1 + param2 + param3;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel3Left3()
+    {
+        final Either<NonEmptyList<String>, Integer> either3 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(30);
+
+        final Function3<Integer, Integer, Integer, Integer> concat = (param1, param2, param3) ->
+                param1 + param2 + param3;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, either3, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel2()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(10);
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+
+        final Function2<Integer, Integer, Integer> sum = Integer::sum;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, sum);
+
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(30), result.get());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel2Left1()
+    {
+        final Either<NonEmptyList<String>, Integer> either1 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either2 = Either.right(20);
+
+        final Function2<Integer, Integer, Integer> concat = Integer::sum;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+    @Test
+    void test_zipOrAccumulateNel2Left2()
+    {
+        final Either<NonEmptyList<String>, Integer> either2 = Either.left(NonEmptyList.of("Error1"));
+        final Either<NonEmptyList<String>, Integer> either1 = Either.right(20);
+
+        final Function2<Integer, Integer, Integer> concat = Integer::sum;
+
+        final var result = Either.zipOrAccumulateNel(either1, either2, concat);
+
+        assertTrue(result.isLeft());
+
+        assertEquals(NonEmptyList.of("Error1"), result.getLeft());
+    }
+
+
+
 }

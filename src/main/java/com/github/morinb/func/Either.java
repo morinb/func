@@ -31,7 +31,8 @@ import java.util.function.Consumer;
  */
 public sealed interface Either<L, R>
         extends Value<R>, Serializable
-        permits Either.Left, Either.Right {
+        permits Either.Left, Either.Right
+{
 
 
     /**
@@ -42,7 +43,8 @@ public sealed interface Either<L, R>
      * @param value the value for the right side of the instance
      * @return a new instance of Right with the specified value
      */
-    static <L, R> Right<L, R> right(final R value) {
+    static <L, R> Right<L, R> right(final R value)
+    {
         return new Right<>(value);
     }
 
@@ -54,108 +56,20 @@ public sealed interface Either<L, R>
      * @param value the value for the left side of the instance
      * @return a new instance of Left with the specified value
      */
-    static <L, R> Left<L, R> left(final L value) {
+    static <L, R> Left<L, R> left(final L value)
+    {
         return new Left<>(value);
     }
 
-    static <L, R> Either<L, R> noop() {
+    static <L, R> Either<L, R> noop()
+    {
         return new Right<>(null);
     }
 
-    static <L, R> Either<L, R> empty() {
+    static <L, R> Either<L, R> empty()
+    {
         return new Left<>(null);
     }
-
-    default <X extends Throwable> R getOrElseThrow(Function1<? super L, X> exceptionMapper) throws X {
-        Objects.requireNonNull(exceptionMapper, "exceptionMapper is null");
-        if (isEmpty()) {
-            throw exceptionMapper.apply(getLeft());
-        }
-        return get();
-    }
-
-    /**
-     * Checks if the instance is of the Left type.
-     *
-     * @return true if the instance is of the Left type, false otherwise.
-     */
-    boolean isLeft();
-
-    /**
-     * Checks if the instance is of the Right type.
-     *
-     * @return true if the instance is of the Right type, false otherwise.
-     */
-    boolean isRight();
-
-
-    /**
-     * Retrieves the value of the left side of the Either instance.
-     *
-     * @return The value of the left side.
-     */
-    L getLeft();
-
-    @Override
-    default boolean isEmpty() {
-        return isLeft();
-    }
-
-    @Override
-    default Iterator<R> iterator() {
-        if (isRight()) {
-            return new Iterator<>() {
-                boolean hasNext = true;
-
-                @Override
-                public boolean hasNext() {
-                    return hasNext;
-                }
-
-                @Override
-                public R next() {
-                    if (!hasNext) {
-                        throw new NoSuchElementException();
-                    }
-                    hasNext = false;
-                    return get();
-                }
-            };
-        } else {
-            return new Iterator<>() {
-                @Override
-                public boolean hasNext() {
-                    return false;
-                }
-
-                @Override
-                public R next() {
-                    throw new NoSuchElementException();
-                }
-
-            };
-        }
-
-    }
-
-    default Either<L, R> peek(Consumer<R> action)
-    {
-        Objects.requireNonNull(action, "action is null");
-        if (isRight()) {
-            action.accept(get());
-        }
-        return this;
-    }
-
-    default Either<L, R> peekLeft(Consumer<L> action)
-    {
-        Objects.requireNonNull(action, "action is null");
-        if (isLeft()) {
-            action.accept(getLeft());
-        }
-        return this;
-    }
-
 
     /**
      * Zips or accumulates the values from multiple Either instances. If all input Either instances are Right,
@@ -175,7 +89,8 @@ public sealed interface Either<L, R>
             final Either<R, A> a,
             final Either<R, B> b,
             final Function2<A, B, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb));
@@ -202,7 +117,8 @@ public sealed interface Either<L, R>
             final Either<R, B> b,
             final Either<R, C> c,
             final Function3<A, B, C, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, c, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc));
@@ -232,7 +148,8 @@ public sealed interface Either<L, R>
             final Either<R, C> c,
             final Either<R, D> d,
             final Function4<A, B, C, D, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, c, d, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd));
@@ -265,7 +182,8 @@ public sealed interface Either<L, R>
             final Either<R, D> d,
             final Either<R, E> e,
             final Function5<A, B, C, D, E, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, c, d, e, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee));
@@ -301,7 +219,8 @@ public sealed interface Either<L, R>
             final Either<R, E> e,
             final Either<R, F> f,
             final Function6<A, B, C, D, E, F, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, c, d, e, f, Either.noop(), Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff));
@@ -341,7 +260,8 @@ public sealed interface Either<L, R>
             final Either<R, F> f,
             final Either<R, G> g,
             final Function7<A, B, C, D, E, F, G, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, c, d, e, f, g, Either.noop(), Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg));
@@ -384,12 +304,12 @@ public sealed interface Either<L, R>
             final Either<R, G> g,
             final Either<R, H> h,
             final Function8<A, B, C, D, E, F, G, H, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, c, d, e, f, g, h, Either.noop(), Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh));
     }
-
 
     /**
      * Zips or accumulates the values from multiple Either instances. If all input Either instances are Right,
@@ -431,12 +351,12 @@ public sealed interface Either<L, R>
             final Either<R, H> h,
             final Either<R, I> i,
             final Function9<A, B, C, D, E, F, G, H, I, Z> transform
-    ) {
+    )
+    {
         return zipOrAccumulate(
                 a, b, c, d, e, f, g, h, i, Either.noop(),
                 (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh, ii));
     }
-
 
     /**
      * Zips or accumulates the values from multiple Either instances. If all input Either instances are Right,
@@ -481,18 +401,278 @@ public sealed interface Either<L, R>
             final Either<R, I> i,
             final Either<R, J> j,
             final Function10<A, B, C, D, E, F, G, H, I, J, Z> transform
-    ) {
+    )
+    {
         final var eithers = FList.of(a, b, c, d, e, f, g, h, i, j);
 
         final var errors = eithers
                 .filter(Either::isLeft)
                 .map(Either::getLeft);
 
-        if (errors.isEmpty()) {
+        if (errors.isEmpty())
+        {
             return right(transform.apply(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get(), i.get(), j.get()));
-        } else {
+        }
+        else
+        {
             return left(NonEmptyList.of(errors));
         }
+    }
+
+    static <R, A, B, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Function2<A, B, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb));
+    }
+
+    static <R, A, B, C, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Function3<A, B, C, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, c, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc));
+    }
+
+    static <R, A, B, C, D, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Either<NonEmptyList<R>, D> d,
+            final Function4<A, B, C, D, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, c, d, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd));
+    }
+
+    static <R, A, B, C, D, E, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Either<NonEmptyList<R>, D> d,
+            final Either<NonEmptyList<R>, E> e,
+            final Function5<A, B, C, D, E, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, c, d, e, Either.noop(), Either.noop(), Either.noop(), Either.noop(), Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee));
+    }
+
+    static <R, A, B, C, D, E, F, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Either<NonEmptyList<R>, D> d,
+            final Either<NonEmptyList<R>, E> e,
+            final Either<NonEmptyList<R>, F> f,
+            final Function6<A, B, C, D, E, F, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, c, d, e, f, Either.noop(), Either.noop(), Either.noop(), Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff));
+    }
+
+    @SuppressWarnings("squid:S107")
+    static <R, A, B, C, D, E, F, G, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Either<NonEmptyList<R>, D> d,
+            final Either<NonEmptyList<R>, E> e,
+            final Either<NonEmptyList<R>, F> f,
+            final Either<NonEmptyList<R>, G> g,
+            final Function7<A, B, C, D, E, F, G, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, c, d, e, f, g, Either.noop(), Either.noop(), Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg));
+    }
+
+    @SuppressWarnings("squid:S107")
+    static <R, A, B, C, D, E, F, G, H, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Either<NonEmptyList<R>, D> d,
+            final Either<NonEmptyList<R>, E> e,
+            final Either<NonEmptyList<R>, F> f,
+            final Either<NonEmptyList<R>, G> g,
+            final Either<NonEmptyList<R>, H> h,
+            final Function8<A, B, C, D, E, F, G, H, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, c, d, e, f, g, h, Either.noop(), Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh));
+    }
+
+    @SuppressWarnings("squid:S107")
+    static <R, A, B, C, D, E, F, G, H, I, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Either<NonEmptyList<R>, D> d,
+            final Either<NonEmptyList<R>, E> e,
+            final Either<NonEmptyList<R>, F> f,
+            final Either<NonEmptyList<R>, G> g,
+            final Either<NonEmptyList<R>, H> h,
+            final Either<NonEmptyList<R>, I> i,
+            final Function9<A, B, C, D, E, F, G, H, I, Z> transform
+    )
+    {
+        return zipOrAccumulateNel(
+                a, b, c, d, e, f, g, h, i, Either.noop(),
+                (aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) -> transform.apply(aa, bb, cc, dd, ee, ff, gg, hh, ii));
+    }
+
+    @SuppressWarnings("squid:S107")
+    static <R, A, B, C, D, E, F, G, H, I, J, Z> Either<NonEmptyList<R>, Z> zipOrAccumulateNel(
+            final Either<NonEmptyList<R>, A> a,
+            final Either<NonEmptyList<R>, B> b,
+            final Either<NonEmptyList<R>, C> c,
+            final Either<NonEmptyList<R>, D> d,
+            final Either<NonEmptyList<R>, E> e,
+            final Either<NonEmptyList<R>, F> f,
+            final Either<NonEmptyList<R>, G> g,
+            final Either<NonEmptyList<R>, H> h,
+            final Either<NonEmptyList<R>, I> i,
+            final Either<NonEmptyList<R>, J> j,
+            final Function10<A, B, C, D, E, F, G, H, I, J, Z> transform
+    )
+    {
+        final var eithers = FList.of(a, b, c, d, e, f, g, h, i, j);
+
+        final var errors = eithers
+                .filter(Either::isLeft)
+                .map(Either::getLeft)
+                .flatMap(NonEmptyList::toFList);
+
+        if (errors.isEmpty())
+        {
+            return right(transform.apply(a.get(), b.get(), c.get(), d.get(), e.get(), f.get(), g.get(), h.get(), i.get(), j.get()));
+        }
+        else
+        {
+            return left(NonEmptyList.of(errors));
+        }
+    }
+
+    /**
+     * Checks if the instance is of the Left type.
+     *
+     * @return true if the instance is of the Left type, false otherwise.
+     */
+    boolean isLeft();
+
+    /**
+     * Checks if the instance is of the Right type.
+     *
+     * @return true if the instance is of the Right type, false otherwise.
+     */
+    boolean isRight();
+
+    /**
+     * Retrieves the value of the left side of the Either instance.
+     *
+     * @return The value of the left side.
+     */
+    L getLeft();
+
+    default <X extends Throwable> R getOrElseThrow(Function1<? super L, X> exceptionMapper) throws X
+    {
+        Objects.requireNonNull(exceptionMapper, "exceptionMapper is null");
+        if (isEmpty())
+        {
+            throw exceptionMapper.apply(getLeft());
+        }
+        return get();
+    }
+
+    @Override
+    default boolean isEmpty()
+    {
+        return isLeft();
+    }
+
+    @Override
+    default Iterator<R> iterator()
+    {
+        if (isRight())
+        {
+            return new Iterator<>()
+            {
+                boolean hasNext = true;
+
+                @Override
+                public boolean hasNext()
+                {
+                    return hasNext;
+                }
+
+                @Override
+                public R next()
+                {
+                    if (!hasNext)
+                    {
+                        throw new NoSuchElementException();
+                    }
+                    hasNext = false;
+                    return get();
+                }
+            };
+        }
+        else
+        {
+            return new Iterator<>()
+            {
+                @Override
+                public boolean hasNext()
+                {
+                    return false;
+                }
+
+                @Override
+                public R next()
+                {
+                    throw new NoSuchElementException();
+                }
+
+            };
+        }
+
+    }
+
+    default Either<L, R> peek(Consumer<R> action)
+    {
+        Objects.requireNonNull(action, "action is null");
+        if (isRight())
+        {
+            action.accept(get());
+        }
+        return this;
+    }
+
+    default Either<L, R> peekLeft(Consumer<L> action)
+    {
+        Objects.requireNonNull(action, "action is null");
+        if (isLeft())
+        {
+            action.accept(getLeft());
+        }
+        return this;
     }
 
     /**
@@ -503,10 +683,14 @@ public sealed interface Either<L, R>
      * @return A new Either containing the mapped value, or the same Either if it is a left value.
      */
     @SuppressWarnings("unchecked")
-    default <T> Either<L, T> map(final Function1<? super R, ? extends T> mapper) {
-        if (isRight()) {
+    default <T> Either<L, T> map(final Function1<? super R, ? extends T> mapper)
+    {
+        if (isRight())
+        {
             return right(mapper.apply(get()));
-        } else {
+        }
+        else
+        {
             return (Either<L, T>) this;
         }
     }
@@ -519,11 +703,15 @@ public sealed interface Either<L, R>
      * @return a new Either object with the result of applying the mapper function to the left value
      */
     @SuppressWarnings("unchecked")
-    default <T> Either<T, R> mapLeft(final Function1<? super L, ? extends T> mapper) {
+    default <T> Either<T, R> mapLeft(final Function1<? super L, ? extends T> mapper)
+    {
         Objects.requireNonNull(mapper, "mapper is null");
-        if (isLeft()) {
+        if (isLeft())
+        {
             return left(mapper.apply(getLeft()));
-        } else {
+        }
+        else
+        {
             return (Either<T, R>) this;
         }
     }
@@ -538,12 +726,16 @@ public sealed interface Either<L, R>
      * @param <U>         the type of the right value of the Either
      * @return a new Either instance with the transformed values
      */
-    default <T, U> Either<T, U> bimap(final Function1<? super L, ? extends T> leftMapper, final Function1<? super R, ? extends U> rightMapper) {
+    default <T, U> Either<T, U> bimap(final Function1<? super L, ? extends T> leftMapper, final Function1<? super R, ? extends U> rightMapper)
+    {
         Objects.requireNonNull(leftMapper, "leftMapper is null");
         Objects.requireNonNull(rightMapper, "rightMapper is null");
-        if (isLeft()) {
+        if (isLeft())
+        {
             return left(leftMapper.apply(getLeft()));
-        } else {
+        }
+        else
+        {
             return right(rightMapper.apply(get()));
         }
     }
@@ -559,17 +751,22 @@ public sealed interface Either<L, R>
      * @return the result of the function application
      * @throws NullPointerException if leftMapper is null or rightMapper is null
      */
-    default <U> U fold(final Function1<? super L, ? extends U> leftMapper, final Function1<? super R, ? extends U> rightMapper) {
+    default <U> U fold(final Function1<? super L, ? extends U> leftMapper, final Function1<? super R, ? extends U> rightMapper)
+    {
         Objects.requireNonNull(leftMapper, "leftMapper is null");
         Objects.requireNonNull(rightMapper, "rightMapper is null");
-        if (isRight()) {
+        if (isRight())
+        {
             return rightMapper.apply(get());
-        } else {
+        }
+        else
+        {
             return leftMapper.apply(getLeft());
         }
     }
 
-    final class Left<L, R> implements Either<L, R> {
+    final class Left<L, R> implements Either<L, R>
+    {
 
         /**
          * Represents the value stored in an instance of Left.
@@ -583,7 +780,8 @@ public sealed interface Either<L, R>
          *
          * @param value the value for the left side of the instance
          */
-        public Left(final L value) {
+        public Left(final L value)
+        {
             this.value = value;
         }
 
@@ -594,7 +792,8 @@ public sealed interface Either<L, R>
          * {@code false} otherwise.
          */
         @Override
-        public boolean isLeft() {
+        public boolean isLeft()
+        {
             return true;
         }
 
@@ -604,7 +803,8 @@ public sealed interface Either<L, R>
          * @return {@code false} since this object represents the left side of an Either object
          */
         @Override
-        public boolean isRight() {
+        public boolean isRight()
+        {
             return false;
         }
 
@@ -615,7 +815,8 @@ public sealed interface Either<L, R>
          * @throws NoSuchElementException if called on an instance of Left.
          */
         @Override
-        public R get() {
+        public R get()
+        {
             throw new NoSuchElementException("Calling get on a Left");
         }
 
@@ -625,7 +826,8 @@ public sealed interface Either<L, R>
          * @return the left value
          */
         @Override
-        public L getLeft() {
+        public L getLeft()
+        {
             return value;
         }
 
@@ -658,7 +860,8 @@ public sealed interface Either<L, R>
      * @param <L> the type of the Left value
      * @param <R> the type of the Right value
      */
-    final class Right<L, R> implements Either<L, R> {
+    final class Right<L, R> implements Either<L, R>
+    {
         /**
          * Value stored in an instance of the Right class.
          */
@@ -667,7 +870,8 @@ public sealed interface Either<L, R>
         /**
          * Represents a Right value in an Either object.
          */
-        public Right(final R value) {
+        public Right(final R value)
+        {
             this.value = value;
         }
 
@@ -677,7 +881,8 @@ public sealed interface Either<L, R>
          * @return {@code true} if the object is at the left, {@code false} otherwise.
          */
         @Override
-        public boolean isLeft() {
+        public boolean isLeft()
+        {
             return false;
         }
 
@@ -687,7 +892,8 @@ public sealed interface Either<L, R>
          * @return true if this instance represents a right value, false otherwise.
          */
         @Override
-        public boolean isRight() {
+        public boolean isRight()
+        {
             return true;
         }
 
@@ -697,7 +903,8 @@ public sealed interface Either<L, R>
          * @return the value of the Right type object
          */
         @Override
-        public R get() {
+        public R get()
+        {
             return value;
         }
 
@@ -708,7 +915,8 @@ public sealed interface Either<L, R>
          * @throws NoSuchElementException if this is a Right instance.
          */
         @Override
-        public L getLeft() {
+        public L getLeft()
+        {
             throw new NoSuchElementException("Calling getLeft on a Right");
         }
 
