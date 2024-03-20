@@ -22,7 +22,7 @@
 
     <groupId>com.github.morinb</groupId>
     <artifactId>func</artifactId>
-    <version>1.6</version>
+    <version>1.7-SNAPSHOT</version>
 
     <name>Func</name>
     <url>https://github.com/morinb/func</url>
