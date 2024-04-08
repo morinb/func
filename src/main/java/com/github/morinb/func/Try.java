@@ -27,8 +27,8 @@ import java.util.function.Function;
  * @param <T> The type of the value contained in the Try instance.
  */
 public sealed interface Try<T>
-    extends Value<T>
-    permits Try.Success, Try.Failure
+        extends Value<T>
+        permits Try.Success, Try.Failure
 {
 
     /**
@@ -122,13 +122,31 @@ public sealed interface Try<T>
      */
     boolean isSuccess();
 
+    @SuppressWarnings("unchecked")
+    default <X extends Throwable> Try<T> recover(Class<X> exceptionClass, Function<? super X, ? extends T> func)
+    {
+        Objects.requireNonNull(func, "func is null");
+        Objects.requireNonNull(exceptionClass, "exceptionClass is null");
+        if (isFailure())
+        {
+            final var cause = getCause();
+            if (exceptionClass.isAssignableFrom(cause.getClass()))
+            {
+                return Try.of(() -> func.apply((X) cause));
+            }
+        }
+        return this;
+    }
+
+
 
     /**
      * The Success class represents a successful result in the Try monad.
      *
      * @param <T> The type of the value contained in the Success instance.
      */
-    record Success<T>(T value) implements Try<T> {
+    record Success<T>(T value) implements Try<T>
+    {
 
         @Override
         public Throwable getCause()
@@ -144,23 +162,29 @@ public sealed interface Try<T>
         }
 
         @Override
-        public boolean isEmpty() {
+        public boolean isEmpty()
+        {
             return false;
         }
 
         @Override
-        public Iterator<T> iterator() {
-            return new Iterator<>() {
+        public Iterator<T> iterator()
+        {
+            return new Iterator<>()
+            {
                 private boolean hasNext = true;
 
                 @Override
-                public boolean hasNext() {
+                public boolean hasNext()
+                {
                     return hasNext;
                 }
 
                 @Override
-                public T next() {
-                    if (!hasNext) {
+                public T next()
+                {
+                    if (!hasNext)
+                    {
                         throw new NoSuchElementException();
                     }
                     hasNext = false;
@@ -176,7 +200,8 @@ public sealed interface Try<T>
         }
 
         @Override
-        public boolean isSuccess() {
+        public boolean isSuccess()
+        {
             return true;
         }
     }
@@ -186,7 +211,8 @@ public sealed interface Try<T>
      *
      * @param <T> The type of the value contained in the Failure instance.
      */
-    record Failure<T>(Throwable throwable) implements Try<T> {
+    record Failure<T>(Throwable throwable) implements Try<T>
+    {
 
         @Override
         public Throwable getCause()
@@ -201,20 +227,25 @@ public sealed interface Try<T>
         }
 
         @Override
-        public boolean isEmpty() {
+        public boolean isEmpty()
+        {
             return true;
         }
 
         @Override
-        public Iterator<T> iterator() {
-            return new Iterator<>() {
+        public Iterator<T> iterator()
+        {
+            return new Iterator<>()
+            {
                 @Override
-                public boolean hasNext() {
+                public boolean hasNext()
+                {
                     return false;
                 }
 
                 @Override
-                public T next() {
+                public T next()
+                {
                     throw new NoSuchElementException();
                 }
             };
@@ -227,7 +258,8 @@ public sealed interface Try<T>
         }
 
         @Override
-        public boolean isSuccess() {
+        public boolean isSuccess()
+        {
             return false;
         }
 

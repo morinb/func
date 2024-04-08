@@ -31,7 +31,7 @@ import java.util.function.Predicate;
  * @param head the first element of the list
  * @param tail the list whose elements are to be appended
  */
-public record FList<T>(T head, com.github.morinb.func.FList<T> tail)
+public record FList<T>(T head, FList<T> tail)
 {
 
     /**
