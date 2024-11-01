@@ -122,6 +122,15 @@ public sealed interface Try<T>
      */
     boolean isSuccess();
 
+    /**
+     * Recovers from a failure by applying the specified function if the cause of the failure is of the given exception type.
+     *
+     * @param <X>            The type of the exception to handle
+     * @param exceptionClass The class of the exception to handle
+     * @param func           The function to apply to the exception to recover
+     * @return A new Try instance with the result of the recovery function applied if the exception matches,
+     * or this Try instance if it is not a failure or the exception does not match.
+     */
     @SuppressWarnings("unchecked")
     default <X extends Throwable> Try<T> recover(Class<X> exceptionClass, Function<? super X, ? extends T> func)
     {
