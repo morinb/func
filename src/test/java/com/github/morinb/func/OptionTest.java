@@ -171,14 +171,14 @@ class OptionTest
     @Test
     void eitherSerializedShouldDeserialize()
     {
-        var option = Option.some(new ArrayList<>(List.of("Un", "Deux", "Trois")));
+        final var option = Option.some(new ArrayList<>(List.of("Un", "Deux", "Trois")));
 
-        var copyOption = Serializers.deserialize(Serializers.serialize(option));
+        final var copyOption = Serializers.deserialize(Serializers.serialize(option));
 
         assertEquals(option, copyOption);
 
-        var none = Option.none();
-        var copyNone = Serializers.deserialize(Serializers.serialize(none));
+        final var none = Option.none();
+        final var copyNone = Serializers.deserialize(Serializers.serialize(none));
 
         assertEquals(none, copyNone);
 

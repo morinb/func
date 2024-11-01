@@ -33,14 +33,14 @@ class CheckedFunction6Test
     void testAndThen() throws Throwable
     {
 
-        CheckedFunction6<Integer, Integer, Integer, Integer, Integer, Integer, String> checkFunction6 = (param1, param2, param3, param4, param5, param6) -> TEST_RESULT;
-        CheckedFunction1<String, String> afterFunction = String::toUpperCase;
+        final CheckedFunction6<Integer, Integer, Integer, Integer, Integer, Integer, String> checkFunction6 = (param1, param2, param3, param4, param5, param6) -> TEST_RESULT;
+        final CheckedFunction1<String, String> afterFunction = String::toUpperCase;
 
-        var resultFunction = checkFunction6.andThen(afterFunction);
+        final var resultFunction = checkFunction6.andThen(afterFunction);
 
         assertNotNull(resultFunction, "Function must not be null");
 
-        var result = resultFunction.apply(TEST_PARAM, TEST_PARAM, TEST_PARAM, TEST_PARAM, TEST_PARAM, TEST_PARAM);
+        final var result = resultFunction.apply(TEST_PARAM, TEST_PARAM, TEST_PARAM, TEST_PARAM, TEST_PARAM, TEST_PARAM);
 
         assertEquals(TEST_RESULT.toUpperCase(), result, "The result is not as expected");
     }
@@ -48,7 +48,7 @@ class CheckedFunction6Test
     @Test
     void testAndThenThrowsNullPointerException()
     {
-        CheckedFunction6<Integer, Integer, Integer, Integer, Integer, Integer, String> checkFunction6 = (param1, param2, param3, param4, param5, param6) -> TEST_RESULT;
+        final CheckedFunction6<Integer, Integer, Integer, Integer, Integer, Integer, String> checkFunction6 = (param1, param2, param3, param4, param5, param6) -> TEST_RESULT;
 
         assertThrows(NullPointerException.class, () -> checkFunction6.andThen(null));
     }
@@ -59,23 +59,23 @@ class CheckedFunction6Test
     @Test
     void curried()
     {
-        CheckedFunction6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> function = (p1, p2, p3, p4, p5, p6) -> p1 + p2 + p3 + p4 + p5 + p6;
+        final CheckedFunction6<Integer, Integer, Integer, Integer, Integer, Integer, Integer> function = (p1, p2, p3, p4, p5, p6) -> p1 + p2 + p3 + p4 + p5 + p6;
 
         // Do currying.
-        var curriedFunction = function.curried();
+        final var curriedFunction = function.curried();
 
         try
         {
             // Apply arguments one by one.
-            var afterFirstArgument = curriedFunction.apply(1);
-            var afterSecondArgument = afterFirstArgument.apply(2);
-            var afterThirdArgument = afterSecondArgument.apply(3);
-            var afterFourthArgument = afterThirdArgument.apply(4);
-            var afterFifthArgument = afterFourthArgument.apply(5);
-            var result = afterFifthArgument.apply(6);
+            final var afterFirstArgument = curriedFunction.apply(1);
+            final var afterSecondArgument = afterFirstArgument.apply(2);
+            final var afterThirdArgument = afterSecondArgument.apply(3);
+            final var afterFourthArgument = afterThirdArgument.apply(4);
+            final var afterFifthArgument = afterFourthArgument.apply(5);
+            final var result = afterFifthArgument.apply(6);
 
             assertEquals(21, result);
-        } catch (Throwable throwable)
+        } catch (final Throwable throwable)
         {
             fail("Test failed due to an exception: " + throwable.getMessage());
         }

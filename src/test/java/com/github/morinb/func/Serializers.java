@@ -16,7 +16,11 @@
 
 package com.github.morinb.func;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public final class Serializers
 {
@@ -26,23 +30,27 @@ public final class Serializers
     }
 
 
-    public static byte[] serialize(Object obj)
+    public static byte[] serialize(final Object obj)
     {
-        try (ByteArrayOutputStream buf = new ByteArrayOutputStream();
-             ObjectOutputStream stream = new ObjectOutputStream(buf)) {
+        try (final ByteArrayOutputStream buf = new ByteArrayOutputStream();
+             final ObjectOutputStream stream = new ObjectOutputStream(buf))
+        {
             stream.writeObject(obj);
             return buf.toByteArray();
-        } catch (IOException x) {
+        } catch (final IOException x)
+        {
             throw new IllegalStateException("Error serializing object", x);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T deserialize(byte[] objectData)
+    public static <T> T deserialize(final byte[] objectData)
     {
-        try (ObjectInputStream stream = new ObjectInputStream(new ByteArrayInputStream(objectData))) {
+        try (final ObjectInputStream stream = new ObjectInputStream(new ByteArrayInputStream(objectData)))
+        {
             return (T) stream.readObject();
-        } catch (IOException | ClassNotFoundException x) {
+        } catch (final IOException | ClassNotFoundException x)
+        {
             throw new IllegalStateException("Error deserializing object", x);
         }
     }

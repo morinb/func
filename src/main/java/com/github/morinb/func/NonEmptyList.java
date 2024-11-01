@@ -143,8 +143,8 @@ public record NonEmptyList<T>(T head, FList<T> tail)
      */
     public <U> NonEmptyList<U> flatMap(final Function1<T, NonEmptyList<U>> f)
     {
-        var newHead = f.apply(head).head;
-        var newTail = tail.flatMap(t -> f.apply(t).toFList());
+        final var newHead = f.apply(head).head;
+        final var newTail = tail.flatMap(t -> f.apply(t).toFList());
 
         return new NonEmptyList<>(newHead, newTail);
     }
@@ -166,7 +166,7 @@ public record NonEmptyList<T>(T head, FList<T> tail)
      * @return the element at the specified index
      * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &ge; size())
      */
-    public T get(int index)
+    public T get(final int index)
     {
         return index == 0 ? head : tail.get(index - 1);
     }

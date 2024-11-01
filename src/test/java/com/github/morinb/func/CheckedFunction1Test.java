@@ -40,12 +40,12 @@ class CheckedFunction1Test
     @Test
     void testApply_withVariousArguments() throws Throwable
     {
-        CheckedFunction1<String, Integer> function1 = String::length;
+        final CheckedFunction1<String, Integer> function1 = String::length;
         assertEquals(5, function1.apply("12345"));
         assertEquals(0, function1.apply(""));
         assertThrows(NullPointerException.class, () -> function1.apply(null));
 
-        CheckedFunction1<Integer, Boolean> function2 = (Integer i) -> i > 0;
+        final CheckedFunction1<Integer, Boolean> function2 = (Integer i) -> i > 0;
         assertTrue(function2.apply(5));
         assertFalse(function2.apply(-1));
         assertThrows(NullPointerException.class, () -> function2.apply(null));
@@ -60,13 +60,13 @@ class CheckedFunction1Test
     @Test
     void testAndThen_withVariousFunctions() throws Throwable
     {
-        CheckedFunction1<Double, String> doubleToString = dbl -> Double.toString(dbl);
-        CheckedFunction1<String, Integer> function1 = String::length;
+        final CheckedFunction1<Double, String> doubleToString = dbl -> Double.toString(dbl);
+        final CheckedFunction1<String, Integer> function1 = String::length;
         var combinedFunction1 = doubleToString.andThen(function1);
 
         assertEquals(3, combinedFunction1.apply(1.0));
 
-        CheckedFunction1<String, Integer> multiplyByTwo = (String s) -> Integer.parseInt(s) * 2;
+        final CheckedFunction1<String, Integer> multiplyByTwo = (String s) -> Integer.parseInt(s) * 2;
         combinedFunction1 = doubleToString.andThen(multiplyByTwo);
         final var finalCombinedFunction = combinedFunction1;
         assertThrows(NumberFormatException.class, () -> finalCombinedFunction.apply(1.0));
@@ -82,16 +82,16 @@ class CheckedFunction1Test
     @Test
     void testCurried_withVariousFunctions()
     {
-        CheckedFunction1<String, Integer> function1 = String::length;
-        var curriedFunction1 = function1.curried();
+        final CheckedFunction1<String, Integer> function1 = String::length;
+        final var curriedFunction1 = function1.curried();
         assertSame(function1, curriedFunction1);
 
-        CheckedFunction1<Integer, Boolean> function2 = (Integer i) -> i > 0;
-        var curriedFunction2 = function2.curried();
+        final CheckedFunction1<Integer, Boolean> function2 = (Integer i) -> i > 0;
+        final var curriedFunction2 = function2.curried();
         assertSame(function2, curriedFunction2);
 
-        CheckedFunction1<Double, String> function3 = dbl -> Double.toString(dbl);
-        var curriedFunction3 = function3.curried();
+        final CheckedFunction1<Double, String> function3 = dbl -> Double.toString(dbl);
+        final var curriedFunction3 = function3.curried();
         assertSame(function3, curriedFunction3);
     }
 }

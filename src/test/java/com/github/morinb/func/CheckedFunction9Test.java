@@ -30,14 +30,14 @@ class CheckedFunction9Test
     @Test
     void testAndThenSuccessful() throws Throwable
     {
-        CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> func =
+        final CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> func =
                 (i1, i2, i3, i4, i5, i6, i7, i8, i9) -> i1 + i2 + i3 + i4 + i5 + i6 + i7 + i8 + i9;
 
-        CheckedFunction1<Integer, String> after = a -> "Result: " + a;
+        final CheckedFunction1<Integer, String> after = a -> "Result: " + a;
 
-        CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String> composedFunc = func.andThen(after);
+        final CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String> composedFunc = func.andThen(after);
 
-        String result = composedFunc.apply(1, 1, 1, 1, 1, 1, 1, 1, 1);
+        final String result = composedFunc.apply(1, 1, 1, 1, 1, 1, 1, 1, 1);
 
         assertEquals("Result: 9", result, "AndThen functionality operates as expected");
     }
@@ -46,14 +46,14 @@ class CheckedFunction9Test
     void testAndThenWithExceptionInAfter()
     {
 
-        CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> func =
+        final CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> func =
                 (i1, i2, i3, i4, i5, i6, i7, i8, i9) -> i1 + i2 + i3 + i4 + i5 + i6 + i7 + i8 + i9;
 
-        CheckedFunction1<Integer, String> after = a -> {
+        final CheckedFunction1<Integer, String> after = a -> {
             throw new IllegalArgumentException("Exception in after function");
         };
 
-        CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String> composedFunc = func.andThen(after);
+        final CheckedFunction9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String> composedFunc = func.andThen(after);
 
         assertThrows(IllegalArgumentException.class, () -> composedFunc.apply(1, 1, 1, 1, 1, 1, 1, 1, 1),
                 "AndThen functionality propagates exceptions as expected");

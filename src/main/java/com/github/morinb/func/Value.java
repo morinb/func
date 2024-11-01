@@ -40,7 +40,8 @@ public interface Value<T> extends Iterable<T> {
      * @return The narrowed value.
      */
     @SuppressWarnings("unchecked")
-    static <T> Value<T> narrow(Value<? extends T> value) {
+    static <T> Value<T> narrow(final Value<? extends T> value)
+    {
         return (Value<T>) value;
     }
 
@@ -50,7 +51,8 @@ public interface Value<T> extends Iterable<T> {
      * @param value The value to be checked for containment.
      * @return {@code true} if the value is contained in this Value, {@code false} otherwise.
      */
-    default boolean contains(T value) {
+    default boolean contains(final T value)
+    {
         return exists(e -> Objects.equals(e, value));
     }
 
@@ -61,9 +63,11 @@ public interface Value<T> extends Iterable<T> {
      * @return {@code true} if any element satisfies the predicate, {@code false} otherwise
      * @throws NullPointerException if the predicate is {@code null}
      */
-    default boolean exists(Predicate<? super T> predicate) {
+    default boolean exists(final Predicate<? super T> predicate)
+    {
         Objects.requireNonNull(predicate, "predicate is null");
-        for (T element : this) {
+        for (final T element : this)
+        {
             if (predicate.test(element)) {
                 return true;
             }
@@ -78,7 +82,8 @@ public interface Value<T> extends Iterable<T> {
      * @return {@code true} if all elements satisfy the predicate, {@code false} otherwise
      * @throws NullPointerException if the predicate is {@code null}
      */
-    default boolean forAll(Predicate<? super T> predicate) {
+    default boolean forAll(final Predicate<? super T> predicate)
+    {
         Objects.requireNonNull(predicate, "predicate is null");
         return !exists(predicate.negate());
     }
@@ -90,9 +95,11 @@ public interface Value<T> extends Iterable<T> {
      * @throws NullPointerException if the action is null
      */
     @Override
-    default void forEach(Consumer<? super T> action) {
+    default void forEach(final Consumer<? super T> action)
+    {
         Objects.requireNonNull(action, "action is null");
-        for (T t : this) {
+        for (final T t : this)
+        {
             action.accept(t);
         }
     }
@@ -110,7 +117,8 @@ public interface Value<T> extends Iterable<T> {
      * @param other The value to be returned if this Value is empty.
      * @return The element represented by this Value if it is not empty, otherwise the provided value.
      */
-    default T getOrElse(T other) {
+    default T getOrElse(final T other)
+    {
         return isEmpty() ? other : get();
     }
 
@@ -121,7 +129,8 @@ public interface Value<T> extends Iterable<T> {
      * @return The element represented by this Value, or the result of the supplier function if the Value is noop.
      * @throws NullPointerException if the supplier is null
      */
-    default T getOrElse(Supplier<? extends T> supplier) {
+    default T getOrElse(final Supplier<? extends T> supplier)
+    {
         Objects.requireNonNull(supplier, "supplier is null");
         return isEmpty() ? supplier.get() : get();
     }
@@ -135,7 +144,8 @@ public interface Value<T> extends Iterable<T> {
      * @throws X                    if the Value is noop
      * @throws NullPointerException if the exceptionSupplier is null
      */
-    default <X extends Throwable> T getOrElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
+    default <X extends Throwable> T getOrElseThrow(final Supplier<? extends X> exceptionSupplier) throws X
+    {
         Objects.requireNonNull(exceptionSupplier, "exceptionSupplier is null");
         if (isEmpty()) {
             throw exceptionSupplier.get();
@@ -152,7 +162,8 @@ public interface Value<T> extends Iterable<T> {
      * @return The element represented by this Value, or the result of the supplier function if the Value is noop.
      * @throws NullPointerException if the supplier is null
      */
-    default T getOrElseTry(CheckedFunction0<? extends T> supplier) {
+    default T getOrElseTry(final CheckedFunction0<? extends T> supplier)
+    {
         Objects.requireNonNull(supplier, "supplier is null");
         return isEmpty() ? Try.of(supplier).get() : get();
     }
@@ -202,7 +213,8 @@ public interface Value<T> extends Iterable<T> {
      * @param <L>  The type of the left value.
      * @return An Either object with the specified left value.
      */
-    default <L> Either<L, T> toEither(L left) {
+    default <L> Either<L, T> toEither(final L left)
+    {
         if (this instanceof Either) {
             return ((Either<?, T>) this).mapLeft(ignored -> left);
         } else {

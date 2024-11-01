@@ -16,15 +16,16 @@
 
 package com.github.morinb.func;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LazyTest
 {
@@ -39,8 +40,8 @@ class LazyTest
     @Test
     void testOf_withNormalSupplier()
     {
-        Supplier<String> supplier = () -> "test";
-        var lazy = Lazy.of(supplier);
+        final Supplier<String> supplier = () -> "test";
+        final var lazy = Lazy.of(supplier);
 
         assertFalse(lazy.isEvaluated());
         assertEquals("test", lazy.get());
@@ -50,8 +51,8 @@ class LazyTest
     @Test
     void testOf_withLazySupplier()
     {
-        var lazy = Lazy.of(() -> "test");
-        var lazy2 = Lazy.of(lazy);
+        final var lazy = Lazy.of(() -> "test");
+        final var lazy2 = Lazy.of(lazy);
 
         assertFalse(lazy.isEvaluated());
         assertEquals("test", lazy.get());

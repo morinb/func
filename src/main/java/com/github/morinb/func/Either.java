@@ -829,7 +829,7 @@ public sealed interface Either<L, R>
      * @throws X                    if the value is empty
      * @throws NullPointerException if exceptionMapper is null
      */
-    default <X extends Throwable> R getOrElseThrow(Function1<? super L, X> exceptionMapper) throws X
+    default <X extends Throwable> R getOrElseThrow(final Function1<? super L, X> exceptionMapper) throws X
     {
         Objects.requireNonNull(exceptionMapper, "exceptionMapper is null");
         if (isEmpty())
@@ -899,7 +899,7 @@ public sealed interface Either<L, R>
      * @param action the action to be performed on the value of the Right side
      * @return this Either
      */
-    default Either<L, R> peek(Consumer<R> action)
+    default Either<L, R> peek(final Consumer<R> action)
     {
         Objects.requireNonNull(action, "action is null");
         if (isRight())
@@ -915,7 +915,7 @@ public sealed interface Either<L, R>
      * @param action the action to be performed on the left value, must not be null
      * @return this Either
      */
-    default Either<L, R> peekLeft(Consumer<L> action)
+    default Either<L, R> peekLeft(final Consumer<L> action)
     {
         Objects.requireNonNull(action, "action is null");
         if (isLeft())
@@ -1089,7 +1089,7 @@ public sealed interface Either<L, R>
         }
 
         @Override
-        public boolean equals(Object obj)
+        public boolean equals(final Object obj)
         {
             return (obj == this) || (obj instanceof Either.Left<?, ?> && Objects.equals(value, ((Left<?, ?>) obj).value));
         }
@@ -1180,7 +1180,7 @@ public sealed interface Either<L, R>
         }
 
         @Override
-        public boolean equals(Object obj)
+        public boolean equals(final Object obj)
         {
             return (obj == this) || (obj instanceof Right && Objects.equals(value, ((Right<?, ?>) obj).value));
         }

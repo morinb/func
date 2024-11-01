@@ -148,7 +148,7 @@ class TryTest
     @Test
     void getOrElse_Null_Success()
     {
-        var tryInstance = Try.of(() -> 1);
+        final var tryInstance = Try.of(() -> 1);
         assertEquals(1, tryInstance.getOrElse(2)); // 1 is expected as Try instance is a Success
     }
 
@@ -158,7 +158,7 @@ class TryTest
     @Test
     void getOrElse_Null_Failure()
     {
-        Try<Integer> tryInstance = Try.of(() -> {
+        final Try<Integer> tryInstance = Try.of(() -> {
             throw new Exception("Failure");
         });
         assertEquals(2, tryInstance.getOrElse(2)); // 2 is expected as Try instance is a Failure
@@ -170,7 +170,7 @@ class TryTest
     @Test
     void getOrElse_Function0_Success()
     {
-        var tryInstance = Try.of(() -> 1);
+        final var tryInstance = Try.of(() -> 1);
         assertEquals(1, tryInstance.getOrElse(() -> 2)); // 1 is expected as Try instance is a Success
     }
 
@@ -180,7 +180,7 @@ class TryTest
     @Test
     void getOrElse_Function0_Failure()
     {
-        Try<Integer> tryInstance = Try.of(() -> {
+        final Try<Integer> tryInstance = Try.of(() -> {
             throw new Exception("Failure");
         });
         assertEquals(2, tryInstance.getOrElse(() -> 2)); // 2 is expected as Try instance is a Failure
@@ -192,7 +192,7 @@ class TryTest
     @Test
     void getOrElse_Function0_Null()
     {
-        var tryInstance = Try.of(() -> 1);
+        final var tryInstance = Try.of(() -> 1);
         assertThrows(NullPointerException.class, () -> tryInstance.getOrElse((Supplier<? extends Integer>) null)); // Fail as the supplier is null
     }
 
@@ -200,8 +200,8 @@ class TryTest
     @Test
     void testIterator_hasNext_WhenCalledTwice()
     {
-        var successInstance = Try.of(() -> 5);
-        var iterator = successInstance.iterator();
+        final var successInstance = Try.of(() -> 5);
+        final var iterator = successInstance.iterator();
         assertTrue(iterator.hasNext(), "Expected hasNext to return true when first called on a Success iterator");
         iterator.next();
         assertFalse(iterator.hasNext(), "Expected hasNext to return false when called second time on a Success iterator");
@@ -210,8 +210,8 @@ class TryTest
     @Test
     void testIterator_next_WhenCalledTwice()
     {
-        var successInstance = Try.of(() -> 5);
-        var iterator = successInstance.iterator();
+        final var successInstance = Try.of(() -> 5);
+        final var iterator = successInstance.iterator();
         assertEquals(5, iterator.next(), "Expected next to return Success value when first called on a Success iterator");
         assertThrows(NoSuchElementException.class, iterator::next, "Expected next to throw NoSuchElementException when called second time on a Success iterator");
     }
@@ -219,10 +219,10 @@ class TryTest
     @Test
     void testIterator_WhenFailure()
     {
-        var failureInstance = Try.of(() -> {
+        final var failureInstance = Try.of(() -> {
             throw new RuntimeException("runtime");
         });
-        var iterator = failureInstance.iterator();
+        final var iterator = failureInstance.iterator();
         assertFalse(iterator.hasNext(), "Expected hasNext to return false when called on a Failure iterator");
 
         assertThrows(NoSuchElementException.class, iterator::next, "Expected next to throw NoSuchElementException when called second time on a Success iterator");

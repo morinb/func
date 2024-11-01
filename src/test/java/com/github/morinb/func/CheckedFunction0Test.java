@@ -36,9 +36,9 @@ class CheckedFunction0Test
     @Test
     void testApplyNoException()
     {
-        CheckedFunction0<String> func = () -> "Test";
+        final CheckedFunction0<String> func = () -> "Test";
 
-        var result = assertDoesNotThrow(func::apply);
+        final var result = assertDoesNotThrow(func::apply);
         assertEquals("Test", result);
     }
 
@@ -48,7 +48,7 @@ class CheckedFunction0Test
     @Test
     void testApplyException()
     {
-        CheckedFunction0<String> func = () -> {
+        final CheckedFunction0<String> func = () -> {
             throw new Exception("Test exception");
         };
 
@@ -62,11 +62,11 @@ class CheckedFunction0Test
     @Test
     void testAndThenNoException()
     {
-        CheckedFunction0<String> func = () -> "Test";
-        CheckedFunction1<String, String> func1 = (str) -> str + "123";
+        final CheckedFunction0<String> func = () -> "Test";
+        final CheckedFunction1<String, String> func1 = str -> str + "123";
 
         final CheckedFunction0<String> stringCheckedFunction0 = func.andThen(func1);
-        var result = assertDoesNotThrow(stringCheckedFunction0::apply);
+        final var result = assertDoesNotThrow(stringCheckedFunction0::apply);
         assertEquals("Test123", result);
     }
 
@@ -77,8 +77,8 @@ class CheckedFunction0Test
     @Test
     void testAndThenException()
     {
-        CheckedFunction0<String> func = () -> "Test";
-        CheckedFunction1<String, String> func1 = (str) -> {
+        final CheckedFunction0<String> func = () -> "Test";
+        final CheckedFunction1<String, String> func1 = str -> {
             throw new Exception("Test exception");
         };
 

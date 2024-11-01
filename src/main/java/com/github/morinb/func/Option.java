@@ -180,7 +180,7 @@ public sealed interface Option<T>
      * @throws H                    if the {@code Option} is noop
      * @throws NullPointerException if {@code throwableSupplier} is null
      */
-    default <H extends Throwable> T getOrElseThrow(Function0<H> throwableSupplier) throws H
+    default <H extends Throwable> T getOrElseThrow(final Function0<H> throwableSupplier) throws H
     {
         Objects.requireNonNull(throwableSupplier, "throwableSupplier is null");
         if (isNone()) {
@@ -253,7 +253,7 @@ public sealed interface Option<T>
         }
 
         @Override
-        public boolean equals(Object obj)
+        public boolean equals(final Object obj)
         {
             return (obj == this) || (obj instanceof Some && Objects.equals(value, ((Some<?>) obj).value));
         }
@@ -299,7 +299,7 @@ public sealed interface Option<T>
         }
 
         @Override
-        public boolean equals(Object o)
+        public boolean equals(final Object o)
         {
             return o == this || (o instanceof Option.None<?> && ((None<?>) o).isNone());
         }

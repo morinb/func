@@ -84,7 +84,7 @@ public sealed interface Try<T>
      */
     @Override
     @SuppressWarnings("unchecked")
-    default <U> Try<U> map(Function1<? super T, ? extends U> mapper)
+    default <U> Try<U> map(final Function1<? super T, ? extends U> mapper)
     {
         return isFailure() ? (Try<U>) this : Try.of(() -> mapper.apply(get()));
     }
@@ -99,7 +99,7 @@ public sealed interface Try<T>
      * @return a new Try instance that is the result of the function application, or this Try instance if it's a Failure
      */
     @SuppressWarnings("unchecked")
-    default <U> Try<U> flatMap(Function<? super T, ? extends Try<? extends U>> mapper)
+    default <U> Try<U> flatMap(final Function<? super T, ? extends Try<? extends U>> mapper)
     {
         return isFailure() ? (Try<U>) this : (Try<U>) mapper.apply(get());
     }
@@ -132,7 +132,7 @@ public sealed interface Try<T>
      * or this Try instance if it is not a failure or the exception does not match.
      */
     @SuppressWarnings("unchecked")
-    default <X extends Throwable> Try<T> recover(Class<X> exceptionClass, Function<? super X, ? extends T> func)
+    default <X extends Throwable> Try<T> recover(final Class<X> exceptionClass, final Function<? super X, ? extends T> func)
     {
         Objects.requireNonNull(func, "func is null");
         Objects.requireNonNull(exceptionClass, "exceptionClass is null");

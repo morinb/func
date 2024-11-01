@@ -34,15 +34,15 @@ class CheckedFunction5Test
     @Test
     void testApply()
     {
-        CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func = (a1, a2, a3, a4, a5) -> a1 + a2 + a3 + a4 + a5;
-        var result = assertDoesNotThrow(() -> func.apply(1, 2, 3, 4, 5));
+        final CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func = (a1, a2, a3, a4, a5) -> a1 + a2 + a3 + a4 + a5;
+        final var result = assertDoesNotThrow(() -> func.apply(1, 2, 3, 4, 5));
         Assertions.assertEquals(15, result);
     }
 
     @Test
     void testApply_throwsException()
     {
-        CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func = (a1, a2, a3, a4, a5) -> {
+        final CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func = (a1, a2, a3, a4, a5) -> {
             if (a1 == 0) throw new ArithmeticException("Argument a1 is zero");
             else return a1 + a2 + a3 + a4 + a5;
         };
@@ -57,12 +57,12 @@ class CheckedFunction5Test
     @Test
     void andThen_WithNonThrowingFunctions_ShouldComposeFunctions() throws Throwable
     {
-        CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func5 = (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
-        CheckedFunction1<Integer, Integer> after = param -> param * 2;
+        final CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func5 = (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
+        final CheckedFunction1<Integer, Integer> after = param -> param * 2;
 
-        var combinedFunc = func5.andThen(after);
+        final var combinedFunc = func5.andThen(after);
 
-        int result = combinedFunc.apply(1, 2, 3, 4, 5);
+        final int result = combinedFunc.apply(1, 2, 3, 4, 5);
         assertEquals(30, result);
     }
 
@@ -73,8 +73,8 @@ class CheckedFunction5Test
     @Test
     void andThen_WhenNullAfterFunctionIsPassed_ShouldThrowNullPointerException()
     {
-        CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func5 = (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
-        CheckedFunction1<Integer, Integer> after = null;
+        final CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> func5 = (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
+        final CheckedFunction1<Integer, Integer> after = null;
 
         assertThrows(NullPointerException.class, () -> func5.andThen(after));
     }
@@ -82,12 +82,12 @@ class CheckedFunction5Test
     @Test
     void testCurriedMethod() throws Throwable
     {
-        CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> function =
+        final CheckedFunction5<Integer, Integer, Integer, Integer, Integer, Integer> function =
                 (param1, param2, param3, param4, param5) -> param1 + param2 + param3 + param4 + param5;
 
-        var curriedFunction = function.curried();
+        final var curriedFunction = function.curried();
 
-        int value = curriedFunction.apply(1)
+        final int value = curriedFunction.apply(1)
                 .apply(2)
                 .apply(3)
                 .apply(4)
@@ -99,7 +99,7 @@ class CheckedFunction5Test
     @Test
     void testCurriedMethod_NullArgument()
     {
-        CheckedFunction5<Object, Object, Object, Object, Object, Integer> function =
+        final CheckedFunction5<Object, Object, Object, Object, Object, Integer> function =
                 (param1, param2, param3, param4, param5) -> {
                     if (param1 == null || param2 == null || param3 == null || param4 == null || param5 == null)
                     {
@@ -109,7 +109,7 @@ class CheckedFunction5Test
                     return 1;
                 };
 
-        var curriedFunction = function.curried();
+        final var curriedFunction = function.curried();
 
         assertThrows(NullPointerException.class, () -> curriedFunction.apply(null)
                 .apply(2)

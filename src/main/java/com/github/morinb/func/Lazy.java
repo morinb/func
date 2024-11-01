@@ -52,7 +52,7 @@ public final class Lazy<T> implements Value<T>, Supplier<T>, Serializable
      * Lazy is a class that represents a lazily evaluated value. It provides a way to defer the computation of a value until it is actually needed.
      * It implements the Value interface, the Supplier interface, and is Serializable.
      */
-    private Lazy(Supplier<? extends T> supplier)
+    private Lazy(final Supplier<? extends T> supplier)
     {
         this.supplier = supplier;
     }
@@ -66,7 +66,7 @@ public final class Lazy<T> implements Value<T>, Supplier<T>, Serializable
      * @throws NullPointerException if the supplier is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Lazy<T> of(Supplier<? extends T> supplier)
+    public static <T> Lazy<T> of(final Supplier<? extends T> supplier)
     {
         Objects.requireNonNull(supplier, "supplier is null");
         if (supplier instanceof Lazy)
@@ -139,7 +139,7 @@ public final class Lazy<T> implements Value<T>, Supplier<T>, Serializable
      * @return a new Lazy representing the result of the mapping operation
      */
     @Override
-    public <U> Value<U> map(Function1<? super T, ? extends U> mapper)
+    public <U> Value<U> map(final Function1<? super T, ? extends U> mapper)
     {
         return Lazy.of(() -> mapper.apply(get()));
     }
@@ -163,7 +163,7 @@ public final class Lazy<T> implements Value<T>, Supplier<T>, Serializable
      * @return true if the specified object is equal to this Lazy object, false otherwise
      */
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
      return (o == this) || (o instanceof Lazy && Objects.equals(((Lazy<?>) o).get(), get()));
     }
@@ -198,7 +198,7 @@ public final class Lazy<T> implements Value<T>, Supplier<T>, Serializable
      * @throws IOException If an I/O error occurs while writing to the ObjectOutputStream.
      */
     @Serial
-    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException
+    private void writeObject(final ObjectOutputStream objectOutputStream) throws IOException
     {
         get();
         objectOutputStream.defaultWriteObject();

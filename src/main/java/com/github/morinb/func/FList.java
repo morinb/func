@@ -41,7 +41,7 @@ public record FList<T>(T head, FList<T> tail)
      * @param <U>  the type of the element
      * @return a new FList instance with the provided element as the head
      */
-    public static <U> FList<U> of(U head)
+    public static <U> FList<U> of(final U head)
     {
         return FList.<U>empty().prepend(head);
     }
@@ -55,7 +55,7 @@ public record FList<T>(T head, FList<T> tail)
      * @return a new FList instance populated with the provided elements
      */
     @SafeVarargs
-    public static <U> FList<U> of(U... elements)
+    public static <U> FList<U> of(final U... elements)
     {
         FList<U> list = FList.empty();
         for (var i = elements.length - 1; i >= 0; i--)
@@ -72,7 +72,7 @@ public record FList<T>(T head, FList<T> tail)
      * @param <U>      the type of the elements
      * @return a new FList instance populated with the provided elements
      */
-    public static <U> FList<U> of(List<U> elements)
+    public static <U> FList<U> of(final List<U> elements)
     {
         FList<U> list = FList.empty();
         for (var i = elements.size() - 1; i >= 0; i--)
@@ -145,7 +145,7 @@ public record FList<T>(T head, FList<T> tail)
      * @return the element at the specified index
      * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &ge; size())
      */
-    public T get(int index)
+    public T get(final int index)
     {
         if (index < 0 || index >= size())
         {
@@ -167,7 +167,7 @@ public record FList<T>(T head, FList<T> tail)
      * @param element the element to be added at the beginning of the FList
      * @return a new FList instance with the provided element as the head
      */
-    public FList<T> prepend(T element)
+    public FList<T> prepend(final T element)
     {
         return new FList<>(element, this);
     }
@@ -178,7 +178,7 @@ public record FList<T>(T head, FList<T> tail)
      * @param element the element to be added to the end of the FList
      * @return a new FList instance with the provided element appended
      */
-    public FList<T> append(T element)
+    public FList<T> append(final T element)
     {
         if (isEmpty())
         {
@@ -200,7 +200,7 @@ public record FList<T>(T head, FList<T> tail)
      * @return a new FList with the transformed elements
      * @throws NullPointerException if the mapper function is null
      */
-    public <U> FList<U> map(Function1<T, U> mapper)
+    public <U> FList<U> map(final Function1<T, U> mapper)
     {
         Objects.requireNonNull(mapper, "mapper is null");
         if (isEmpty())
@@ -220,7 +220,7 @@ public record FList<T>(T head, FList<T> tail)
      * @return a new FList containing only the elements for which the predicate returns true
      * @throws NullPointerException if the predicate is null
      */
-    public FList<T> filter(Predicate<T> predicate)
+    public FList<T> filter(final Predicate<T> predicate)
     {
         Objects.requireNonNull(predicate, "predicate is null");
         if (isEmpty())
@@ -245,7 +245,7 @@ public record FList<T>(T head, FList<T> tail)
      * @return a new FList instance with the updated element
      * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &ge; size())
      */
-    public FList<T> update(int index, T element)
+    public FList<T> update(final int index, final T element)
     {
 
         if (index < 0 || index >= size())
@@ -271,7 +271,7 @@ public record FList<T>(T head, FList<T> tail)
      * @return the accumulated value after folding all the elements of the FList
      * @throws NullPointerException if the accumulator is null
      */
-    public <R> R foldRight(R identity, BiFunction<T, R, R> accumulator)
+    public <R> R foldRight(final R identity, final BiFunction<T, R, R> accumulator)
     {
         Objects.requireNonNull(accumulator, "accumulator is null");
         if (isEmpty())
@@ -293,7 +293,7 @@ public record FList<T>(T head, FList<T> tail)
      * @return a new FList with the flattened elements
      * @throws NullPointerException if the mapper function is null
      */
-    public <U> FList<U> flatMap(Function1<T, FList<U>> mapper)
+    public <U> FList<U> flatMap(final Function1<T, FList<U>> mapper)
     {
         Objects.requireNonNull(mapper, "mapper is null");
         return foldRight(FList.empty(), (elem, acc) ->
@@ -306,7 +306,7 @@ public record FList<T>(T head, FList<T> tail)
      * @param other the list to append
      * @return a new FList instance with the elements of the provided list appended
      */
-    public FList<T> appendList(FList<T> other)
+    public FList<T> appendList(final FList<T> other)
     {
         if (isEmpty())
         {

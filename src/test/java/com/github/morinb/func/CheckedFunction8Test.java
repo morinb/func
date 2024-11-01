@@ -34,10 +34,10 @@ class CheckedFunction8Test
     @DisplayName("Test normal flow")
     void testNormalFlow() throws Throwable
     {
-        CheckedFunction8<String, String, String, String, String, String, String, String, String> function = (p1, p2, p3, p4, p5, p6, p7, p8) -> p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8;
-        CheckedFunction1<String, Integer> afterFunction = String::length;
+        final CheckedFunction8<String, String, String, String, String, String, String, String, String> function = (p1, p2, p3, p4, p5, p6, p7, p8) -> p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8;
+        final CheckedFunction1<String, Integer> afterFunction = String::length;
 
-        CheckedFunction8<String, String, String, String, String, String, String, String, Integer> composedFunction = function.andThen(afterFunction);
+        final CheckedFunction8<String, String, String, String, String, String, String, String, Integer> composedFunction = function.andThen(afterFunction);
 
         assertEquals(27, composedFunction.apply("Hello", " ", "there", " ", "General", " ", "Kenobi", "!"));
     }
@@ -46,7 +46,7 @@ class CheckedFunction8Test
     @DisplayName("Test when after function is null")
     void testNullAfterFunction()
     {
-        CheckedFunction8<String, String, String, String, String, String, String, String, String> function = (p1, p2, p3, p4, p5, p6, p7, p8) -> p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8;
+        final CheckedFunction8<String, String, String, String, String, String, String, String, String> function = (p1, p2, p3, p4, p5, p6, p7, p8) -> p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8;
 
         assertThrows(NullPointerException.class, () -> function.andThen(null));
     }
@@ -59,8 +59,8 @@ class CheckedFunction8Test
     void testCurriedMethod()
     {
         assertDoesNotThrow(() -> {
-            var curriedFunction = function.curried();
-            var result = curriedFunction.apply(1).apply(2).apply(3).apply(4).apply(5).apply(6).apply(7).apply(8);
+            final var curriedFunction = function.curried();
+            final var result = curriedFunction.apply(1).apply(2).apply(3).apply(4).apply(5).apply(6).apply(7).apply(8);
             assertEquals(36, result.intValue());
         });
     }
@@ -72,7 +72,7 @@ class CheckedFunction8Test
     @Test
     void testCurriedMethodWithNull()
     {
-        var curriedFunction = function.curried();
+        final var curriedFunction = function.curried();
         assertDoesNotThrow(() -> curriedFunction.apply(null));
     }
 
@@ -82,11 +82,11 @@ class CheckedFunction8Test
     @Test
     void testCurriedMethodWithException()
     {
-        CheckedFunction8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> exceptionFunction = (p1, p2, p3, p4, p5, p6, p7, p8) -> {
+        final CheckedFunction8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> exceptionFunction = (p1, p2, p3, p4, p5, p6, p7, p8) -> {
             throw new RuntimeException();
         };
 
-        var curriedFunction = exceptionFunction.curried();
+        final var curriedFunction = exceptionFunction.curried();
         assertThrows(RuntimeException.class, () -> curriedFunction.apply(1).apply(2).apply(3).apply(4).apply(5).apply(6).apply(7).apply(8));
     }
 }

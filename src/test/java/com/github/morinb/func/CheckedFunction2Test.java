@@ -27,12 +27,12 @@ class CheckedFunction2Test
     @Test
     void testApply() throws Throwable
     {
-        CheckedFunction2<Integer, Integer, Integer> additionFunc = Integer::sum;
+        final CheckedFunction2<Integer, Integer, Integer> additionFunc = Integer::sum;
 
-        var param1 = 5;
-        var param2 = 10;
+        final var param1 = 5;
+        final var param2 = 10;
 
-        int result = additionFunc.apply(param1, param2);
+        final int result = additionFunc.apply(param1, param2);
 
         assertEquals(15, result, "The result of the addition should be equal to the sum of the parameters");
     }
@@ -41,7 +41,7 @@ class CheckedFunction2Test
     void testApplyWithException()
     {
 
-        CheckedFunction2<Integer, Integer, Integer> exceptionFunc = (param1, param2) -> {
+        final CheckedFunction2<Integer, Integer, Integer> exceptionFunc = (param1, param2) -> {
             throw new UnsupportedOperationException("Not supported yet.");
         };
 
@@ -51,13 +51,13 @@ class CheckedFunction2Test
     @Test
     void testAndThen() throws Throwable
     {
-        CheckedFunction2<Integer, Integer, Integer> multiplicationFunc = (param1, param2) -> param1 * param2;
-        CheckedFunction1<Integer, Integer> additionFunc = (param) -> param + 3;
+        final CheckedFunction2<Integer, Integer, Integer> multiplicationFunc = (param1, param2) -> param1 * param2;
+        final CheckedFunction1<Integer, Integer> additionFunc = param -> param + 3;
 
-        var param1 = 2;
-        var param2 = 3;
+        final var param1 = 2;
+        final var param2 = 3;
 
-        int result = multiplicationFunc.andThen(additionFunc).apply(param1, param2);
+        final int result = multiplicationFunc.andThen(additionFunc).apply(param1, param2);
 
         assertEquals(9, result, "The result of the addition should be equal to the product of the parameters plus 3");
     }
@@ -66,8 +66,8 @@ class CheckedFunction2Test
     void testAndThenWithException()
     {
 
-        CheckedFunction2<Integer, Integer, Integer> multiplicationFunc = (param1, param2) -> param1 * param2;
-        CheckedFunction1<Integer, Integer> exceptionFunc = (param) -> {
+        final CheckedFunction2<Integer, Integer, Integer> multiplicationFunc = (param1, param2) -> param1 * param2;
+        final CheckedFunction1<Integer, Integer> exceptionFunc = param -> {
             throw new UnsupportedOperationException("Not supported yet.");
         };
 
@@ -78,14 +78,14 @@ class CheckedFunction2Test
     @Test
     void testCurried() throws Throwable
     {
-        CheckedFunction2<Integer, Integer, Integer> multiplicationFunc = (param1, param2) -> param1 * param2;
+        final CheckedFunction2<Integer, Integer, Integer> multiplicationFunc = (param1, param2) -> param1 * param2;
 
-        var param1 = 2;
-        var param2 = 3;
+        final var param1 = 2;
+        final var param2 = 3;
 
-        var curriedFunc = multiplicationFunc.curried();
+        final var curriedFunc = multiplicationFunc.curried();
 
-        int result = curriedFunc.apply(param1).apply(param2);
+        final int result = curriedFunc.apply(param1).apply(param2);
 
         assertEquals(6, result, "The result of the curried function should be equal to the product of the parameters");
     }

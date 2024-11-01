@@ -23,115 +23,105 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ValueTest {
-
-    static class MyValue<T> implements Value<T> {
-
-        private final T value;
-
-        MyValue(T value) {
-            this.value = value;
-        }
-
-        @Override
-        public T get() {
-            return value;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return value == null;
-        }
-
-        @Override
-        public <U> Value<U> map(Function1<? super T, ? extends U> mapper) {
-            return new MyValue<>(mapper.apply(value));
-        }
-
-        @Override
-        public Iterator<T> iterator() {
-            return java.util.Collections.singleton(value).iterator();
-        }
-    }
+class ValueTest
+{
 
     @Test
-    public void narrowShouldReturnSameInstanceWhenValueSubclassType() {
-        Value<Integer> value = new MyValue<>(1);
+    void narrowShouldReturnSameInstanceWhenValueSubclassType()
+    {
+        final Value<Integer> value = new MyValue<>(1);
         assertSame(value, Value.narrow(value));
     }
 
     @Test
-    public void narrowShouldReturnSameInstanceWhenValueSuperclassType() {
-        Value<? extends Integer> numberValue = new MyValue<>(1);
+    void narrowShouldReturnSameInstanceWhenValueSuperclassType()
+    {
+        final Value<? extends Integer> numberValue = new MyValue<>(1);
         assertSame(numberValue, Value.narrow(numberValue));
     }
 
     @Test
-    public void narrowShouldReturnSameInstanceWhenValueSameType() {
-        MyValue<Integer> value = new MyValue<>(1);
+    void narrowShouldReturnSameInstanceWhenValueSameType()
+    {
+        final MyValue<Integer> value = new MyValue<>(1);
         assertSame(value, Value.narrow(value));
     }
 
     @Test
-    public void narrowShouldReturnSameInstanceWhenValueIsNull() {
-        Value<Object> value = null;
+    void narrowShouldReturnSameInstanceWhenValueIsNull()
+    {
+        final Value<Object> value = null;
         assertNull(Value.narrow(value));
     }
 
     @Test
-    public void containsShouldReturnTrueWhenValueExists() {
-        Value<Integer> value = new MyValue<>(1);
+    void containsShouldReturnTrueWhenValueExists()
+    {
+        final Value<Integer> value = new MyValue<>(1);
         assertTrue(value.contains(1));
     }
 
     @Test
-    public void containsShouldReturnFalseWhenValueDoesNotExist() {
-        Value<Integer> value = new MyValue<>(1);
+    void containsShouldReturnFalseWhenValueDoesNotExist()
+    {
+        final Value<Integer> value = new MyValue<>(1);
         assertFalse(value.contains(2));
     }
 
     @Test
-    public void containsShouldReturnFalseWhenValueIsNullAndValueExists() {
-        Value<Integer> value = new MyValue<>(null);
+    void containsShouldReturnFalseWhenValueIsNullAndValueExists()
+    {
+        final Value<Integer> value = new MyValue<>(null);
         assertFalse(value.contains(1));
     }
 
     @Test
-    public void containsShouldReturnTrueWhenValueIsNullAndValueIsNull() {
-        Value<Object> value = new MyValue<>(null);
+    void containsShouldReturnTrueWhenValueIsNullAndValueIsNull()
+    {
+        final Value<Object> value = new MyValue<>(null);
         assertTrue(value.contains(null));
     }
 
     @Test
-    public void forAllShouldReturnTrueWhenPredicateMatchesAllValues() {
-        Value<Integer> value = new MyValue<>(10);
+    void forAllShouldReturnTrueWhenPredicateMatchesAllValues()
+    {
+        final Value<Integer> value = new MyValue<>(10);
         assertTrue(value.forAll(e -> e > 0));
     }
 
     @Test
-    public void forAllShouldReturnFalseWhenPredicateDoesntMatchesAllValues() {
-        Value<Integer> value = new MyValue<>(-10);
+    void forAllShouldReturnFalseWhenPredicateDoesntMatchesAllValues()
+    {
+        final Value<Integer> value = new MyValue<>(-10);
         assertFalse(value.forAll(e -> e > 0));
     }
 
     @Test
-    public void forAllShouldReturnTrueWhenValueIsNullAndPredicateIsAllTrueForNull() {
-        Value<Object> value = new MyValue<>(null);
+    void forAllShouldReturnTrueWhenValueIsNullAndPredicateIsAllTrueForNull()
+    {
+        final Value<Object> value = new MyValue<>(null);
         assertTrue(value.forAll(Objects::isNull));
     }
 
     @Test
-    public void forEachShouldNotDoAnythingIfActionIsNull() {
-        Value<Integer> value = new MyValue<>(1);
+    void forEachShouldNotDoAnythingIfActionIsNull()
+    {
+        final Value<Integer> value = new MyValue<>(1);
         assertThrows(NullPointerException.class, () -> value.forEach(null));
     }
 
     @Test
-    public void forEachShouldProperlyApplyTheAction() {
-        Value<Integer> value = new MyValue<>(1);
-        Integer[] sum = {0};
+    void forEachShouldProperlyApplyTheAction()
+    {
+        final Value<Integer> value = new MyValue<>(1);
+        final Integer[] sum = {0};
 
         value.forEach(i -> sum[0] += i);
 
@@ -139,100 +129,150 @@ public class ValueTest {
     }
 
     @Test
-    public void getOrElseTryShouldReturnGetReturnValueWhenNotEmpty() {
-        Value<Integer> value = new MyValue<>(1);
+    void getOrElseTryShouldReturnGetReturnValueWhenNotEmpty()
+    {
+        final Value<Integer> value = new MyValue<>(1);
         assertEquals(1, value.getOrElseTry(() -> 2));
     }
 
     @Test
-    public void getOrElseTryShouldReturnSupplierValueWhenEmpty() {
-        Value<Integer> value = new MyValue<>(null);
+    void getOrElseTryShouldReturnSupplierValueWhenEmpty()
+    {
+        final Value<Integer> value = new MyValue<>(null);
         assertEquals(Integer.valueOf(2), value.getOrElseTry(() -> 2));
     }
 
     @Test
-    public void getOrElseTryShouldThrowExceptionWhenSupplierThrows() {
-        Value<Integer> value = new MyValue<>(null);
+    void getOrElseTryShouldThrowExceptionWhenSupplierThrows()
+    {
+        final Value<Integer> value = new MyValue<>(null);
         assertThrows(RuntimeException.class, () -> value.getOrElseTry(() -> {
             throw new RuntimeException();
         }));
     }
 
     @Test //Test1: getOrNull should return null when the Value is noop
-    public void getOrNullShouldReturnNullWhenValueIsEmpty() {
-        Value<Integer> value = new MyValue<>(null);
+    void getOrNullShouldReturnNullWhenValueIsEmpty()
+    {
+        final Value<Integer> value = new MyValue<>(null);
         assertNull(value.getOrNull());
     }
 
     @Test //Test2: getOrNull should return value when the Value is not noop
-    public void getOrNullShouldReturnValueWhenValueIsNotEmpty() {
-        Value<Integer> value = new MyValue<>(10);
+    void getOrNullShouldReturnValueWhenValueIsNotEmpty()
+    {
+        final Value<Integer> value = new MyValue<>(10);
         assertEquals(Integer.valueOf(10), value.getOrNull());
     }
 
     @Test
-    public void testToEitherWithEitherRight() {
-        Value<String> value = Either.right("Hello");
-        Either<Integer, String> either = value.toEither(10);
+    void testToEitherWithEitherRight()
+    {
+        final Value<String> value = Either.right("Hello");
+        final Either<Integer, String> either = value.toEither(10);
         Assertions.assertTrue(either.isRight());
         Assertions.assertEquals("Hello", either.get());
     }
 
     @Test
-    public void testToEitherWithEitherLeft() {
-        Value<String> value = Either.left("error");
-        Either<Integer, String> either = value.toEither(10);
+    void testToEitherWithEitherLeft()
+    {
+        final Value<String> value = Either.left("error");
+        final Either<Integer, String> either = value.toEither(10);
         Assertions.assertTrue(either.isLeft());
         Assertions.assertEquals(10, either.getLeft());
     }
 
     @Test
-    public void testToEitherWithExistingValue() {
-        Value<String> value = new MyValue<>("Hello");
-        Either<Integer, String> either = value.toEither(10);
+    void testToEitherWithExistingValue()
+    {
+        final Value<String> value = new MyValue<>("Hello");
+        final Either<Integer, String> either = value.toEither(10);
         Assertions.assertTrue(either.isRight());
         Assertions.assertEquals("Hello", either.get());
     }
 
     @Test
-    public void testToEitherWithEmptyValue() {
-        Value<String> value = new MyValue<>(null);
-        Either<Integer, String> either = value.toEither(10);
+    void testToEitherWithEmptyValue()
+    {
+        final Value<String> value = new MyValue<>(null);
+        final Either<Integer, String> either = value.toEither(10);
         Assertions.assertTrue(either.isLeft());
         Assertions.assertEquals(10, either.getLeft());
     }
 
     @Test
-    public void testToTryWithExistingValue() {
-        Value<String> value = new MyValue<>("Hello");
-        Try<String> result = value.toTry();
+    void testToTryWithExistingValue()
+    {
+        final Value<String> value = new MyValue<>("Hello");
+        final Try<String> result = value.toTry();
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertEquals("Hello", result.get());
     }
 
     @Test
-    public void testToTryWithEmptyValue() {
-        Value<Supplier<String>> value = new MyValue<>(() -> {
+    void testToTryWithEmptyValue()
+    {
+        final Value<Supplier<String>> value = new MyValue<>(() -> {
             throw new RuntimeException();
         });
-        Try<Supplier<String>> result = value.toTry();
+        final Try<Supplier<String>> result = value.toTry();
         Assertions.assertTrue(result.isSuccess());
 
-    }    @Test
-    public void testToTryWithSuccess() {
-        Value<String> value = Try.of(() -> "Hello");
-        Try<String> result = value.toTry();
+    }
+
+    @Test
+    void testToTryWithSuccess()
+    {
+        final Value<String> value = Try.of(() -> "Hello");
+        final Try<String> result = value.toTry();
         Assertions.assertTrue(result.isSuccess());
         Assertions.assertEquals("Hello", result.get());
     }
 
     @Test
-    public void testToTryWithFailure() {
-        Value<Supplier<String>> value = Try.of(() -> {
+    void testToTryWithFailure()
+    {
+        final Value<Supplier<String>> value = Try.of(() -> {
             throw new RuntimeException();
         });
-        Try<Supplier<String>> result = value.toTry();
+        final Try<Supplier<String>> result = value.toTry();
         Assertions.assertTrue(result.isFailure());
 
+    }
+
+    static class MyValue<T> implements Value<T>
+    {
+
+        private final T value;
+
+        MyValue(final T value)
+        {
+            this.value = value;
+        }
+
+        @Override
+        public T get()
+        {
+            return value;
+        }
+
+        @Override
+        public boolean isEmpty()
+        {
+            return value == null;
+        }
+
+        @Override
+        public <U> Value<U> map(final Function1<? super T, ? extends U> mapper)
+        {
+            return new MyValue<>(mapper.apply(value));
+        }
+
+        @Override
+        public Iterator<T> iterator()
+        {
+            return java.util.Collections.singleton(value).iterator();
+        }
     }
 }

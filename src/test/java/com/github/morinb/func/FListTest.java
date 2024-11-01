@@ -29,7 +29,7 @@ class FListTest
     @Test
     void isEmptyTest_whenListContainsNoElements_shouldReturnTrue()
     {
-        FList<Integer> list = FList.empty();
+        final FList<Integer> list = FList.empty();
         assertTrue(list.isEmpty());
     }
 
@@ -158,7 +158,7 @@ class FListTest
     {
         FList<Integer> list = FList.empty();
         list = list.append(1).append(2);
-        int sum = list.foldRight(0, Integer::sum);
+        final int sum = list.foldRight(0, Integer::sum);
         assertEquals(3, sum);
     }
 
@@ -169,7 +169,7 @@ class FListTest
         final var sublist1 = FList.<Integer>empty().append(1).append(2);
         final var subList2 = FList.<Integer>empty().append(3).append(4);
         list = list.append(sublist1).append(subList2);
-        var flatList = list.flatMap(i -> i);
+        final var flatList = list.flatMap(i -> i);
         assertEquals(4, flatList.size());
         assertEquals(1, flatList.get(0));
         assertEquals(2, flatList.get(1));
@@ -180,9 +180,9 @@ class FListTest
     @Test
     void appendListTest_whenAppendingTwoLists_shouldReturnCorrectlyAppendedList()
     {
-        var firstList = FList.<Integer>empty().append(1).append(2);
-        var secondList = FList.<Integer>empty().append(3).append(4);
-        var concatenatedList = firstList.appendList(secondList);
+        final var firstList = FList.<Integer>empty().append(1).append(2);
+        final var secondList = FList.<Integer>empty().append(3).append(4);
+        final var concatenatedList = firstList.appendList(secondList);
         assertEquals(4, concatenatedList.size());
         assertEquals(1, concatenatedList.get(0));
         assertEquals(2, concatenatedList.get(1));
@@ -193,14 +193,14 @@ class FListTest
     @Test
     void ofTest_whenCreatingListWithOf_shouldReturnCorrectList()
     {
-        var list = FList.of(1);
+        final var list = FList.of(1);
         assertEquals(1, list.get(0));
     }
 
     @Test
     void ofTest_whenCreatingListWithMultipleOf_shouldReturnCorrectList()
     {
-        var list = FList.of(1, 2);
+        final var list = FList.of(1, 2);
         assertEquals(2, list.size());
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
@@ -208,16 +208,16 @@ class FListTest
 
     @Test
     void ofTest_whenCreatingListFromSingleElementArray_shouldReturnCorrectList() {
-        Integer[] numbers = {1};
-        var list = FList.of(numbers);
+        final Integer[] numbers = {1};
+        final var list = FList.of(numbers);
         assertEquals(1, list.size());
         assertEquals(1, list.get(0));
     }
 
     @Test
     void ofTest_whenCreatingListFromMultiElementArray_shouldReturnCorrectList() {
-        Integer[] numbers = {1, 2, 3};
-        var list = FList.of(numbers);
+        final Integer[] numbers = {1, 2, 3};
+        final var list = FList.of(numbers);
         assertEquals(3, list.size());
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
@@ -248,25 +248,25 @@ class FListTest
     }
     @Test
     void toStringTest_whenEmptyList_shouldReturnEmptyString() {
-        FList<Integer> list = FList.empty();
+        final FList<Integer> list = FList.empty();
         assertEquals("", list.toString());
     }
 
     @Test
     void toStringTest_whenSingleElementList_shouldReturnElementString() {
-        var list = FList.of(1);
+        final var list = FList.of(1);
         assertEquals("1", list.toString());
     }
 
     @Test
     void toStringTest_whenMultiElementList_shouldReturnCorrectString() {
-        var list = FList.of(1, 2, 3);
+        final var list = FList.of(1, 2, 3);
         assertEquals("1::2::3", list.toString());
     }
     @Test
     void toNonEmptyListTest_whenFListContainsElements_shouldReturnNonEmptyList() {
-        var fList = FList.of(1, 2, 3);
-        var list = fList.toNonEmptyList();
+        final var fList = FList.of(1, 2, 3);
+        final var list = fList.toNonEmptyList();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0));
         assertEquals(2, list.get(1));
@@ -275,7 +275,7 @@ class FListTest
 
     @Test
     void toNonEmptyListTest_whenFListIsEmpty_shouldThrowException() {
-        FList<Integer> fList = FList.empty();
+        final FList<Integer> fList = FList.empty();
         assertThrows(NullPointerException.class, fList::toNonEmptyList);
     }
 }
