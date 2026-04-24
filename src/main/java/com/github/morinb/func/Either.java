@@ -946,6 +946,30 @@ public sealed interface Either<L, R>
     }
 
     /**
+     * Transforms the value of this Either if it is a Right using the provided mapping function,
+     * and returns the result. If this is a Left, the same instance is returned.
+     *
+     * @param <T> The type of the value inside the resulting Either if it is a Right.
+     * @param mapper A function that takes the value of this Either (if it is a Right) and
+     *               returns another Either instance.
+     * @return A new Either instance resulting from applying the mapping function to the value
+     *         if this is a Right, or this instance if it is a Left.
+     * @throws NullPointerException if the provided mapper is null.
+     */
+    @SuppressWarnings("unchecked")
+    default <T> Either<L, T> flatMap(final Function1<? super R, ? extends Either<L, ? extends T>> mapper) {
+        Objects.requireNonNull(mapper, "mapper is null");
+        if (isRight())
+        {
+            return (Either<L, T>) mapper.apply(get());
+        }
+        else
+        {
+            return (Either<L, T>) this;
+        }
+    }
+
+    /**
      * This method applies the given mapper function to the left value of this Either object and returns a new Either object with the result.
      *
      * @param mapper the function to apply to the left value

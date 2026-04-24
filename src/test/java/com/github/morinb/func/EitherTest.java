@@ -85,6 +85,41 @@ class EitherTest
     }
 
     @Test
+    void testRight_flatMapReturnsRight()
+    {
+        underTest = Either.right(10);
+        final var result = underTest.flatMap(param1 -> Either.right(param1 * 2));
+        assertTrue(result.isRight());
+        assertEquals(Integer.valueOf(20), result.get());
+    }
+
+    @Test
+    void testRight_flatMapReturnsLeft()
+    {
+        underTest = Either.right(10);
+        final var result = underTest.flatMap(param1 -> Either.left("error"));
+        assertTrue(result.isLeft());
+        assertEquals("error", result.getLeft());
+    }
+
+    @Test
+    void testLeft_flatMap()
+    {
+        underTest = Either.left("under test");
+        final var result = underTest.flatMap(param1 -> Either.right(param1 * 2));
+        assertTrue(result.isLeft());
+        assertEquals("under test", result.getLeft());
+        assertEquals(underTest, result);
+    }
+
+    @Test
+    void testFlatMap_nullMapper()
+    {
+        underTest = Either.right(10);
+        assertThrows(NullPointerException.class, () -> underTest.flatMap(null));
+    }
+
+    @Test
     void testRight_bimapRight()
     {
         underTest = Either.right(10);
